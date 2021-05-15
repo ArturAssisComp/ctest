@@ -18,8 +18,6 @@
 //Definitions of global Variables:
 result global_result = {0};
 
-//Declaration of local functions:
-static void reset_global_result();
 
 //Definitions of assert functions:
 void assert_int_equal(int target, int ref)
@@ -75,8 +73,8 @@ void assert_int_equal(int target, int ref)
 }
 
 
-//Local Function definitions:
-static void reset_global_result()
+//Auxiliary Function definitions:
+void reset_global_result()
 {
 	global_result.was_successful = 0;
 	global_result.result_message[0] = '\0';

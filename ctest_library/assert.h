@@ -24,4 +24,6 @@ void assert_int_equal(int target, int ref);
 void assert_double_equal(double target, double ref);
 void assert_intArray_equal(int target[], size_t size_target, int ref[], size_t size_ref);
 
+//Auxiliary functions:
+void reset_global_result();
 #endif
