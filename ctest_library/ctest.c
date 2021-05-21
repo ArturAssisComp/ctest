@@ -37,10 +37,17 @@ void print_result()
  * Space Complexity: -
  */
 {
+	int n;
+
 	if (global_result.was_successful == TRUE)
 	{
 		//Print the result:
-		fprintf(stdout, ".");
+		n = fprintf(stdout, ".");
+		if (n < 0)
+		{
+			fprintf(stderr, "Error while printing the result.\n");
+			exit(EXIT_FAILURE);
+		}
 
 		//Update the progress:
 		if(num_of_results > MAX_RESULTS)
@@ -54,7 +61,12 @@ void print_result()
 	else
 	{
 		//Print the result:
-		fprintf(stdout, "F\n\nFAILURE MESSAGE (Assert number %d):\n%s", num_of_results + 1, global_result.result_message);
+		n = fprintf(stdout, "F\n\nFAILURE MESSAGE (Assert number %d):\n%s", num_of_results + 1, global_result.result_message);
+		if (n < 0)
+		{
+			fprintf(stderr, "Error while printing the result.\n");
+			exit(EXIT_FAILURE);
+		}
 
 		//Update the progress:
 		if(num_of_results > MAX_RESULTS)
