@@ -6,7 +6,7 @@
 //Constants:
 #define TRUE 1
 #define FALSE 0
-#define MAX_CHARS 256
+#define MAX_CHARS 256 //The maximum number of chars for a message.
 
 //Definitions of structs:
 typedef struct

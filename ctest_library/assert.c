@@ -5,8 +5,7 @@
  */
 
 /**
- * Description:
- *
+ * Description: This file contains the standard assert functions.
  */
 
 //Includes:
@@ -83,8 +82,19 @@ void reset_global_result()
 //Debug:
 int main()
 {
-	printf("Before: %s, %d\n", global_result.result_message, global_result.was_successful);
-	assert_int_equal(1, 2);
-	printf("After: %s, %d", global_result.result_message, global_result.was_successful);
+	printf("Progress: ");
+	 assert_int_equal(1, 2); //Progress: F
+	assert_int_equal(1, 1); //Progress: F.
+	assert_int_equal(1 + 2, 3); //Progress: F..
+	 assert_int_equal(4, 2); //Progress: F..F
+	assert_int_equal(2, 2); //Progress: F..F.
+	 assert_int_equal(120, 992); //Progress: F..F..F
+	assert_int_equal(2, 2); //Progress: F..F..F
+	assert_int_equal(2, 2); //Progress: F..F..F.
+	assert_int_equal(2, 2); //Progress: F..F..F..
+	assert_int_equal(2, 2); //Progress: F..F..F...
+	assert_int_equal(2, 2); //Progress: F..F..F....
+	 assert_int_equal(-10, 2); //Progress: F..F..F....F
+	 assert_int_equal(-10, -2); //Progress: F..F..F....FF
 
 }
