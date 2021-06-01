@@ -14,7 +14,7 @@ typedef struct
 
 
 //Declaration of functions:
-char **break_line(char text[], size_t text_length, char first_prefix[], char prefix[], char suffix[], size_t line_length);
+char **break_line(char text[], size_t max_text_length, char first_prefix[], char prefix[], char suffix[], size_t line_length);
 word *get_words(char text[], size_t max_chars);
 #endif
 
