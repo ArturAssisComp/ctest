@@ -4,6 +4,7 @@
 //Include:
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 //Structs:
 typedef struct
@@ -14,7 +15,7 @@ typedef struct
 
 
 //Declaration of functions:
-char **break_line(char text[], size_t max_text_length, char first_prefix[], char prefix[], char suffix[], size_t line_length);
-word *get_words(char text[], size_t max_chars);
+char *break_line(char text[], size_t max_text_length, char first_prefix[], char prefix[], char suffix[], size_t line_length);
+word *get_words(char text[], size_t max_chars, size_t *num_of_words_read);
 #endif
 
