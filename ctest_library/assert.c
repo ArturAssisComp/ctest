@@ -79,22 +79,3 @@ void reset_global_result()
 	global_result.result_message[0] = '\0';
 }
 
-//Debug:
-int main()
-{
-	printf("Progress: ");
-	 assert_int_equal(1, 2); //Progress: F
-	assert_int_equal(1, 1); //Progress: F.
-	assert_int_equal(1 + 2, 3); //Progress: F..
-	 assert_int_equal(4, 2); //Progress: F..F
-	assert_int_equal(2, 2); //Progress: F..F.
-	 assert_int_equal(120, 992); //Progress: F..F..F
-	assert_int_equal(2, 2); //Progress: F..F..F
-	assert_int_equal(2, 2); //Progress: F..F..F.
-	assert_int_equal(2, 2); //Progress: F..F..F..
-	assert_int_equal(2, 2); //Progress: F..F..F...
-	assert_int_equal(2, 2); //Progress: F..F..F....
-	 assert_int_equal(-10, 2); //Progress: F..F..F....F
-	 assert_int_equal(-10, -2); //Progress: F..F..F....FF
-
-}
