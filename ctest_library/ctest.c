@@ -20,9 +20,12 @@
 #define MAX_RESULTS 500 //Maximum number of results per each module.
 #define MAX_NAME 32 //Maximum number of chars per name.
 #define MAX_DESCRIPTION 1024 //Maximum number of chars per description.
+#define TRUE 1
+#define FALSE 0
 
 
 //Global Variables:
+char bool_print_progress = TRUE; //Says if it is necessary to print 'Progress: %s'.
 char progress[MAX_RESULTS + 1] = "\0";
 char suite_progress[MAX_RESULTS + 1] = "\0";
 char suite_name[MAX_NAME], module_name[MAX_NAME];
@@ -49,8 +52,11 @@ void print_result()
 	int n;
 
 	//Print the first 'Progress':
-	if(num_of_results == 0)
+	if(bool_print_progress)
+	{
 		fprintf(stdout, "\nProgress: %s", progress);
+		bool_print_progress = FALSE;
+	}
 
 	if (global_result.was_successful == TRUE)
 	{
@@ -161,7 +167,7 @@ void start_suite(char *name, char *description, char *func_ids[])
 
 	merged_str = merge_str(func_ids, ", ", ".");
 	aux_str = break_line(merged_str, strlen(merged_str), "|    FUNCTIONS COVERED: ", "|    ", " |", line_length);
-	n = fprintf(stdout, "%s%s\n\n", aux_str, thick_line);
+	n = fprintf(stdout, "%s%s\n\n", aux_str, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite functions ids.\n");
@@ -188,7 +194,7 @@ void end_suite()
 	int n;
 
 	//Print the starting informations:
-	n = fprintf(stdout, "\n\n%s\n|    SUMMARY OF THE SUITE: %-51s |\n%s\n", thick_line, suite_name, thin_line);
+	n = fprintf(stdout, "\n\n%s\n|    SUMMARY OF THE SUITE: %-51s |\n%s\n", thin_line, suite_name, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
@@ -209,7 +215,7 @@ void end_suite()
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n\n", num_of_fails, thin_line);
+	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n\n", num_of_fails, thick_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
@@ -254,11 +260,13 @@ void start_module(char *name, char *description, char *func_ids[])
 	//Keep track of the suite results:
 	num_of_suite_results = num_of_results;
 	num_of_suite_fails = num_of_fails;
+	suite_progress[0] = '\0';
 	strcat(suite_progress, progress);
 
 	//Reset global variables related to the suite:
 	num_of_results = 0;
 	num_of_fails   = 0;
+	bool_print_progress = TRUE;
 	module_name[0] = '\0';
 	progress[0]    = '\0';
 	
@@ -296,7 +304,7 @@ void start_module(char *name, char *description, char *func_ids[])
 
 	merged_str = merge_str(func_ids, ", ", ".");
 	aux_str = break_line(merged_str, strlen(merged_str), ".    FUNCTIONS COVERED: ", ".    ", " .", line_length);
-	n = fprintf(stdout, "%s%s\n", aux_str, thick_line);
+	n = fprintf(stdout, "%s%s", aux_str, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite functions ids.\n");
@@ -308,4 +316,56 @@ void start_module(char *name, char *description, char *func_ids[])
 
 
 
+void end_module()
+/**
+ * Description: This function ends a module, printing its summary of results.
+ * 
+ * Input: (void)
+ *
+ * Output: (void)
+ *
+ * Time/Space Complexity: -
+ */
+{
+	char *thick_line = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"; // Repeat '~' 80 times.
+	char *thin_line = "................................................................................"; // Repeat '.' 80 times.
+	int n;
+
+	//Print the starting informations:
+	n = fprintf(stdout, "\n%s\n.    SUMMARY OF THE MODULE: %-50s .\n%s\n", thin_line, module_name, thin_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the module name.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	n = fprintf(stdout, ".    -> TOTAL OF CASES: %-54d .\n%s\n", num_of_results, thin_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the module name.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	n = fprintf(stdout, ".    -> SUCCESSES: %-59d .\n%s\n", num_of_results - num_of_fails, thin_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the module name.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	n = fprintf(stdout, ".    -> FAILS: %-63d .\n%s\n\n", num_of_fails, thick_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the module name.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	//Reset global variables related to the module:
+	num_of_results = num_of_suite_results;
+	num_of_fails   = num_of_suite_fails;
+	progress[0] = '\0';
+	strcat(progress, suite_progress);
+	module_name[0]  = '\0';
+	bool_print_progress = TRUE;
+}
 
