@@ -12,7 +12,6 @@
 
 //Includes:
 #include "ctest.h"
-#include "assert.h"
 #include "text_formatting.h"
 #include <stdio.h>
 
@@ -33,6 +32,8 @@ int num_of_suite_results   = 0;
 int num_of_results         = 0;
 int num_of_suite_fails  = 0;
 int num_of_fails        = 0;
+int total_results = 0;
+int total_fails   = 0;
 
 //Function definitions:
 void print_result()
@@ -96,10 +97,14 @@ void print_result()
 		progress[num_of_results++] = 'F';
 		progress[num_of_results] = '\0';
 		num_of_fails++;
+		total_fails++;
 
 		//Keep the progress:
 		fprintf(stdout, "\nProgress: %s", progress);
 	}
+
+	//Increment total results:
+	total_results++;
 }
 
 
@@ -131,6 +136,8 @@ void start_suite(char *name, char *description, char *func_ids[])
 	//Reset global variables related to the suite:
 	num_of_results = 0;
 	num_of_fails   = 0;
+ 	total_results = 0;
+	total_fails   = 0;
 	progress[0]    = '\0';
 	
 	//Initialize variables:
@@ -201,21 +208,21 @@ void end_suite()
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> TOTAL OF CASES: %-54d |\n%s\n", num_of_results, thin_line);
+	n = fprintf(stdout, "|    -> TOTAL OF CASES: %-54d |\n%s\n", total_results, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> SUCCESSES: %-59d |\n%s\n", num_of_results - num_of_fails, thin_line);
+	n = fprintf(stdout, "|    -> SUCCESSES: %-59d |\n%s\n", total_results - total_fails, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n\n", num_of_fails, thick_line);
+	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n\n", total_fails, thick_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
@@ -225,6 +232,8 @@ void end_suite()
 	//Reset global variables related to the suite:
 	num_of_results = 0;
 	num_of_fails   = 0;
+ 	total_results = 0;
+	total_fails   = 0;
 	suite_name[0]  = '\0';
 }
 
