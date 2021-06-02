@@ -395,3 +395,65 @@ word *get_words(char text[], size_t max_chars, size_t *num_of_words_read)
 }
 
 
+char *merge_str(char *str_arr[], char sep[], char end[])
+/**
+ * Description: This function returns all the strings from the array 'str_arr' 
+ * merged. They are separated by the string 'sep' and finished by the string 
+ * 'end'. 'str_arr' must be NULL terminated, otherwise the behavior is undefined. 
+ * 	The 'sep' and 'end' have default values equal to the empty string when they 
+ * are NULL.
+ *
+ * Memory Allocation (!): After using this function, the caller must free the (char *)
+ * returned.
+ *
+ * Input: (char *[]) str_arr --> Array of strings that will be merged.
+ *        (char []) sep --> The separator string. 
+ *        (char []) end --> The terminator string.
+ *
+ * Output: (char *) --> The resultant merged string.
+ *
+ * Time Complexity: O(total_chars_of(str_arr)^2)
+ * 	--> This function is not critical to the performance of the program, so it 
+ * 	will not be optimized.
+ *
+ * Space Complexity: O(total_chars_of(str_arr))
+ */
+{
+	size_t total_chars, i, sep_size;
+	char *merged_str;
+
+	//Check for default values:
+	if(sep == NULL) sep = "";
+	if(end == NULL) end = "";
+	
+	
+
+	//Count the number of chars of str_arr:
+	i           = 0;
+	total_chars = 0;
+	sep_size = strlen(sep);
+	while(str_arr[i] != NULL)
+		total_chars += strlen(str_arr[i++]) + sep_size;
+	total_chars += strlen(end) - sep_size;
+	//Allocate memory for the result:
+	merged_str = calloc(total_chars + 1, sizeof *merged_str);
+	if(merged_str == NULL)
+	{
+		fprintf(stdout, "Problems during memory allocation.");
+		exit(EXIT_FAILURE);
+	}
+	merged_str[0] = '\0';
+
+	//Merge:
+	i = 0;
+	while(str_arr[i] != NULL)
+	{
+		strcat(merged_str, str_arr[i]);
+		if(str_arr[++i] != NULL) //if true, sep is necessary
+			strcat(merged_str, sep);
+	}
+	strcat(merged_str, end);
+	
+	//Return the result:
+	return merged_str;
+}
