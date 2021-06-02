@@ -48,6 +48,10 @@ void print_result()
 {
 	int n;
 
+	//Print the first 'Progress':
+	if(num_of_results == 0)
+		fprintf(stdout, "\nProgress: %s", progress);
+
 	if (global_result.was_successful == TRUE)
 	{
 		//Print the result:
@@ -217,4 +221,91 @@ void end_suite()
 	num_of_fails   = 0;
 	suite_name[0]  = '\0';
 }
+
+
+
+void start_module(char *name, char *description, char *func_ids[])
+/**
+ * Description: This function starts a new module (modules may be nested inside 
+ * suites) of tests. It reads the name of the module, the description and the 
+ * IDs of the functions that will be tested.
+ * 	The body of the test module must be nested between a start_module() and 
+ * end_module() and nested inside a suite. A module body outside a suite generates
+ * an undefined behavior.
+ *
+ *
+ * Input: (char *) name --> The name of the module;
+ *        (char *) description --> The description of the module;
+ *        (char *[]) func_ids --> An array with the strings of the IDs of the 
+ *        functions that will be tested in the module. The last ID must be NULL
+ *        in order to indicate the end of the array. If the pointer 'func_ids'
+ *        is NULL, it is equivalent to receive no ID.;
+ *
+ * Output: (void)
+ *
+ * Time/Space Complexity: -
+ */
+{
+	char *thick_line = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"; // Repeat '~' 80 times.
+	char *thin_line = "................................................................................"; // Repeat '.' 80 times.
+	char module_description[MAX_DESCRIPTION], *aux_str, *merged_str;
+	int n, line_length = 80;
+
+	//Keep track of the suite results:
+	num_of_suite_results = num_of_results;
+	num_of_suite_fails = num_of_fails;
+	strcat(suite_progress, progress);
+
+	//Reset global variables related to the suite:
+	num_of_results = 0;
+	num_of_fails   = 0;
+	module_name[0] = '\0';
+	progress[0]    = '\0';
+	
+	//Initialize variables:
+	n = snprintf(module_name, MAX_NAME, name);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while initializing module_name.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	n = snprintf(module_description, MAX_DESCRIPTION, description);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while initializing module_description.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	//Print the starting informations:
+	n = fprintf(stdout, "\n\n%s\n.    START MODULE: %-59s .\n%s\n", thick_line, module_name, thin_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the suite name.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	aux_str = break_line(module_description, MAX_DESCRIPTION, ".    DESCRIPTION: ", ".    ", " .", line_length);
+	n = fprintf(stdout, "%s%s\n", aux_str, thin_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the suite description.\n");
+		exit(EXIT_FAILURE);
+	}
+	free(aux_str);
+
+	merged_str = merge_str(func_ids, ", ", ".");
+	aux_str = break_line(merged_str, strlen(merged_str), ".    FUNCTIONS COVERED: ", ".    ", " .", line_length);
+	n = fprintf(stdout, "%s%s\n", aux_str, thick_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the suite functions ids.\n");
+		exit(EXIT_FAILURE);
+	}
+	free(merged_str);
+	free(aux_str);
+}
+
+
+
 
