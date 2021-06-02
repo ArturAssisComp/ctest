@@ -96,7 +96,6 @@ char *break_line(char text[], size_t max_text_length, char first_prefix[], char 
 	//Add the prefix:
 	strcat(formatted_lines, first_prefix);
 	current_line_length = strlen(first_prefix) + strlen(suffix); //Suffix will be added at the end
-
 	while(current_line_length < line_length)
 	{
 		if(my_words[word_index].string == NULL || my_words[word_index].length + current_line_length > line_length) //Can not add a new word
@@ -185,6 +184,13 @@ char *break_line(char text[], size_t max_text_length, char first_prefix[], char 
 	strcat(formatted_lines, "\n");
 
 	}
+
+	//Free my_words:
+	word_index = 0;
+	while (my_words[word_index].string != NULL)
+		free(my_words[word_index++].string);
+	free(my_words);
+	
 	
 
 	return formatted_lines;
@@ -199,6 +205,9 @@ word *get_words(char text[], size_t max_chars, size_t *num_of_words_read)
  * element is the NULL string. Its length is 0.
  * 	This function changes the value of the pointer 'num_of_words_read' to the
  * number of words that have been read.
+ *
+ * Memory allocation: The user must free the (word *) output after using it. Each
+ * string of each element must be freed.
  *
  * Input: (char []) text --> text with the words that will be read.
  *        (size_t) max_chars --> The maximum number of chars that will be read.
