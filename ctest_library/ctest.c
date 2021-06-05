@@ -19,8 +19,6 @@
 #define MAX_RESULTS 500 //Maximum number of results per each module.
 #define MAX_NAME 32 //Maximum number of chars per name.
 #define MAX_DESCRIPTION 1024 //Maximum number of chars per description.
-#define TRUE 1
-#define FALSE 0
 
 
 //Global Variables:
@@ -34,6 +32,8 @@ int num_of_suite_fails  = 0;
 int num_of_fails        = 0;
 int total_results = 0;
 int total_fails   = 0;
+int num_of_ignored = 0, num_of_suite_ignored = 0, total_ignored = 0;
+int ignore = FALSE;
 
 //Function definitions:
 void print_result()
@@ -52,6 +52,7 @@ void print_result()
 {
 	int n;
 
+
 	//Print the first 'Progress':
 	if(bool_print_progress)
 	{
@@ -59,7 +60,25 @@ void print_result()
 		bool_print_progress = FALSE;
 	}
 
-	if (global_result.was_successful == TRUE)
+	//Check if this result will be ignored:
+	if(ignore)
+	{
+		num_of_ignored++;
+		total_ignored++;
+		total_results++;
+		n = fprintf(stdout, "I");
+		if (n < 0)
+		{
+			fprintf(stderr, "Error while printing the result.\n");
+			exit(EXIT_FAILURE);
+		}
+		progress[num_of_results++] = 'I';
+		progress[num_of_results] = '\0';
+		return;
+	}
+
+	//Handle the result:
+	if (global_result.was_successful)
 	{
 		//Print the result:
 		n = fprintf(stdout, ".");
@@ -136,8 +155,10 @@ void start_suite(char *name, char *description, char *func_ids[])
 	//Reset global variables related to the suite:
 	num_of_results = 0;
 	num_of_fails   = 0;
+	num_of_ignored = 0;
  	total_results = 0;
 	total_fails   = 0;
+	total_ignored = 0;
 	progress[0]    = '\0';
 	
 	//Initialize variables:
@@ -204,31 +225,37 @@ void end_suite()
 	n = fprintf(stdout, "\n\n%s\n|    SUMMARY OF THE SUITE: %-51s |\n%s\n", thin_line, suite_name, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the suite name.\n");
+		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
 	n = fprintf(stdout, "|    -> TOTAL OF CASES: %-54d |\n%s\n", total_results, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the suite name.\n");
+		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> SUCCESSES: %-59d |\n%s\n", total_results - total_fails, thin_line);
+	n = fprintf(stdout, "|    -> SUCCESSES: %-59d |\n%s\n", total_results - total_fails - total_ignored, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the suite name.\n");
+		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n\n", total_fails, thick_line);
+	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n", total_fails, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the suite name.\n");
+		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
+	n = fprintf(stdout, "|    -> IGNORED: %-61d |\n%s\n\n", total_ignored, thick_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the suite summary.\n");
+		exit(EXIT_FAILURE);
+	}
 	//Reset global variables related to the suite:
 	num_of_results = 0;
 	num_of_fails   = 0;
@@ -269,12 +296,14 @@ void start_module(char *name, char *description, char *func_ids[])
 	//Keep track of the suite results:
 	num_of_suite_results = num_of_results;
 	num_of_suite_fails = num_of_fails;
+	num_of_suite_ignored = num_of_ignored;
 	suite_progress[0] = '\0';
 	strcat(suite_progress, progress);
 
 	//Reset global variables related to the suite:
 	num_of_results = 0;
 	num_of_fails   = 0;
+	num_of_ignored = 0;
 	bool_print_progress = TRUE;
 	module_name[0] = '\0';
 	progress[0]    = '\0';
@@ -344,34 +373,42 @@ void end_module()
 	n = fprintf(stdout, "\n%s\n.    SUMMARY OF THE MODULE: %-50s .\n%s\n", thin_line, module_name, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the module name.\n");
+		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
 	n = fprintf(stdout, ".    -> TOTAL OF CASES: %-54d .\n%s\n", num_of_results, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the module name.\n");
+		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, ".    -> SUCCESSES: %-59d .\n%s\n", num_of_results - num_of_fails, thin_line);
+	n = fprintf(stdout, ".    -> SUCCESSES: %-59d .\n%s\n", num_of_results - num_of_fails - num_of_ignored, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the module name.\n");
+		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, ".    -> FAILS: %-63d .\n%s\n\n", num_of_fails, thick_line);
+	n = fprintf(stdout, ".    -> FAILS: %-63d .\n%s\n", num_of_fails, thin_line);
 	if (n < 0)
 	{
-		fprintf(stderr, "Error while printing the module name.\n");
+		fprintf(stderr, "Error while printing the module summary.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	n = fprintf(stdout, ".    -> IGNORED: %-61d .\n%s\n\n", num_of_ignored, thick_line);
+	if (n < 0)
+	{
+		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
 	//Reset global variables related to the module:
 	num_of_results = num_of_suite_results;
 	num_of_fails   = num_of_suite_fails;
+	num_of_ignored = num_of_suite_ignored;
 	progress[0] = '\0';
 	strcat(progress, suite_progress);
 	module_name[0]  = '\0';

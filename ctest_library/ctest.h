@@ -4,6 +4,13 @@
 //Include:
 #include "assert.h"
 
+//Define:
+#define TRUE 1
+#define FALSE 0
+
+//Global Variables:
+extern int ignore;
+
 //Declaration of functions:
 void print_result();
 void start_suite(char *name, char *description, char *func_ids[]);
