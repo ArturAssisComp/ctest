@@ -18,12 +18,11 @@ result global_result = {0};
 
 
 //Definitions of assert functions:
+/*Built-in types:*/
 void assert_int_equal(int target, int ref)
 /**
- * Description: This function compares the value of 'target' with the value of 
- * 'ref'. Then, it uses the global variable 'global_result' to save the result.
- * At the end of the execution, it calls the function 'print_result()' to send 
- * the result to the output defined by the user.
+ * Description: This function compares the values of two 'int' numbers. 
+ * Then, it returns the result.
  *
  * Input: (int) target --> Value that will be compared with the reference in 
  *                         order to test some function.
@@ -69,6 +68,59 @@ void assert_int_equal(int target, int ref)
 	//Reset global variable:
 	reset_global_result();
 }
+
+
+
+void assert_integer_equal(integer target, integer ref)
+/**
+ * Description: This function compares the values of two 'integer' numbers. The 
+ * 'integer' type is the same as 'long long int'. Then, it returns the result.
+ *
+ * Input: (integer) target --> Value that will be compared with the reference in 
+ *                         order to test some function.
+ *        (integer) ref --> The reference value.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	int n;
+
+	if (target == ref)
+	{
+		//Successful test:
+		global_result.was_successful = TRUE;
+		global_result.result_message[0] = '\0';
+	}else
+	{
+		//Failed test:
+		global_result.was_successful = FALSE;
+
+		//Generate the error message:
+		n = snprintf(global_result.result_message, 
+					MAX_CHARS,
+					"The target value is not equal to the reference value.\n %lld != %lld (target != reference)\n", 
+					target, 
+					ref
+			    );
+			   
+		if (n < 0) //Error creating the result message.
+		{
+			fprintf(stderr, "Error while generating the result message.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	//Print the results:
+	print_result();
+	
+	//Reset global variable:
+	reset_global_result();
+}
+
 
 
 //Auxiliary Function definitions:

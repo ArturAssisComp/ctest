@@ -15,13 +15,15 @@ typedef struct
 	char result_message[MAX_CHARS];
 } result;
 
+typedef long long int integer;
+
 //Declaration of global variables:
 extern result global_result;
 
 
 //Declaration of functions:
 void assert_int_equal(int target, int ref);
-void assert_double_equal(double target, double ref);
+void assert_integer_equal(integer target, integer ref);
 void assert_intArray_equal(int target[], size_t size_target, int ref[], size_t size_ref);
 
 //Auxiliary functions:
