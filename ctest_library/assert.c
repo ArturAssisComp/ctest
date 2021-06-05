@@ -18,7 +18,7 @@ result global_result = {0};
 
 
 //Definitions of assert functions:
-/*Built-in types:*/
+/*Built-in single types*/
 void assert_int_equal(int target, int ref)
 /**
  * Description: This function compares the values of two 'int' numbers. 
@@ -122,6 +122,55 @@ void assert_integer_equal(integer target, integer ref)
 }
 
 
+void assert_char_equal(char target, char ref)
+/**
+ * Description: This function compares the values of two 'char' numbers.  
+ * Then, it returns the result.
+ *
+ * Input: (integer) target --> Value that will be compared with the reference in 
+ *                         order to test some function.
+ *        (integer) ref --> The reference value.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	int n;
+
+	if (target == ref)
+	{
+		//Successful test:
+		global_result.was_successful = TRUE;
+		global_result.result_message[0] = '\0';
+	}else
+	{
+		//Failed test:
+		global_result.was_successful = FALSE;
+
+		//Generate the error message:
+		n = snprintf(global_result.result_message, 
+					MAX_CHARS,
+					"The target value is not equal to the reference value.\n %c != %c (target != reference)\n", 
+					target, 
+					ref
+			    );
+			   
+		if (n < 0) //Error creating the result message.
+		{
+			fprintf(stderr, "Error while generating the result message.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	//Print the results:
+	print_result();
+	
+	//Reset global variable:
+	reset_global_result();
+}
 
 //Auxiliary Function definitions:
 void reset_global_result()
