@@ -56,7 +56,7 @@ void print_result()
 	//Print the first 'Progress':
 	if(bool_print_progress)
 	{
-		fprintf(stdout, "\nProgress: %s", progress);
+		fprintf(stdout, "\n>>> Progress: %s", progress);
 		bool_print_progress = FALSE;
 	}
 
@@ -119,7 +119,7 @@ void print_result()
 		total_fails++;
 
 		//Keep the progress:
-		fprintf(stdout, "\nProgress: %s", progress);
+		fprintf(stdout, "\n>>> Progress: %s", progress);
 	}
 
 	//Increment total results:
