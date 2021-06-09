@@ -23,12 +23,76 @@ extern result global_result;
 
 
 //Declaration of functions:
-/*Built-in single types*/
+/*equal*/
 void assert_int_equal(int target, int ref);
 void assert_integer_equal(integer target, integer ref);
 void assert_char_equal(char target, char ref);
+
+/*notEqual*/
+//...
+
+/*almostEqual*/
 void assert_float_almostEqual(float target, float ref, float max_diff);
 void assert_double_almostEqual(double target, double ref, double max_diff);
+
+/*notAlmostEqual*/
+//...
+
+/*greater*/
+//...
+
+/*greaterEqual*/
+//...
+
+/*less*/
+//...
+
+/*lessEqual*/
+//...
+
+/*isTrue*/
+//...
+
+/*isFalse*/
+//...
+
+/*isIn*/
+//Element in an array
+
+/*isNotIn*/
+//element is not in an array
+
+/*isRegex*/
+//some regular expression is in the ref ex: [1, 2, 3] --> [2, 3, 4, 5, 5, 1, 2, 3, 4] is true (from i = 5 to 7)
+
+/*isNotRegex*/
+//...
+
+/*isPartialPermutation*/ 
+void assert_intArraySlice_isPartialPermutation(int target[], size_t start, size_t end, int ref[], size_t ref_size);
+void assert_integerArraySlice_isPartialPermutation(integer target[], size_t start, size_t end, integer ref[], size_t ref_size);
+void assert_charArraySlice_isPartialPermutation(char target[], size_t start, size_t end, char ref[], size_t ref_size);
+void assert_floatArraySlice_isPartialPermutation(float target[], size_t start, size_t end, float ref[], size_t ref_size);
+void assert_doubleArraySlice_isPartialPermutation(double target[], size_t start, size_t end, double ref[], size_t ref_size);
+
+/*isPermutation*/
+void assert_intArray_isPermutation(int target[], size_t target_size, int ref[], size_t ref_size);
+void assert_integerArray_isPermutation(integer target[], size_t target_size, integer ref[], size_t ref_size);
+void assert_charArray_isPermutation(char target[], size_t target_size, char ref[], size_t ref_size);
+void assert_floatArray_isPermutation(float target[], size_t target_size, float ref[], size_t ref_size);
+void assert_doubleArray_isPermutation(double target[], size_t target_size, double ref[], size_t ref_size);
+
+/*isSorted*/
+void assert_intArraySlice_isSorted(int target[], size_t start, size_t end);
+void assert_integerArraySlice_isSorted(integer target[], size_t start, size_t end);
+void assert_charArraySlice_isSorted(char target[], size_t start, size_t end);
+void assert_floatArraySlice_isSorted(float target[], size_t start, size_t end);
+void assert_doubleArraySlice_isSorted(double target[], size_t start, size_t end);
+void assert_intArray_isSorted(int target[], size_t size);
+void assert_integerArray_isSorted(integer target[], size_t size);
+void assert_charArray_isSorted(char target[], size_t size);
+void assert_floatArray_isSorted(float target[], size_t size);
+void assert_doubleArray_isSorted(double target[], size_t size);
 
 /*
  * List to implement:
