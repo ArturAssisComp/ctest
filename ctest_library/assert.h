@@ -17,6 +17,7 @@ typedef struct
 } result;
 
 typedef long long int integer;
+typedef unsigned long long int unsigned_integer;
 
 //Declaration of global variables:
 extern result global_result;
@@ -26,6 +27,7 @@ extern result global_result;
 /*equal*/
 void assert_int_equal(int target, int ref);
 void assert_integer_equal(integer target, integer ref);
+void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref);
 void assert_char_equal(char target, char ref);
 
 /*notEqual*/
