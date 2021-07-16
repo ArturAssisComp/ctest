@@ -2,6 +2,7 @@
 #define ASSERT_H
 //Includes:
 #include <stdlib.h>
+#include <stdbool.h>
 
 //Constants:
 #define TRUE 1
@@ -52,11 +53,10 @@ void assert_double_almostEqual(double target, double ref, double max_diff);
 /*lessEqual*/
 //...
 
-/*isTrue*/
-//...
-
-/*isFalse*/
-//...
+/*is true/false -> bool*/
+void assert_bool_equal(bool target, bool ref);
+void assert_bool_true(bool target);
+void assert_bool_false(bool target);
 
 /*isIn*/
 //Element in an array

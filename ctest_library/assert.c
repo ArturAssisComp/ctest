@@ -14,6 +14,7 @@
 #include <math.h>
 
 
+
 //Definitions of global Variables:
 result global_result = {0};
 
@@ -369,6 +370,147 @@ void assert_double_almostEqual(double target, double ref, double max_diff)
 
 
 
+
+/*is true/false -> bool*/
+void assert_bool_equal(bool target, bool ref)
+/**
+ * Description: This function compares the values of two 'bool' variables.  
+ * Then, it returns the result.
+ *
+ * Input: (bool) target --> Value that will be compared with the reference in 
+ *                         order to test some function.
+ *        (bool) ref --> The reference value.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	int n;
+
+	if (target == ref)
+	{
+		//Successful test:
+		global_result.was_successful = TRUE;
+		global_result.result_message[0] = '\0';
+	}else
+	{
+		//Failed test:
+		global_result.was_successful = FALSE;
+
+		//Generate the error message:
+		n = snprintf(global_result.result_message, 
+					MAX_CHARS,
+					"The target value is not equal to the reference value.\n--> %s != %s (target != reference)\n", 
+					target?"true":"false", 
+					ref?"true":"false"
+			    );
+			   
+		if (n < 0) //Error creating the result message.
+		{
+			fprintf(stderr, "Error while generating the result message.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	//Print the results:
+	print_result();
+	
+	//Reset global variable:
+	reset_global_result();
+}
+
+void assert_bool_true(bool target)
+/**
+ * Description: This function checks if the bool 'target' is true.
+ *
+ * Input: (bool) target --> Value that will be compared with the boolean value 'true'. 
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	int n;
+
+	if (target == true)
+	{
+		//Successful test:
+		global_result.was_successful = TRUE;
+		global_result.result_message[0] = '\0';
+	}else
+	{
+		//Failed test:
+		global_result.was_successful = FALSE;
+
+		//Generate the error message:
+		n = snprintf(global_result.result_message, 
+					MAX_CHARS,
+					"The target boolean is not true.\n" 
+			    );
+			   
+		if (n < 0) //Error creating the result message.
+		{
+			fprintf(stderr, "Error while generating the result message.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	//Print the results:
+	print_result();
+	
+	//Reset global variable:
+	reset_global_result();
+}
+
+void assert_bool_false(bool target)
+/**
+ * Description: This function checks if the bool 'target' is false
+ *
+ * Input: (bool) target --> Value that will be compared with the boolean value 'false'. 
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	int n;
+
+	if (target == false)
+	{
+		//Successful test:
+		global_result.was_successful = TRUE;
+		global_result.result_message[0] = '\0';
+	}else
+	{
+		//Failed test:
+		global_result.was_successful = FALSE;
+
+		//Generate the error message:
+		n = snprintf(global_result.result_message, 
+					MAX_CHARS,
+					"The target boolean is not false.\n" 
+			    );
+			   
+		if (n < 0) //Error creating the result message.
+		{
+			fprintf(stderr, "Error while generating the result message.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	//Print the results:
+	print_result();
+	
+	//Reset global variable:
+	reset_global_result();
+}
 
 
 
