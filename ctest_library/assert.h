@@ -53,6 +53,12 @@ void assert_double_almostEqual(double target, double ref, double max_diff);
 /*lessEqual*/
 //...
 
+/*isPositive*/
+//...
+
+/*isNegative*/
+void assert_double_isNegative(double target);
+
 /*is true/false -> bool*/
 void assert_bool_equal(bool target, bool ref);
 void assert_bool_true(bool target);

@@ -370,6 +370,52 @@ void assert_double_almostEqual(double target, double ref, double max_diff)
 
 
 
+/*isNegative*/
+void assert_double_isNegative(double target)
+/**
+ * Description: This function checks if the double 'target' is negativa (<0).
+ *
+ * Input: (double) target --> Value that will be checked for a negative number.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	int n;
+
+	if (target < 0)
+	{
+		//Successful test:
+		global_result.was_successful = TRUE;
+		global_result.result_message[0] = '\0';
+	}else
+	{
+		//Failed test:
+		global_result.was_successful = FALSE;
+
+		//Generate the error message:
+		n = snprintf(global_result.result_message, 
+					MAX_CHARS,
+					"The target value is not negative.\n--> %s >= 0 (target >= 0)\n", 
+					target
+			    );
+			   
+		if (n < 0) //Error creating the result message.
+		{
+			fprintf(stderr, "Error while generating the result message.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	//Print the results:
+	print_result();
+	
+	//Reset global variable:
+	reset_global_result();
+}
 
 /*is true/false -> bool*/
 void assert_bool_equal(bool target, bool ref)
