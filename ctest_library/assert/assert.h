@@ -5,23 +5,24 @@
 #include <stdbool.h>
 
 //Constants:
-#define TRUE 1
-#define FALSE 0
-#define MAX_CHARS 256 //The maximum number of chars for a message.
+#define MAX_CHARS 1024 //The maximum number of chars for a message.
 
 
-//Definitions of structs:
-typedef struct
+//Declarations of structs:
+struct
 {
-	int was_successful;
+	bool was_successful;
 	char result_message[MAX_CHARS];
-} result;
+} global_result;
 
 typedef long long int integer;
 typedef unsigned long long int unsigned_integer;
+typedef long double floating_point;
 
-//Declaration of global variables:
-extern result global_result;
+
+//Declaration of auxiliary functions:
+void print_result();
+void reset_global_result();
 
 
 //Declaration of functions:
@@ -107,6 +108,5 @@ void assert_doubleArray_isSorted(double target[], size_t size);
  * unsigned long long int
  * */
 
-//Auxiliary functions:
-void reset_global_result();
+
 #endif

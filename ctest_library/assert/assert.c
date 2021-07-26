@@ -572,10 +572,5 @@ void assert_bool_false(bool target)
 
 
 
-//Auxiliary Function definitions:
-void reset_global_result()
-{
-	global_result.was_successful = 0;
-	global_result.result_message[0] = '\0';
-}
+
 
