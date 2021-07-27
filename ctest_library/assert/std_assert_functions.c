@@ -18,15 +18,21 @@
 
 
 //Definitions of assert functions:
-/*Built-in single types*/
-void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref)
+/*STD assert functions for unsigned_integer type*/
+
+void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[])
 /**
- * Description: This function compares the values of two 'unsigned_integer' numbers. 
- * Then, it returns the result.
+ * Description: This function compares for equality the values of two 'unsigned_integer' numbers. 
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ * 	If 'ignore' is true, this function will not test anything.
  *
- * Input: (unsigned_integer) target --> Value that will be compared with the reference in 
- *                         order to test some function.
- *        (unsigned_integer) ref --> The reference value.
+ * Input: (unsigned_integer) target --> Value that will be compared to the reference in 
+ *                         order to test if they are equal.
+ *        (unsigned_integer) reference --> The reference value.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
  *
  * Output: (void)
  *
@@ -35,35 +41,72 @@ void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref
  * Space Complexity: O(1)
  */
 {
-	int n;
-	if (target == ref)
-	{
-		//Successful test:
-		global_result.was_successful = true;
-		global_result.result_message[0] = '\0';
-	}else
-	{
-		//Failed test:
-		global_result.was_successful = false;
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 64;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_unsigned_integer_equal";
+	char std_message[] = "The target value SHOULD BE EQUAL to the reference value.";
 
-		//Generate the error message:
-		n = snprintf(global_result.result_message, 
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Execute the test:
+	global_result.was_successful = (target == reference);
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		counter = snprintf(global_result.result_details, 
 					MAX_CHARS,
-					"The target value is not equal to the reference value.\n--> %llu != %llu (target != reference)\n", 
+					"> %20s    %-20s\n"\
+					"> %20llu != %-20llu\n",
+				        "target",
+			               	"reference",       
 					target, 
-					ref
-			    );
+					reference
+					);
 			   
-		if (n < 0) //Error creating the result message.
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
 		{
-			fprintf(stderr, "Error while generating the result message.\n");
-			exit(EXIT_FAILURE);
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"Error while generating the result message.\n"
+					);
+			goto finish;
 		}
+		//------------------------------------------------------------------------------
 	}
 
-	//Print the results:
-	print_result();
 	
-	//Reset global variable:
-	reset_global_result();
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	print_result(assert_name, std_message, custom_message, line_number);
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
 }

@@ -1,15 +1,16 @@
 #include "assert.h"
 #include "..\globals\globals.h"
+#include "../aux_libs/text_formatting.h"
 #include <stdio.h>
 #include <stdbool.h>
 
 //Define global variables:
-int verbose;
-bool ignore;
+int verbose = LOW;
+bool ignore = false;
 
 
 //Definitions:
-void print_result()
+void print_result(char assert_name[], char std_message[], char custom_message[], int line_number)
 /**
  * Description: This function must be called after each assertion. It prints 
  * the result using the stdout stream.
@@ -23,7 +24,8 @@ void print_result()
  * Space Complexity: -
  */
 {
-	int n;
+	int n, line_length = 80;
+	char *buffer_str;
 
 
 	//Print the first 'Progress':
@@ -72,13 +74,60 @@ void print_result()
 	}
 	else //Fail
 	{
-		//Print the result:
-		n = fprintf(stdout, "F\n\nFAILURE MESSAGE (Assert number %d):\n%s", ctest_info.num_of_results + 1, global_result.result_message);
+		//Print the header:
+		n = fprintf(stdout, "F\n\nFAILURE MESSAGE (Assert number %d at LINE %d):\n", ctest_info.num_of_results + 1, line_number);
 		if (n < 0)
 		{
-			fprintf(stderr, "Error while printing the result.\n");
+			fprintf(stderr, "Error while printing the header of the result.\n");
 			exit(EXIT_FAILURE);
 		}
+
+		//Print the assert name:
+		n = fprintf(stdout, "<assert name> --> %s\n", assert_name);
+		if (n < 0)
+		{
+			fprintf(stderr, "Error while printing the assert name of the result.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		//Print the std message:
+		if(verbose == MEDIUM || verbose == HIGH)
+		{
+			buffer_str = break_line(std_message, MAX_CHARS, "<std msg>     --> ", "    ", "", line_length);
+			n = fprintf(stdout, "%s", buffer_str );
+			if (n < 0)
+			{
+				fprintf(stderr, "Error while printing the stantard message of the result.\n");
+				exit(EXIT_FAILURE);
+			}
+			free(buffer_str);
+		}
+
+		//Print the custom message:
+		if(custom_message != NULL && (verbose == MEDIUM || verbose == HIGH))
+		{
+			buffer_str = break_line(custom_message, MAX_CHARS, "<custom msg>  --> ", "    ", "", line_length);
+			n = fprintf(stdout, "%s", buffer_str);
+			if (n < 0)
+			{
+				fprintf(stderr, "Error while printing the custom message of the result.\n");
+				exit(EXIT_FAILURE);
+			}
+			free(buffer_str);
+		}
+
+		//Print the details of the failure:
+		if(verbose == HIGH)
+		{
+			n = fprintf(stdout, "<details>     -->\n%s\n", global_result.result_details);
+			if (n < 0)
+			{
+				fprintf(stderr, "Error while printing the custom message of the result.\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+
 
 		//Update the progress:
 		if(ctest_info.num_of_results > MAX_RESULTS)
@@ -103,6 +152,6 @@ void print_result()
 void reset_global_result()
 /*This function resets the global_result struct*/
 {
-	global_result.was_successful = 0;
-	global_result.result_message[0] = '\0';
+	global_result.was_successful = true;
+	global_result.result_details[0] = '\0';
 }

@@ -15,6 +15,7 @@
 #include "../aux_libs/text_formatting.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 //Define global variables:
 suite_ctest_info_struct suite_ctest_info;

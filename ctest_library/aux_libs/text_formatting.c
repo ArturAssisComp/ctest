@@ -11,6 +11,9 @@
 
 //Includes:
 #include "text_formatting.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 //Auxilliary functions:
 int is_white_space(char s)

@@ -5,14 +5,14 @@
 #include <stdbool.h>
 
 //Constants:
-#define MAX_CHARS 1024 //The maximum number of chars for a message.
+#define MAX_CHARS 4096 //The maximum number of chars for a message.
 
 
 //Declarations of structs:
 struct
 {
 	bool was_successful;
-	char result_message[MAX_CHARS];
+	char result_details[MAX_CHARS];
 } global_result;
 
 typedef long long int integer;
@@ -21,15 +21,21 @@ typedef long double floating_point;
 
 
 //Declaration of auxiliary functions:
-void print_result();
+void print_result(char assert_name[], char std_message[], char custom_message[], int line_number);
 void reset_global_result();
 
 
 //Declaration of functions:
+
+/*STD assert functions for unsigned_integer type*/
+void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
+
+
+
 /*equal*/
 void assert_int_equal(int target, int ref);
 void assert_integer_equal(integer target, integer ref);
-void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref);
+
 void assert_char_equal(char target, char ref);
 
 /*notEqual*/
