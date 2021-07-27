@@ -119,7 +119,7 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 		//Print the details of the failure:
 		if(verbose == HIGH)
 		{
-			n = fprintf(stdout, "<details>     -->\n%s\n", global_result.result_details);
+			n = fprintf(stdout, "<details>     -->\n%s", global_result.result_details);
 			if (n < 0)
 			{
 				fprintf(stderr, "Error while printing the custom message of the result.\n");
