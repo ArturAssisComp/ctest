@@ -8,6 +8,7 @@ int main(void)
 		"assert_unsigned_integer_greater",
 		"assert_unsigned_integer_greaterEqual",
 		"assert_unsigned_integer_less",
+		"assert_unsigned_integer_lessEqual",
 		NULL
 	};
 
@@ -105,6 +106,25 @@ int main(void)
 			assert_unsigned_integer_less (a3, a1, __LINE__, NULL);
 			a2 = 35; a4 = 3;
 			assert_unsigned_integer_less (a4, a2, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
+		//----------------------assert_unsigned_integer_lessEqual---------------------
+		//Tests that will be successful:
+		start_module("unsigned_integer - lessEqual", "Every assert in this module must pass.", (char *[]){"assert_unsigned_integer_lessEqual", NULL});
+			assert_unsigned_integer_lessEqual (0, 1, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (1, 2, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (2, 2, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (0, 2, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (2, 4, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (14, 87, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (20, 20, __LINE__, NULL);
+			assert_unsigned_integer_lessEqual (12739, 127139, __LINE__, NULL);
+			a1 = 1022; a3 = 102;
+			assert_unsigned_integer_lessEqual (a3, a1, __LINE__, NULL);
+			a2 = 35; a4 = 3;
+			assert_unsigned_integer_lessEqual (a4, a2, __LINE__, NULL);
 		end_module();
 
 		//----------------------------------------------------------------------------

@@ -33,6 +33,7 @@ void assert_unsigned_integer_notEqual     (unsigned_integer target, unsigned_int
 void assert_unsigned_integer_greater      (unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
 void assert_unsigned_integer_greaterEqual (unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
 void assert_unsigned_integer_less         (unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
+void assert_unsigned_integer_lessEqual    (unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
 
 
 
