@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 //Define global variables:
-int verbose = LOW;
+int verbose = HIGH;
 bool ignore = false;
 
 

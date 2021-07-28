@@ -9,6 +9,7 @@ int main(void)
 		"assert_unsigned_integer_greaterEqual",
 		"assert_unsigned_integer_less",
 		"assert_unsigned_integer_lessEqual",
+		"assert_unsigned_integer_bitMaskEqual",
 		NULL
 	};
 
@@ -140,6 +141,33 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_unsigned_integer_bitMaskEqual------------------
+		//Tests that will fails:
+		start_module("unsigned_integer - bitMaskEqual", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integer_bitMaskEqual", NULL});
+			verbose = LOW;
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x80, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b10000000
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x61, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b01100001
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x461, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b010001100001
+			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b1111
+			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xFF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b11111111
+
+
+			verbose = MEDIUM;
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x80, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b10000000
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x61, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b01100001
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x461, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b010001100001
+			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b1111
+			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xFF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b11111111
+
+			verbose = HIGH;
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x80, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b10000000
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x61, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b01100001
+			assert_unsigned_integer_bitMaskEqual(0x4B, 0xC2, 0x461, __LINE__, NULL); //0b01001011 - 0b11000010 with mask 0b010001100001
+			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b1111
+			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xFF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b11111111
+			assert_unsigned_integer_bitMaskEqual(0x6, ~0x6, 0xF, __LINE__, NULL); //0b0111 - 0b(...)1000 with mask 0b1111
+		end_module();
+		//----------------------------------------------------------------------------
 
 	end_suite();
 	//----------------------------------------------------------------------------

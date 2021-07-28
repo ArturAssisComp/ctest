@@ -14,6 +14,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+//Local auxiliary functions:
+static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits); 
+static char *mask_compare(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol);
+static int num_of_significant_bits(unsigned_integer number);
 
 
 
@@ -577,4 +581,242 @@ finish:
 	//------------------------------------------------------------------------------
 }
 
+void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_integer reference, unsigned_integer mask, int line_number, char custom_message[])
+/**
+ * Description: This function checks if the bits selected by the bit mask 'mask' 
+ * from the 'target' are respectively equal to the bits selected by the same mask 
+ * from the 'reference'. If the 'mask' is 0, the result will be true. 
+ * 	The details of the high verbose result only shows the number of bits that
+ * are necessary to show all sibnificant bits from 'mask'.
+ * 	The details are presented using binary representation of the numbers.
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ * 	If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (unsigned_integer) target --> Value that will be compared to the reference in 
+ *                         order to test if the former is less or equal to the latter.
+ *        (unsigned_integer) reference --> The reference value.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 128;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_unsigned_integer_bitMaskEqual";
+	char std_message[] = "The bits selected by the bit mask from the target and the reference values SHOULD BE RESPECTIVELY EQUAL.";
 
+ 
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Execute the test:
+	global_result.was_successful = (~(target ^ reference) & mask) == mask;
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		size_t num_of_digits = num_of_significant_bits(mask);
+		char equal_symbol = '|', diff_symbol = ':';
+		char *binary_target_str, *binary_reference_str, *binary_mask_str;
+		char *target_reference_comparison_str;
+
+		//Generate the binary form of each number:
+		binary_target_str = decimal_to_binary_str(target, num_of_digits);
+		binary_reference_str = decimal_to_binary_str(reference, num_of_digits);
+		binary_mask_str = decimal_to_binary_str(mask, num_of_digits);
+
+		//Generate the string that compares target and reference:
+		target_reference_comparison_str = mask_compare(target, reference, mask, equal_symbol, diff_symbol);
+
+		//Create the datailed message:
+		counter = snprintf(global_result.result_details, 
+					MAX_CHARS,
+					">            <binary>  (<hexadecimal>)\n"\
+					"> target:    0b%s (0x%llX)\n"\
+					">              %s\n"\
+					"> reference: 0b%s (0x%llX)\n"\
+					"> bit-mask:  0b%s (0x%llX)\n",
+					binary_target_str, 
+					target,
+					target_reference_comparison_str,
+					binary_reference_str,
+					reference,
+					binary_mask_str,
+					mask
+					);
+
+		//Free the buffers:
+		free(binary_target_str);
+		free(binary_reference_str);
+		free(binary_mask_str);
+		free(target_reference_comparison_str);
+
+			   
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
+		{
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"\nError while generating the result message (at line %d).\n",
+					line_number
+					);
+			goto finish;
+		}
+		//------------------------------------------------------------------------------
+	}
+
+	
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	print_result(assert_name, std_message, custom_message, line_number);
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+}
+
+
+//Definitions of the local auxiliary functions:
+static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits)
+/**
+ * Description: This function transforms the decimal number 'target' into its 
+ * binary form and returns the result as a string. 
+ * 	After using the string, the user must call free to liberate the memory 
+ * allocated. 
+ * 	The string will have exactly 'num_of_digits' rightmost digits of 
+ * the binary representation of 'target'.
+ * 
+ * Ex1: if target == 0b01101 and num_of_digits == 3, the result is "101".
+ * Ex2: if target == 0b01101 and num_of_digits == 6, the result is "001101".
+ *
+ * Input: (unsigned_integer) target --> Decimal number that will be transformed to 
+ * 	  binary number.
+ * 	  (int) num_of_digits --> The number of rightmost digits that 
+ * 	  will be transformed to string and returned to the user of the function.
+ * 
+ * Output: (char *) --> The memory to the string allocated. This string contains
+ *         the rightmost 'num_of_digits' of the binary representation of 'target'.
+ */
+{
+	//------------------------------------------------------------------------------
+	//Allocate memory for the binary digits:
+	char *buffer;
+	buffer = calloc(num_of_digits + 1, sizeof *buffer);
+
+	//------------------------------------------------------------------------------
+	//Check for error during the memory allocation:
+	if(!buffer)
+	{
+		fprintf(stderr, "\nERROR while allocating memory in function decimal_to_binary_str.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+	//Fill the buffer with the binary characters:
+	buffer[num_of_digits] = '\0';
+	while(num_of_digits > 0)
+	{
+		buffer[--num_of_digits] = (target & 1)? '1':'0';
+		target >>= 1;
+	}
+
+	//------------------------------------------------------------------------------
+	//Return the result:
+	return buffer;
+
+	//------------------------------------------------------------------------------
+}
+
+static char *mask_compare(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol)
+{
+	//------------------------------------------------------------------------------
+	//Allocate memory for the binary digits:
+	char *buffer;
+	size_t num_of_digits = num_of_significant_bits(mask);
+	unsigned_integer digit_mask = 1;
+
+	/*The bitwise operation "not (A xor B)" gives us the bits that are equal in A and B.*/
+	unsigned_integer xnor_target_reference = ~ (target ^ reference);
+	buffer = calloc(num_of_digits + 1, sizeof *buffer);
+
+	//------------------------------------------------------------------------------
+	//Check for error during the memory allocation:
+	if(!buffer)
+	{
+		fprintf(stderr, "\nERROR while allocating memory in function mask_compare.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+	//Fill the buffer with the binary characters:
+	buffer[num_of_digits] = '\0';
+	while(num_of_digits)
+	{
+		if(mask & digit_mask) //Check if the digits of target and reference are equal.
+		{
+			buffer[--num_of_digits] = (digit_mask & xnor_target_reference)? equal_symbol:diff_symbol;
+		}
+		else //Ignore this digit
+		{
+			buffer[--num_of_digits] = ' ';
+		}
+
+		digit_mask <<= 1;
+	}
+
+	//------------------------------------------------------------------------------
+	//Return the result:
+	return buffer;
+
+	//------------------------------------------------------------------------------
+}
+
+
+static int num_of_significant_bits(unsigned_integer number)
+/**
+ * Description: This function calculates the number of significant bits of 'number'.
+ * Ex.: if 'number' is 0b00001101, the result will be 4, not 8.
+ */
+{
+	int counter = 0;
+	//Invariant relation: {counter = 0; number * 2 ^ counter}
+	while(number)
+	{
+		number >>= 1;
+		counter++;
+	}
+
+	//Return the result:
+	return counter;
+}
