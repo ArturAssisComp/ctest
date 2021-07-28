@@ -11,7 +11,7 @@ int main(void)
 	};
 
 	//----------------------------------------------------------------------------
-	start_suite("FAIL", "ALL tests in this suit must fail.", functions_tested);
+	start_suite("FAIL", "ALL tests in this suite must fail.", functions_tested);
 
 		//----------------------assert_unsigned_integer_equal-------------------------
 		//Tests that will fails:

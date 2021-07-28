@@ -72,14 +72,14 @@ void start_suite(char *name, char *description, char *func_ids[])
 	}
 
 	//Print the starting informations:
-	n = fprintf(stdout, "%s\n|    START SUITE: %-60s |\n%s\n", thick_line, suite_ctest_info.suite_name, thin_line);
+	n = fprintf(stdout, "%s\n||   START SUITE: %-59s ||\n%s\n", thick_line, suite_ctest_info.suite_name, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	aux_str = break_line(suite_description, MAX_DESCRIPTION, "|    DESCRIPTION: ", "|    ", " |", line_length);
+	aux_str = break_line(suite_description, MAX_DESCRIPTION, "||   DESCRIPTION: ", "||   ", " ||", line_length);
 	n = fprintf(stdout, "%s%s\n", aux_str, thin_line);
 	if (n < 0)
 	{
@@ -89,7 +89,7 @@ void start_suite(char *name, char *description, char *func_ids[])
 	free(aux_str);
 
 	merged_str = merge_str(func_ids, ", ", ".");
-	aux_str = break_line(merged_str, strlen(merged_str), "|    FUNCTIONS COVERED: ", "|    ", " |", line_length);
+	aux_str = break_line(merged_str, strlen(merged_str), "||   FUNCTIONS COVERED: ", "||   ", " ||", line_length);
 	n = fprintf(stdout, "%s%s\n\n", aux_str, thin_line);
 	if (n < 0)
 	{
@@ -117,35 +117,35 @@ void end_suite()
 	int n;
 
 	//Print the starting informations:
-	n = fprintf(stdout, "\n\n%s\n|    SUMMARY OF THE SUITE: %-51s |\n%s\n", thin_line, suite_ctest_info.suite_name, thin_line);
+	n = fprintf(stdout, "\n\n%s\n||   SUMMARY OF THE SUITE: %-50s ||\n%s\n", thin_line, suite_ctest_info.suite_name, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> TOTAL OF CASES: %-54d |\n%s\n", ctest_info.total_results, thin_line);
+	n = fprintf(stdout, "||   -> TOTAL OF CASES: %-53d ||\n%s\n", ctest_info.total_results, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> SUCCESSES: %-59d |\n%s\n", ctest_info.total_results - ctest_info.total_fails - ctest_info.total_ignored, thin_line);
+	n = fprintf(stdout, "||   -> SUCCESSES:      %-53d ||\n%s\n", ctest_info.total_results - ctest_info.total_fails - ctest_info.total_ignored, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> FAILS: %-63d |\n%s\n", ctest_info.total_fails, thin_line);
+	n = fprintf(stdout, "||   -> FAILS:          %-53d ||\n%s\n", ctest_info.total_fails, thin_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, "|    -> IGNORED: %-61d |\n%s\n\n", ctest_info.total_ignored, thick_line);
+	n = fprintf(stdout, "||   -> IGNORED:        %-53d ||\n%s\n\n", ctest_info.total_ignored, thick_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite summary.\n");
@@ -219,15 +219,15 @@ void start_module(char *name, char *description, char *func_ids[])
 	}
 
 	//Print the starting informations:
-	n = fprintf(stdout, "\n\n%s\n.    START MODULE: %-59s .\n%s\n", thick_line, suite_ctest_info.module_name, thin_line);
+	n = fprintf(stdout, "\n\n%s\n    START MODULE:      %-54s \n", thick_line, suite_ctest_info.module_name);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite name.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	aux_str = break_line(module_description, MAX_DESCRIPTION, ".    DESCRIPTION: ", ".    ", " .", line_length);
-	n = fprintf(stdout, "%s%s\n", aux_str, thin_line);
+	aux_str = break_line(module_description, MAX_DESCRIPTION, "    DESCRIPTION:       ", "    ", " ", line_length);
+	n = fprintf(stdout, "%s", aux_str);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the suite description.\n");
@@ -236,7 +236,7 @@ void start_module(char *name, char *description, char *func_ids[])
 	free(aux_str);
 
 	merged_str = merge_str(func_ids, ", ", ".");
-	aux_str = break_line(merged_str, strlen(merged_str), ".    FUNCTIONS COVERED: ", ".    ", " .", line_length);
+	aux_str = break_line(merged_str, strlen(merged_str), "    FUNCTIONS COVERED: ", "    ", " ", line_length);
 	n = fprintf(stdout, "%s%s", aux_str, thin_line);
 	if (n < 0)
 	{
@@ -265,35 +265,35 @@ void end_module()
 	int n;
 
 	//Print the starting informations:
-	n = fprintf(stdout, "\n%s\n.    SUMMARY OF THE MODULE: %-50s .\n%s\n", thin_line, suite_ctest_info.module_name, thin_line);
+	n = fprintf(stdout, "\n%s\n    SUMMARY OF THE MODULE: %-50s \n", thin_line, suite_ctest_info.module_name);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, ".    -> TOTAL OF CASES: %-54d .\n%s\n", ctest_info.num_of_results, thin_line);
+	n = fprintf(stdout, "    -> TOTAL OF CASES: %-54d \n", ctest_info.num_of_results);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, ".    -> SUCCESSES: %-59d .\n%s\n", ctest_info.num_of_results - ctest_info.num_of_fails - ctest_info.num_of_ignored, thin_line);
+	n = fprintf(stdout, "    -> SUCCESSES:      %-54d \n", ctest_info.num_of_results - ctest_info.num_of_fails - ctest_info.num_of_ignored);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, ".    -> FAILS: %-63d .\n%s\n", ctest_info.num_of_fails, thin_line);
+	n = fprintf(stdout, "    -> FAILS:          %-54d \n", ctest_info.num_of_fails);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the module summary.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	n = fprintf(stdout, ".    -> IGNORED: %-61d .\n%s\n\n", ctest_info.num_of_ignored, thick_line);
+	n = fprintf(stdout, "    -> IGNORED:        %-54d \n%s\n\n", ctest_info.num_of_ignored, thick_line);
 	if (n < 0)
 	{
 		fprintf(stderr, "Error while printing the module summary.\n");

@@ -11,7 +11,7 @@ int main(void)
 	};
 
 	//----------------------------------------------------------------------------
-	start_suite("SUCCESS", "ALL tests in this suit must be successful.", functions_tested);
+	start_suite("SUCCESS", "ALL tests in this suite must be successful.", functions_tested);
 
 		//----------------------assert_unsigned_integer_equal-------------------------
 		//----------------------------------------------------------------------------
