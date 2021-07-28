@@ -5,6 +5,7 @@ int main(void)
 	char *functions_tested[] = {
 		"assert_unsigned_integer_equal",
 		"assert_unsigned_integer_notEqual",
+		"assert_unsigned_integer_greater",
 		NULL
 	};
 
@@ -17,6 +18,7 @@ int main(void)
 ignore = true;
 			assert_unsigned_integer_equal(0, 0, __LINE__, NULL);
 			assert_unsigned_integer_notEqual(1, 1, __LINE__, NULL);
+			assert_unsigned_integer_greater(3, 1, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------
