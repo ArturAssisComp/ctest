@@ -7,6 +7,7 @@ int main(void)
 		"assert_unsigned_integer_notEqual",
 		"assert_unsigned_integer_greater",
 		"assert_unsigned_integer_greaterEqual",
+		"assert_unsigned_integer_less",
 		NULL
 	};
 
@@ -21,6 +22,7 @@ ignore = true;
 			assert_unsigned_integer_notEqual(1, 1, __LINE__, NULL);
 			assert_unsigned_integer_greater(3, 1, __LINE__, NULL);
 			assert_unsigned_integer_greaterEqual(23, 45, __LINE__, NULL);
+			assert_unsigned_integer_less(23, 45, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------
