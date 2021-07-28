@@ -6,6 +6,7 @@ int main(void)
 		"assert_unsigned_integer_equal",
 		"assert_unsigned_integer_notEqual",
 		"assert_unsigned_integer_greater",
+		"assert_unsigned_integer_greaterEqual",
 		NULL
 	};
 
@@ -74,6 +75,27 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+
+		//----------------------assert_unsigned_integer_greaterEqual-------------------------
+		//Tests that will fails:
+		start_module("unsigned_integer - greaterEqual", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integer_greaterEqual", NULL});
+			verbose = LOW;
+			assert_unsigned_integer_greaterEqual(0, 1, __LINE__, NULL);
+			assert_unsigned_integer_greaterEqual(1, 2, __LINE__, "abcde");
+			assert_unsigned_integer_greaterEqual(10, 11, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_unsigned_integer_greaterEqual(0, 1, __LINE__, NULL);
+			assert_unsigned_integer_greaterEqual(1, 2, __LINE__, "abcde");
+			assert_unsigned_integer_greaterEqual(10, 11, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_unsigned_integer_greaterEqual(0, 2, __LINE__, NULL);
+			assert_unsigned_integer_greaterEqual(1, 10, __LINE__, "abcde");
+			assert_unsigned_integer_greaterEqual(10, 123, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_unsigned_integer_greaterEqual(8128739182638769123, 8128739182638769126, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 
