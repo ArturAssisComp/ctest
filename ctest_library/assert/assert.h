@@ -36,90 +36,18 @@ void assert_unsigned_integer_less         (unsigned_integer target, unsigned_int
 void assert_unsigned_integer_lessEqual    (unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
 void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_integer reference, unsigned_integer mask, int line_number, char custom_message[]);
 
+/*STD assert functions for integer type*/
+void assert_integer_equal        (integer target, integer reference, int line_number, char custom_message[]);
+void assert_integer_notEqual     (integer target, integer reference, int line_number, char custom_message[]);
+void assert_integer_greater      (integer target, integer reference, int line_number, char custom_message[]);
+void assert_integer_greaterEqual (integer target, integer reference, int line_number, char custom_message[]);
+void assert_integer_less         (integer target, integer reference, int line_number, char custom_message[]);
+void assert_integer_lessEqual    (integer target, integer reference, int line_number, char custom_message[]);
 
 
-
-/*equal*/
-void assert_int_equal(int target, int ref);
-void assert_integer_equal(integer target, integer ref);
-
-void assert_char_equal(char target, char ref);
-
-/*notEqual*/
-//...
 
 /*almostEqual*/
 void assert_float_almostEqual(float target, float ref, float max_diff);
 void assert_double_almostEqual(double target, double ref, double max_diff);
-
-/*notAlmostEqual*/
-//...
-
-/*greater*/
-//...
-
-/*greaterEqual*/
-//...
-
-/*less*/
-//...
-
-/*lessEqual*/
-//...
-
-/*isPositive*/
-//...
-
-/*isNegative*/
-void assert_double_isNegative(double target);
-
-/*is true/false -> bool*/
-void assert_bool_equal(bool target, bool ref);
-void assert_bool_true(bool target);
-void assert_bool_false(bool target);
-
-/*isIn*/
-//Element in an array
-
-/*isNotIn*/
-//element is not in an array
-
-/*isRegex*/
-//some regular expression is in the ref ex: [1, 2, 3] --> [2, 3, 4, 5, 5, 1, 2, 3, 4] is true (from i = 5 to 7)
-
-/*isNotRegex*/
-//...
-
-/*isPartialPermutation*/ 
-void assert_intArraySlice_isPartialPermutation(int target[], size_t start, size_t end, int ref[], size_t ref_size);
-void assert_integerArraySlice_isPartialPermutation(integer target[], size_t start, size_t end, integer ref[], size_t ref_size);
-void assert_charArraySlice_isPartialPermutation(char target[], size_t start, size_t end, char ref[], size_t ref_size);
-void assert_floatArraySlice_isPartialPermutation(float target[], size_t start, size_t end, float ref[], size_t ref_size);
-void assert_doubleArraySlice_isPartialPermutation(double target[], size_t start, size_t end, double ref[], size_t ref_size);
-
-/*isPermutation*/
-void assert_intArray_isPermutation(int target[], size_t target_size, int ref[], size_t ref_size);
-void assert_integerArray_isPermutation(integer target[], size_t target_size, integer ref[], size_t ref_size);
-void assert_charArray_isPermutation(char target[], size_t target_size, char ref[], size_t ref_size);
-void assert_floatArray_isPermutation(float target[], size_t target_size, float ref[], size_t ref_size);
-void assert_doubleArray_isPermutation(double target[], size_t target_size, double ref[], size_t ref_size);
-
-/*isSorted*/
-void assert_intArraySlice_isSorted(int target[], size_t start, size_t end);
-void assert_integerArraySlice_isSorted(integer target[], size_t start, size_t end);
-void assert_charArraySlice_isSorted(char target[], size_t start, size_t end);
-void assert_floatArraySlice_isSorted(float target[], size_t start, size_t end);
-void assert_doubleArraySlice_isSorted(double target[], size_t start, size_t end);
-void assert_intArray_isSorted(int target[], size_t size);
-void assert_integerArray_isSorted(integer target[], size_t size);
-void assert_charArray_isSorted(char target[], size_t size);
-void assert_floatArray_isSorted(float target[], size_t size);
-void assert_doubleArray_isSorted(double target[], size_t size);
-
-/*
- * List to implement:
- * unsigned long long int
- * */
-
 
 #endif

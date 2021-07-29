@@ -3,6 +3,7 @@
 int main(void)
 {
 	char *functions_tested[] = {
+		//unsigned_integer type:
 		"assert_unsigned_integer_equal",
 		"assert_unsigned_integer_notEqual",
 		"assert_unsigned_integer_greater",
@@ -10,6 +11,8 @@ int main(void)
 		"assert_unsigned_integer_less",
 		"assert_unsigned_integer_lessEqual",
 		"assert_unsigned_integer_bitMaskEqual",
+		//integer type:
+		"assert_integer_equal",
 		NULL
 	};
 
@@ -166,6 +169,26 @@ int main(void)
 			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b1111
 			assert_unsigned_integer_bitMaskEqual(0x6, 0xD, 0xFF, __LINE__, NULL); //0b0111 - 0b1101 with mask 0b11111111
 			assert_unsigned_integer_bitMaskEqual(0x6, ~0x6, 0xF, __LINE__, NULL); //0b0111 - 0b(...)1000 with mask 0b1111
+		end_module();
+		//----------------------------------------------------------------------------
+
+
+		//----------------------assert_integer_equal-------------------------
+		//Tests that will fails:
+		start_module("integer - equal", "Every assert in this module must fail.", (char *[]){"assert_integer_equal", NULL});
+			verbose = LOW;
+			assert_integer_equal(5, 6, __LINE__, NULL);
+			assert_integer_equal(7, 0, __LINE__, "Testing custom message system: 7 is not equal to 0.");
+
+			verbose = MEDIUM;
+			assert_integer_equal(5, 6, __LINE__, NULL);
+			assert_integer_equal(7, 0, __LINE__, "Testing custom message system: 7 is not equal to 0.");
+
+			verbose = HIGH;
+			assert_integer_equal(5, 6, __LINE__, NULL);
+			assert_integer_equal(7, 0, __LINE__, NULL);
+			assert_integer_equal(76, -10, __LINE__, NULL);
+			assert_integer_equal(8128739182638769123, 8128739186387694323, __LINE__, "Testing big numbers.");
 		end_module();
 		//----------------------------------------------------------------------------
 

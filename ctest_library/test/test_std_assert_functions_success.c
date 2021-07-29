@@ -3,6 +3,7 @@
 int main(void)
 {
 	char *functions_tested[] = {
+		//unsigned_integer type:
 		"assert_unsigned_integer_equal",
 		"assert_unsigned_integer_notEqual",
 		"assert_unsigned_integer_greater",
@@ -10,6 +11,8 @@ int main(void)
 		"assert_unsigned_integer_less",
 		"assert_unsigned_integer_lessEqual",
 		"assert_unsigned_integer_bitMaskEqual",
+		//integer type:
+		"assert_unsigned_integer_equal",
 		NULL
 	};
 
@@ -144,6 +147,26 @@ int main(void)
 		end_module();
 
 		//----------------------------------------------------------------------------
+
+		//----------------------assert_integer_equal-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("unsigned_integer - Equal", "Every assert in this module must pass.", (char *[]){"assert_integer_equal", NULL});
+			assert_integer_equal(0, 0, __LINE__, NULL);
+			assert_integer_equal(1, 1, __LINE__, NULL);
+			assert_integer_equal(2, 2, __LINE__, "2 == 2");
+			assert_integer_equal(3, 3, __LINE__, NULL);
+			assert_integer_equal(4, 4, __LINE__, NULL);
+			assert_integer_equal(5, 5, __LINE__, NULL);
+			assert_integer_equal(100, 100, __LINE__, NULL);
+			assert_integer_equal(12739, 12739, __LINE__, NULL);
+			a1 = 102; a2 = 102;
+			assert_integer_equal(a1, a2, __LINE__, NULL);
+			a3 = 35; a4 = 35;
+			assert_integer_equal(a3, a4, __LINE__, NULL);
+		end_module();
+		//----------------------------------------------------------------------------
+
 
 	end_suite();
 	//----------------------------------------------------------------------------
