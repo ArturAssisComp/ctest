@@ -14,6 +14,10 @@ int main(void)
 		//integer type:
 		"assert_integer_equal",
 		"assert_integer_notEqual",
+		"assert_integer_greater",
+		"assert_integer_greaterEqual",
+		"assert_integer_less",
+		"assert_integer_lessEqual",
 		NULL
 	};
 
@@ -33,6 +37,7 @@ ignore = true;
 			assert_unsigned_integer_bitMaskEqual(12, 3, 455, __LINE__, NULL);
 			assert_integer_equal(23, 45, __LINE__, NULL);
 			assert_integer_notEqual(-23, 45, __LINE__, NULL);
+			assert_integer_greater(23, 45, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------

@@ -14,6 +14,10 @@ int main(void)
 		//integer type:
 		"assert_integer_equal",
 		"assert_integer_notEqual",
+		"assert_integer_greater",
+		"assert_integer_greaterEqual",
+		"assert_integer_less",
+		"assert_integer_lessEqual",
 		NULL
 	};
 
@@ -210,6 +214,27 @@ int main(void)
 			assert_integer_notEqual(-1, -1, __LINE__, "abcde");
 			assert_integer_notEqual(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
 			assert_integer_notEqual(8128739182638769123, 8128739182638769123, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
+		//----------------------assert_integer_greater-----------------------
+		//Tests that will fails:
+		start_module("integer - greater", "Every assert in this module must fail.", (char *[]){"assert_integer_greater", NULL});
+			verbose = LOW;
+			assert_integer_greater(0, 1, __LINE__, NULL);
+			assert_integer_greater(1, 1, __LINE__, "abcde");
+			assert_integer_greater(-10, -10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_integer_greater(0, 1, __LINE__, NULL);
+			assert_integer_greater(1, 1, __LINE__, "abcde");
+			assert_integer_greater(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_integer_greater(0, 0, __LINE__, NULL);
+			assert_integer_greater(1, 10, __LINE__, "abcde");
+			assert_integer_greater(-104, 13, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_integer_greater(8128739182638769123, 8128739182638769126, __LINE__, "Testing big numbers.");
 		end_module();
 		//----------------------------------------------------------------------------
 

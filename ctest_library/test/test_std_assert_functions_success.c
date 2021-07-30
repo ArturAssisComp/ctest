@@ -14,6 +14,10 @@ int main(void)
 		//integer type:
 		"assert_integer_equal",
 		"assert_integer_notEqual",
+		"assert_integer_greater",
+		"assert_integer_greaterEqual",
+		"assert_integer_less",
+		"assert_integer_lessEqual",
 		NULL
 	};
 
@@ -152,7 +156,7 @@ int main(void)
 		//----------------------assert_integer_equal-------------------------
 		//----------------------------------------------------------------------------
 		//Tests that will be successful:
-		start_module("unsigned_integer - Equal", "Every assert in this module must pass.", (char *[]){"assert_integer_equal", NULL});
+		start_module("integer - Equal", "Every assert in this module must pass.", (char *[]){"assert_integer_equal", NULL});
 			assert_integer_equal(0, 0, __LINE__, NULL);
 			assert_integer_equal(1, 1, __LINE__, NULL);
 			assert_integer_equal(2, 2, __LINE__, "2 == 2");
@@ -170,7 +174,7 @@ int main(void)
 
 		//----------------------assert_integer_notEqual----------------------
 		//Tests that will be successful:
-		start_module("unsigned_integer - notEqual", "Every assert in this module must pass.", (char *[]){"assert_integer_notEqual", NULL});
+		start_module("integer - notEqual", "Every assert in this module must pass.", (char *[]){"assert_integer_notEqual", NULL});
 			assert_integer_notEqual(1, 0, __LINE__, NULL);
 			assert_integer_notEqual(0, 1, __LINE__, NULL);
 			assert_integer_notEqual(1, 2, __LINE__, "2 == 2");
@@ -183,6 +187,25 @@ int main(void)
 			assert_integer_notEqual(a1, a2, __LINE__, NULL);
 			a3 = 35; a4 = 45;
 			assert_integer_notEqual(a3, a4, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
+		//----------------------assert_integer_greater-----------------------
+		//Tests that will be successful:
+		start_module("integer - greater", "Every assert in this module must pass.", (char *[]){"assert_integer_greater", NULL});
+			assert_integer_greater(1, 0, __LINE__, NULL);
+			assert_integer_greater(2, 1, __LINE__, NULL);
+			assert_integer_greater(3, 2, __LINE__, NULL);
+			assert_integer_greater(-2, -10, __LINE__, NULL);
+			assert_integer_greater(3, 2, __LINE__, NULL);
+			assert_integer_greater(87, 14, __LINE__, NULL);
+			assert_integer_greater(100, 20, __LINE__, NULL);
+			assert_integer_greater(127139, 12739, __LINE__, NULL);
+			a1 = 1022; a3 = 102;
+			assert_integer_greater(a1, a3, __LINE__, NULL);
+			a2 = 35; a4 = 3;
+			assert_integer_greater(a2, a4, __LINE__, NULL);
 		end_module();
 
 		//----------------------------------------------------------------------------
