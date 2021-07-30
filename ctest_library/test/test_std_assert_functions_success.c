@@ -12,7 +12,8 @@ int main(void)
 		"assert_unsigned_integer_lessEqual",
 		"assert_unsigned_integer_bitMaskEqual",
 		//integer type:
-		"assert_unsigned_integer_equal",
+		"assert_integer_equal",
+		"assert_integer_notEqual",
 		NULL
 	};
 
@@ -167,6 +168,24 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_integer_notEqual----------------------
+		//Tests that will be successful:
+		start_module("unsigned_integer - notEqual", "Every assert in this module must pass.", (char *[]){"assert_integer_notEqual", NULL});
+			assert_integer_notEqual(1, 0, __LINE__, NULL);
+			assert_integer_notEqual(0, 1, __LINE__, NULL);
+			assert_integer_notEqual(1, 2, __LINE__, "2 == 2");
+			assert_integer_notEqual(2, 1, __LINE__, NULL);
+			assert_integer_notEqual(0, 4, __LINE__, NULL);
+			assert_integer_notEqual(87, 123, __LINE__, NULL);
+			assert_integer_notEqual(100, 1020, __LINE__, NULL);
+			assert_integer_notEqual(127139, 12739, __LINE__, NULL);
+			a1 = 1022; a2 = 102;
+			assert_integer_notEqual(a1, a2, __LINE__, NULL);
+			a3 = 35; a4 = 45;
+			assert_integer_notEqual(a3, a4, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
 
 	end_suite();
 	//----------------------------------------------------------------------------

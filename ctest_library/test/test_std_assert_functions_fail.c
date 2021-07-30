@@ -13,6 +13,7 @@ int main(void)
 		"assert_unsigned_integer_bitMaskEqual",
 		//integer type:
 		"assert_integer_equal",
+		"assert_integer_notEqual",
 		NULL
 	};
 
@@ -57,7 +58,6 @@ int main(void)
 			assert_unsigned_integer_notEqual(8128739182638769123, 8128739182638769123, __LINE__, "Testing big numbers.");
 		end_module();
 		//----------------------------------------------------------------------------
-
 
 		//----------------------assert_unsigned_integer_greater-----------------------
 		//Tests that will fails:
@@ -189,6 +189,27 @@ int main(void)
 			assert_integer_equal(7, 0, __LINE__, NULL);
 			assert_integer_equal(76, -10, __LINE__, NULL);
 			assert_integer_equal(8128739182638769123, 8128739186387694323, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
+		//----------------------assert_integer_notEqual----------------------
+		//Tests that will fails:
+		start_module("integer - notEqual", "Every assert in this module must fail.", (char *[]){"assert_integer_notEqual", NULL});
+			verbose = LOW;
+			assert_integer_notEqual(0, 0, __LINE__, NULL);
+			assert_integer_notEqual(1, 1, __LINE__, "abcde");
+			assert_integer_notEqual(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_integer_notEqual(0, 0, __LINE__, NULL);
+			assert_integer_notEqual(1, 1, __LINE__, "abcde");
+			assert_integer_notEqual(-10, -10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_integer_notEqual(0, 0, __LINE__, NULL);
+			assert_integer_notEqual(-1, -1, __LINE__, "abcde");
+			assert_integer_notEqual(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_integer_notEqual(8128739182638769123, 8128739182638769123, __LINE__, "Testing big numbers.");
 		end_module();
 		//----------------------------------------------------------------------------
 
