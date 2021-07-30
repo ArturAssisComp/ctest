@@ -210,6 +210,25 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_integer_greaterEqual------------------
+		//Tests that will be successful:
+		start_module("integer - greaterEqual", "Every assert in this module must pass.", (char *[]){"assert_integer_greaterEqual", NULL});
+			assert_integer_greaterEqual(1, 0, __LINE__, NULL);
+			assert_integer_greaterEqual(-2, -13, __LINE__, NULL);
+			assert_integer_greaterEqual(3, 2, __LINE__, NULL);
+			assert_integer_greaterEqual(2, 0, __LINE__, NULL);
+			assert_integer_greaterEqual(2, 2, __LINE__, NULL);
+			assert_integer_greaterEqual(87, 14, __LINE__, NULL);
+			assert_integer_greaterEqual(100, -20, __LINE__, NULL);
+			assert_integer_greaterEqual(127139, 12739, __LINE__, NULL);
+			a1 = 1022; a3 = 102;
+			assert_integer_greaterEqual(a1, a3, __LINE__, NULL);
+			a2 = 35; a4 = 3;
+			assert_integer_greaterEqual(a2, a4, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 	end_suite();
 	//----------------------------------------------------------------------------
 

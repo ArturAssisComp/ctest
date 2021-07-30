@@ -38,6 +38,7 @@ ignore = true;
 			assert_integer_equal(23, 45, __LINE__, NULL);
 			assert_integer_notEqual(-23, 45, __LINE__, NULL);
 			assert_integer_greater(23, 45, __LINE__, NULL);
+			assert_integer_greaterEqual(23, 45, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------

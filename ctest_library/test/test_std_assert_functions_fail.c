@@ -238,6 +238,28 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_integer_greaterEqual------------------
+		//Tests that will fails:
+		start_module("integer - greaterEqual", "Every assert in this module must fail.", (char *[]){"assert_integer_greaterEqual", NULL});
+			verbose = LOW;
+			assert_integer_greaterEqual(0, 1, __LINE__, NULL);
+			assert_integer_greaterEqual(1, 2, __LINE__, "abcde");
+			assert_integer_greaterEqual(10, 11, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_integer_greaterEqual(0, 1, __LINE__, NULL);
+			assert_integer_greaterEqual(1, 2, __LINE__, "abcde");
+			assert_integer_greaterEqual(-10, 11, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_integer_greaterEqual(0, 2, __LINE__, NULL);
+			assert_integer_greaterEqual(-1, 10, __LINE__, "abcde");
+			assert_integer_greaterEqual(-10, 123, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_integer_greaterEqual(8128739182638769123, 8128739182638769126, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
