@@ -48,7 +48,8 @@ ignore = true;
 			assert_integer_greaterEqual (23, 45, __LINE__, NULL);
 			assert_integer_less         (43, 45, __LINE__, NULL);
 			assert_integer_lessEqual    (43, 45, __LINE__, NULL);
-			assert_floating_point_almostEqual        (23, 45, 0.1, __LINE__, NULL);
+			assert_floating_point_almostEqual    (23, 45, 0.1, __LINE__, NULL);
+			assert_floating_point_notAlmostEqual (23, 45, 0.1, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------
