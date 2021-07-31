@@ -18,12 +18,21 @@ int main(void)
 		"assert_integer_greaterEqual",
 		"assert_integer_less",
 		"assert_integer_lessEqual",
+		//floating_point type:
+		"assert_floating_point_almostEqual",
+		"assert_floating_point_notAlmostEqual",
+		"assert_floating_point_greater",
+		"assert_floating_point_greaterEqual",
+		"assert_floating_point_less",
+		"assert_floating_point_lessEqual",
 		NULL
 	};
 
 	//----------------------------------------------------------------------------
 	start_suite("SUCCESS", "ALL tests in this suite must be successful.", functions_tested);
 
+		/*TEST CASES for unsigned_integer*/
+		
 		//----------------------assert_unsigned_integer_equal-------------------------
 		//----------------------------------------------------------------------------
 		//Tests that will be successful:
@@ -153,6 +162,8 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+		/*TEST CASES for integer*/
+
 		//----------------------assert_integer_equal-------------------------
 		//----------------------------------------------------------------------------
 		//Tests that will be successful:
@@ -228,6 +239,73 @@ int main(void)
 		end_module();
 
 		//----------------------------------------------------------------------------
+
+		//----------------------assert_integer_less--------------------------
+		//Tests that will be successful:
+		start_module("integer - less", "Every assert in this module must pass.", (char *[]){"assert_integer_less", NULL});
+			assert_integer_less (0, 1, __LINE__, NULL);
+			assert_integer_less (1, 2, __LINE__, NULL);
+			assert_integer_less (2, 3, __LINE__, NULL);
+			assert_integer_less (0, 2, __LINE__, NULL);
+			assert_integer_less (2, 4, __LINE__, NULL);
+			assert_integer_less (-14, 87, __LINE__, NULL);
+			assert_integer_less (20, 100, __LINE__, NULL);
+			assert_integer_less (-12739, 127139, __LINE__, NULL);
+			a1 = 1022; a3 = 102;
+			assert_integer_less (a3, a1, __LINE__, NULL);
+			a2 = 35; a4 = 3;
+			assert_integer_less (a4, a2, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
+		//----------------------assert_integer_lessEqual---------------------
+		//Tests that will be successful:
+		start_module("integer - lessEqual", "Every assert in this module must pass.", (char *[]){"assert_integer_lessEqual", NULL});
+			assert_integer_lessEqual (0, 1, __LINE__, NULL);
+			assert_integer_lessEqual (1, 2, __LINE__, NULL);
+			assert_integer_lessEqual (2, 2, __LINE__, NULL);
+			assert_integer_lessEqual (0, 2, __LINE__, NULL);
+			assert_integer_lessEqual (-2, 4, __LINE__, NULL);
+			assert_integer_lessEqual (14, 87, __LINE__, NULL);
+			assert_integer_lessEqual (20, 20, __LINE__, NULL);
+			assert_integer_lessEqual (12739, 127139, __LINE__, NULL);
+			a1 = 1022; a3 = 102;
+			assert_integer_lessEqual (a3, a1, __LINE__, NULL);
+			a2 = 35; a4 = 3;
+			assert_integer_lessEqual (a4, a2, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
+		/*TEST CASES for floating_point*/
+
+		//----------------------assert_floating_point_almostEqual-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		floating_point max_diff;
+		start_module("floating_point - almostEqual", "Every assert in this module must pass.", (char *[]){"assert_floating_point_almostEqual", NULL});
+			max_diff = 0.001;
+			assert_floating_point_almostEqual(0.1239, 0.1235, max_diff, __LINE__, NULL);
+			assert_floating_point_almostEqual(23.1239, 23.1235, max_diff, __LINE__, NULL);
+			assert_floating_point_almostEqual(-90.88898, -90.88878, max_diff, __LINE__, NULL);
+			max_diff = 0.0001;
+			assert_floating_point_almostEqual(1, 1, max_diff, __LINE__, NULL);
+			assert_floating_point_almostEqual(292.99938291, 292.99930001, max_diff, __LINE__, "2 == 2");
+			assert_floating_point_almostEqual(-3.90, -3.90, max_diff, __LINE__, NULL);
+			assert_floating_point_almostEqual(-4.999, -4.999, max_diff, __LINE__, NULL);
+			assert_floating_point_almostEqual(5.299382, 5.29938234, max_diff, __LINE__, NULL);
+			max_diff = 0.3;
+			assert_floating_point_almostEqual(100.2, 100.1, max_diff, __LINE__, NULL);
+			assert_floating_point_almostEqual(12739.1092, 12739.3990, max_diff, __LINE__, NULL);
+			max_diff = 100;
+			float b1 = 1e3, b2 = 1.09e3;
+			assert_floating_point_almostEqual(b1, b2, max_diff, __LINE__, NULL);
+			double b3 = 100, b4 = 35;
+			assert_floating_point_almostEqual(b3, b4, max_diff, __LINE__, NULL);
+		end_module();
+		//----------------------------------------------------------------------------
+
 
 	end_suite();
 	//----------------------------------------------------------------------------

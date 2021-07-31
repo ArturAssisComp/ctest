@@ -13,6 +13,7 @@
 #include "../globals/globals.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 //Local auxiliary functions:
 static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits); 
@@ -1081,6 +1082,323 @@ finish:
 
 	//------------------------------------------------------------------------------
 }
+
+
+
+void assert_integer_less (integer target, integer reference, int line_number, char custom_message[])
+/**
+ * Description: This function checks if the 'target' is less than the 'reference'. 
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ * 	If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (integer) target --> Value that will be compared to the reference in 
+ *                         order to test if the former is less than the latter.
+ *        (integer) reference --> The reference value.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 128;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_integer_less";
+	char std_message[] = "The target value SHOULD BE LESS than the reference value.";
+
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Execute the test:
+	global_result.was_successful = (target < reference);
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		counter = snprintf(global_result.result_details, 
+					MAX_CHARS,
+					"> %20s    %-20s\n"\
+					"> %+20lld >= %+-20lld\n",
+				        "target",
+			               	"reference",       
+					target, 
+					reference
+					);
+			   
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
+		{
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"\nError while generating the result message (at line %d).\n",
+					line_number
+					);
+			goto finish;
+		}
+		//------------------------------------------------------------------------------
+	}
+
+	
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	print_result(assert_name, std_message, custom_message, line_number);
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+}
+
+
+
+void assert_integer_lessEqual (integer target, integer reference, int line_number, char custom_message[])
+/**
+ * Description: This function checks if the 'target' is less or equal to the 'reference'. 
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ * 	If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (integer) target --> Value that will be compared to the reference in 
+ *                         order to test if the former is less or equal to the latter.
+ *        (integer) reference --> The reference value.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 128;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_integer_lessEqual";
+	char std_message[] = "The target value SHOULD BE LESS OR EQUAL to the reference value.";
+
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Execute the test:
+	global_result.was_successful = (target <= reference);
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		counter = snprintf(global_result.result_details, 
+					MAX_CHARS,
+					"> %20s    %-20s\n"\
+					"> %+20lld >  %+-20lld\n",
+				        "target",
+			               	"reference",       
+					target, 
+					reference
+					);
+			   
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
+		{
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"\nError while generating the result message (at line %d).\n",
+					line_number
+					);
+			goto finish;
+		}
+		//------------------------------------------------------------------------------
+	}
+
+	
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	print_result(assert_name, std_message, custom_message, line_number);
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+}
+
+
+/*STD assert functions for floating_point type*/
+
+void assert_floating_point_almostEqual(floating_point target, floating_point reference, floating_point max_diff, int line_number, char custom_message[])
+/**
+ * Description: This function checks if 'target' is almost equal to 'reference'. 
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ * 	-If 'ignore' is true, this function will not test anything.
+ * 	-The details of the result are presented with precision equal to the precision
+ * of 1e-12.
+ * 	-'target' is considered almost equal to 'reference' if:
+ * 	fabs(target - reference) < max_diff
+ * 	-max_diff >= 0.000000000001 (1e-12)
+ *
+ * 	WARNING: This function uses absolute difference to check if two floating 
+ * point numbers are almost equal. This technique may result in inaccurate results. 
+ * This is caused by the intrinsic problems that exist while doing  floating point 
+ * arithmetic. 
+ *
+ * Input: (floating_point) target    --> Value that will be compared to the reference in 
+ *                         order to test if they are almost equal.
+ *        (floating_point) reference --> The reference value.
+ *        (floating_point) max_diff  --> The maximum difference between 'target' and 'reference' 
+ *        allowed in order to consider both almost equal. 
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message   --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 128;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_floating_point_almostEqual";
+	char std_message[] = "The target value SHOULD BE ALMOST EQUAL to the reference value.";
+
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Check the input max_diff:
+	if(max_diff < 1e-12) 
+	{
+		//Error with the input.
+		error = true;
+		snprintf(function_error_message, 
+				max_error_msg_sz, 
+				"\nError: max_diff must be greater than 1e-12 (at line %d).\n",
+				line_number
+				);
+		goto finish;
+	}
+	
+	//Execute the test:
+	global_result.was_successful = fabs(target - reference) < max_diff;
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		counter = snprintf(global_result.result_details, 
+					MAX_CHARS,
+					"> %15s     %-15s\n"\
+					"> %+15lg !~= %+-15lg\n"\
+					">\n"\
+					"> %20s    %-15s\n"\
+					"> %20lg >= %-15lg\n",
+				        "target",
+			               	"reference",       
+					target, 
+					reference,
+					"|target - reference|",
+					"max_diff",
+					fabs(target - reference),
+					max_diff
+					);
+			   
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
+		{
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"\nError while generating the result message (at line %d).\n",
+					line_number
+					);
+			goto finish;
+		}
+		//------------------------------------------------------------------------------
+	}
+
+	
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	print_result(assert_name, std_message, custom_message, line_number);
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+}
+
 
 
 //------------------------------------------------------------------------------

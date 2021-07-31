@@ -17,7 +17,7 @@ struct
 
 typedef long long int integer;
 typedef unsigned long long int unsigned_integer;
-typedef long double floating_point;
+typedef double floating_point;
 
 
 //Declaration of auxiliary functions:
@@ -44,6 +44,13 @@ void assert_integer_greaterEqual (integer target, integer reference, int line_nu
 void assert_integer_less         (integer target, integer reference, int line_number, char custom_message[]);
 void assert_integer_lessEqual    (integer target, integer reference, int line_number, char custom_message[]);
 
+/*STD assert functions for floating_point type*/
+void assert_floating_point_almostEqual    (floating_point target, floating_point reference, floating_point max_diff, int line_number, char custom_message[]);
+void assert_floating_point_notAlmostEqual (floating_point target, floating_point reference, floating_point min_diff, int line_number, char custom_message[]);
+void assert_floating_point_greater        (floating_point target, floating_point reference, int line_number, char custom_message[]);
+void assert_floating_point_greaterEqual   (floating_point target, floating_point reference, int line_number, char custom_message[]);
+void assert_floating_point_less           (floating_point target, floating_point reference, int line_number, char custom_message[]);
+void assert_floating_point_lessEqual      (floating_point target, floating_point reference, int line_number, char custom_message[]);
 
 
 /*almostEqual*/
