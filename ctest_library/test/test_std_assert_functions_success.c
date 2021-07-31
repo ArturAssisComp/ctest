@@ -370,6 +370,26 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_floating_point_less--------------------------
+		//Tests that will be successful:
+		start_module("floating_point - less", "Every assert in this module must pass.", (char *[]){"assert_floating_point_less", NULL});
+			assert_floating_point_less (0.971, 1.2389, __LINE__, NULL);
+			assert_floating_point_less (1, 2, __LINE__, NULL);
+			assert_floating_point_less (0, 2, __LINE__, NULL);
+			assert_floating_point_less (-2.092, 3.23098, __LINE__, NULL);
+			assert_floating_point_less (0.29e2, 0.2e3, __LINE__, NULL);
+			assert_floating_point_less (2.23, 4.23, __LINE__, NULL);
+			assert_floating_point_less (-14, 87, __LINE__, NULL);
+			assert_floating_point_less (20, 100, __LINE__, NULL);
+			assert_floating_point_less (12739, 127139, __LINE__, NULL);
+			b1 = 1022; b3 = 102;
+			assert_floating_point_less (b3, b1, __LINE__, NULL);
+			b2 = 35; b4 = 3;
+			assert_floating_point_less (b4, b2, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 	end_suite();
 	//----------------------------------------------------------------------------
 

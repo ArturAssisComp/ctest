@@ -432,6 +432,29 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_floating_point_less--------------------------
+		//Tests that will fail:
+		start_module("floating_point - less", "Every assert in this module must fail.", (char *[]){"assert_floating_point_less", NULL});
+			verbose = LOW;
+			assert_floating_point_less(0.42, 0, __LINE__, NULL);
+			assert_floating_point_less(0, 0, __LINE__, NULL);
+			assert_floating_point_less(1, 0, __LINE__, "abcde");
+			assert_floating_point_less(10, 9, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_floating_point_less(2.5, 1, __LINE__, NULL);
+			assert_floating_point_less(1, 0, __LINE__, "abcde");
+			assert_floating_point_less(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_floating_point_less(3.2, -2.2331123, __LINE__, NULL);
+			assert_floating_point_less(11, 10, __LINE__, "abcde");
+			assert_floating_point_less(1.022e3, 123, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_floating_point_less(-812, -81287391, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
