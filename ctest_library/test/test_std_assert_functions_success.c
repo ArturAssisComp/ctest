@@ -390,6 +390,27 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_floating_point_lessEqual---------------------
+		//Tests that will be successful:
+		start_module("floating_point - lessEqual", "Every assert in this module must pass.", (char *[]){"assert_floating_point_lessEqual", NULL});
+			assert_floating_point_lessEqual (0.4108, 1, __LINE__, NULL);
+			assert_floating_point_lessEqual (1, 2, __LINE__, NULL);
+			assert_floating_point_lessEqual (0, 0, __LINE__, NULL);
+			assert_floating_point_lessEqual (2, 2, __LINE__, NULL);
+			assert_floating_point_lessEqual (0.109, 2.19, __LINE__, NULL);
+			assert_floating_point_lessEqual (-2, 4, __LINE__, NULL);
+			assert_floating_point_lessEqual (-14e4, 87e2, __LINE__, NULL);
+			assert_floating_point_lessEqual (20, 20, __LINE__, NULL);
+			assert_floating_point_lessEqual (12739, 127139, __LINE__, NULL);
+			b1 = 1022; b3 = 102;
+			assert_floating_point_lessEqual (b3, b1, __LINE__, NULL);
+			b2 = 35; b4 = 3;
+			assert_floating_point_lessEqual (b4, b2, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 

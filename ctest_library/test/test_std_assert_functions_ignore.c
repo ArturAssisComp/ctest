@@ -53,6 +53,7 @@ ignore = true;
 			assert_floating_point_greater        (12.2331, 2998, __LINE__, NULL);
 			assert_floating_point_greaterEqual   (132.2331, 2998, __LINE__, NULL);
 			assert_floating_point_less           (12.2331, 2.998, __LINE__, NULL);
+			assert_floating_point_lessEqual      (12.2331, 2.998, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------
