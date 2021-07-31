@@ -409,6 +409,29 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 
+		//----------------------assert_floating_point_greaterEqual------------------
+		//Tests that will fail:
+		start_module("floating_point - greaterEqual", "Every assert in this module must fail.", (char *[]){"assert_floating_point_greaterEqual", NULL});
+			verbose = LOW;
+			assert_floating_point_greaterEqual(0, 1, __LINE__, NULL);
+			assert_floating_point_greaterEqual(-1.4, 2, __LINE__, "abcde");
+			assert_floating_point_greaterEqual(10, 11, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_floating_point_greaterEqual(0, 1, __LINE__, NULL);
+			assert_floating_point_greaterEqual(1, 2, __LINE__, "abcde");
+			assert_floating_point_greaterEqual(10, 11, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_floating_point_greaterEqual(0, 2, __LINE__, NULL);
+			assert_floating_point_greaterEqual(0.199812, 0.199923, __LINE__, NULL);
+			assert_floating_point_greaterEqual(1, 10, __LINE__, "abcde");
+			assert_floating_point_greaterEqual(-10.3, 123, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_floating_point_greaterEqual(8128, 2.78e23, __LINE__, "Testing big numbers.");
+			assert_floating_point_greaterEqual(8.21879e-20, 0.5, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
