@@ -330,6 +330,25 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_floating_point_greater-----------------------
+		//Tests that will be successful:
+		start_module("floating_point - greater", "Every assert in this module must pass.", (char *[]){"assert_floating_point_greater", NULL});
+			assert_floating_point_greater(1.23, 0, __LINE__, NULL);
+			assert_floating_point_greater(2e15, 1e3, __LINE__, NULL);
+			assert_floating_point_greater(3, 2, __LINE__, NULL);
+			assert_floating_point_greater(-2, -1e4, __LINE__, NULL);
+			assert_floating_point_greater(322.223, 21.2, __LINE__, NULL);
+			assert_floating_point_greater(87.34, -14.23231, __LINE__, NULL);
+			assert_floating_point_greater(100, 20, __LINE__, NULL);
+			assert_floating_point_greater(127139, 12739, __LINE__, NULL);
+			b1 = 1022; b3 = 102;
+			assert_floating_point_greater(a1, a3, __LINE__, NULL);
+			b2 = 35; b4 = 3;
+			assert_floating_point_greater(a2, a4, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 	end_suite();
 	//----------------------------------------------------------------------------
 

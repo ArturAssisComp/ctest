@@ -387,6 +387,27 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_floating_point_greater-----------------------
+		//Tests that will fail:
+		start_module("floating_point - greater", "Every assert in this module must fail.", (char *[]){"assert_floating_point_greater", NULL});
+			verbose = LOW;
+			assert_floating_point_greater(0, 1, __LINE__, NULL);
+			assert_floating_point_greater(1.0, 1.0, __LINE__, "abcde");
+			assert_floating_point_greater(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = MEDIUM;
+			assert_floating_point_greater(0, 1, __LINE__, NULL);
+			assert_floating_point_greater(1, 1, __LINE__, "abcde");
+			assert_floating_point_greater(10, 10, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+
+			verbose = HIGH;
+			assert_floating_point_greater(0.90912, 0.990123, __LINE__, NULL);
+			assert_floating_point_greater(-1, 10, __LINE__, "abcde");
+			assert_floating_point_greater(10.39, 123.12, __LINE__, "abcdefghijklmnopqrstuvwxyz");
+			assert_floating_point_greater(-8128739182638769123.123, 8128739182638769126, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
 
 	end_suite();
 	//----------------------------------------------------------------------------
