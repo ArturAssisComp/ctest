@@ -1,4 +1,5 @@
 #include "../ctest/ctest.h"
+#include <stdbool.h>
 
 int main(void)
 {
@@ -25,6 +26,11 @@ int main(void)
 		"assert_floating_point_greaterEqual",
 		"assert_floating_point_less",
 		"assert_floating_point_lessEqual",
+		//bool type
+		"assert_bool_equal",
+		"assert_bool_notEqual",
+		"assert_bool_true",
+		"assert_bool_false",
 		NULL
 	};
 
@@ -472,6 +478,28 @@ int main(void)
 			assert_floating_point_lessEqual(11, 10, __LINE__, "abcde");
 			assert_floating_point_lessEqual(1022, 123, __LINE__, "abcdefghijklmnopqrstuvwxyz");
 			assert_floating_point_lessEqual(12.3987, 126e-20, __LINE__, "Testing big numbers.");
+		end_module();
+		//----------------------------------------------------------------------------
+
+		/*TEST CASES for bool*/
+
+		//----------------------assert_bool_equal-------------------------
+		//Tests that will fail:
+		start_module("bool - equal", "Every assert in this module must fail.", (char *[]){"assert_bool_equal", NULL});
+			verbose = LOW;
+			assert_bool_equal(true, false, __LINE__, NULL);
+			assert_bool_equal(false, true, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_bool_equal(true, false, __LINE__, NULL);
+			assert_bool_equal(false, true, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_bool_equal(true, false, __LINE__, NULL);
+			assert_bool_equal(false, true, __LINE__, NULL);
+			assert_bool_equal(0, 1, __LINE__, NULL);
+			assert_bool_equal(1, 0, __LINE__, NULL);
+			assert_bool_equal(5, 0, __LINE__, NULL);
 		end_module();
 		//----------------------------------------------------------------------------
 

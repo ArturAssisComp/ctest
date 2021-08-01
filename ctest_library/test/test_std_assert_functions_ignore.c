@@ -25,6 +25,11 @@ int main(void)
 		"assert_floating_point_greaterEqual",
 		"assert_floating_point_less",
 		"assert_floating_point_lessEqual",
+		//bool type
+		"assert_bool_equal",
+		"assert_bool_notEqual",
+		"assert_bool_true",
+		"assert_bool_false",
 		NULL
 	};
 
@@ -54,6 +59,7 @@ ignore = true;
 			assert_floating_point_greaterEqual   (132.2331, 2998, __LINE__, NULL);
 			assert_floating_point_less           (12.2331, 2.998, __LINE__, NULL);
 			assert_floating_point_lessEqual      (12.2331, 2.998, __LINE__, NULL);
+			assert_bool_equal (true, true, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------

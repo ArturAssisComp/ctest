@@ -52,9 +52,10 @@ void assert_floating_point_greaterEqual   (floating_point target, floating_point
 void assert_floating_point_less           (floating_point target, floating_point reference, int line_number, char custom_message[]);
 void assert_floating_point_lessEqual      (floating_point target, floating_point reference, int line_number, char custom_message[]);
 
-
-/*almostEqual*/
-void assert_float_almostEqual(float target, float ref, float max_diff);
-void assert_double_almostEqual(double target, double ref, double max_diff);
+/*STD assert functions for bool type*/
+void assert_bool_equal    (bool target, bool reference, int line_number, char custom_message[]);
+void assert_bool_notEqual (bool target, bool reference, int line_number, char custom_message[]);
+void assert_bool_true     (bool target, int line_number, char custom_message[]);
+void assert_bool_false    (bool target, int line_number, char custom_message[]);
 
 #endif

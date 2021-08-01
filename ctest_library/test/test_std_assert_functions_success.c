@@ -25,6 +25,11 @@ int main(void)
 		"assert_floating_point_greaterEqual",
 		"assert_floating_point_less",
 		"assert_floating_point_lessEqual",
+		//bool type
+		"assert_bool_equal",
+		"assert_bool_notEqual",
+		"assert_bool_true",
+		"assert_bool_false",
 		NULL
 	};
 
@@ -410,6 +415,19 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+		/*TEST CASES for bool*/
+		
+		//----------------------assert_bool_equal-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("bool - Equal", "Every assert in this module must pass.", (char *[]){"assert_bool_equal", NULL});
+			assert_bool_equal(true, true, __LINE__, NULL);
+			assert_bool_equal(false, false, __LINE__, NULL);
+			assert_bool_equal(2, 2, __LINE__, NULL);
+			assert_bool_equal(3, 3, __LINE__, NULL);
+			assert_bool_equal(0, 0, __LINE__, NULL);
+		end_module();
+		//----------------------------------------------------------------------------
 
 	end_suite();
 	//----------------------------------------------------------------------------
