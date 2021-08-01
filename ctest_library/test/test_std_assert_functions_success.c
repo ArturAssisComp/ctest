@@ -429,6 +429,17 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_bool_notEqual----------------------
+		//Tests that will be successful:
+		start_module("bool - notEqual", "Every assert in this module must pass.", (char *[]){"assert_bool_notEqual", NULL});
+			assert_bool_notEqual(true, false, __LINE__, NULL);
+			assert_bool_notEqual(false, true, __LINE__, NULL);
+			assert_bool_notEqual(1, 0, __LINE__, NULL);
+			assert_bool_notEqual(0, 1, __LINE__, NULL);
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
