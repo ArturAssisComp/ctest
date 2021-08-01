@@ -61,6 +61,7 @@ ignore = true;
 			assert_floating_point_lessEqual      (12.2331, 2.998, __LINE__, NULL);
 			assert_bool_equal (true, true, __LINE__, NULL);
 			assert_bool_notEqual (true, true, __LINE__, NULL);
+			assert_bool_true (true, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------

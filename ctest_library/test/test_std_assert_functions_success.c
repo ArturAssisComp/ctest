@@ -440,6 +440,17 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_bool_true----------------------
+		//Tests that will be successful:
+		start_module("bool - true", "Every assert in this module must pass.", (char *[]){"assert_bool_true", NULL});
+			assert_bool_true(true, __LINE__, NULL);
+			assert_bool_true(2, __LINE__, NULL);
+
+		end_module();
+
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 

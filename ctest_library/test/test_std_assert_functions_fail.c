@@ -504,6 +504,7 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 		//----------------------assert_bool_notEqual----------------------
+
 		//Tests that will fail:
 		start_module("bool - notEqual", "Every assert in this module must fail.", (char *[]){"assert_bool_notEqual", NULL});
 			verbose = LOW;
@@ -519,6 +520,26 @@ int main(void)
 			assert_bool_notEqual(false, false, __LINE__, NULL);
 			assert_bool_notEqual(1, 1, __LINE__, "abcde");
 			assert_bool_notEqual(10, 10, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+		//----------------------assert_bool_true----------------------
+		//Tests that will fail:
+		start_module("bool - true", "Every assert in this module must fail.", (char *[]){"assert_bool_true", NULL});
+			verbose = LOW;
+			assert_bool_true(false, __LINE__, NULL);
+			assert_bool_true(0, __LINE__, "abcde");
+
+			verbose = MEDIUM;
+			assert_bool_true(false, __LINE__, NULL);
+			assert_bool_true(0, __LINE__, "abcde");
+
+			verbose = HIGH;
+			assert_bool_true(false, __LINE__, NULL);
+			assert_bool_true(0, __LINE__, "abcde");
+
 
 
 		end_module();
