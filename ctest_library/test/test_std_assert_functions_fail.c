@@ -540,7 +540,23 @@ int main(void)
 			assert_bool_true(false, __LINE__, NULL);
 			assert_bool_true(0, __LINE__, "abcde");
 
+		end_module();
+		//----------------------------------------------------------------------------
 
+		//----------------------assert_bool_false----------------------
+		//Tests that will fail:
+		start_module("bool - false", "Every assert in this module must fail.", (char *[]){"assert_bool_false", NULL});
+			verbose = LOW;
+			assert_bool_false(true, __LINE__, NULL);
+			assert_bool_false(1, __LINE__, "abcde");
+
+			verbose = MEDIUM;
+			assert_bool_false(true, __LINE__, NULL);
+			assert_bool_false(1, __LINE__, "abcde");
+
+			verbose = HIGH;
+			assert_bool_false(true, __LINE__, NULL);
+			assert_bool_false(1, __LINE__, "abcde");
 
 		end_module();
 		//----------------------------------------------------------------------------
