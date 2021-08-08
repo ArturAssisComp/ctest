@@ -14,15 +14,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <string.h>
+
 
 //Local auxiliary functions:
-static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits); 
-static char *mask_compare(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol);
+static char *decimal_to_binary_generate_str(unsigned_integer target, size_t num_of_digits); 
+static char *mask_compare_generate_str(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol);
 static int num_of_significant_bits(unsigned_integer number);
+static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_array[], size_t target_array_size, unsigned_integer reference_array[], size_t reference_array_size); 
+static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size, char equal_symbol, char diff_symbol);
+static int num_of_digits(unsigned_integer number);
 
 
 
 //Definitions of assert functions:
+/*Single data types*/
 /*STD assert functions for unsigned_integer type*/
 
 void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[])
@@ -642,12 +648,12 @@ void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_int
 		char *target_reference_comparison_str;
 
 		//Generate the binary form of each number:
-		binary_target_str = decimal_to_binary_str(target, num_of_digits);
-		binary_reference_str = decimal_to_binary_str(reference, num_of_digits);
-		binary_mask_str = decimal_to_binary_str(mask, num_of_digits);
+		binary_target_str = decimal_to_binary_generate_str(target, num_of_digits);
+		binary_reference_str = decimal_to_binary_generate_str(reference, num_of_digits);
+		binary_mask_str = decimal_to_binary_generate_str(mask, num_of_digits);
 
 		//Generate the string that compares target and reference:
-		target_reference_comparison_str = mask_compare(target, reference, mask, equal_symbol, diff_symbol);
+		target_reference_comparison_str = mask_compare_generate_str(target, reference, mask, equal_symbol, diff_symbol);
 
 		//Create the datailed message:
 		counter = snprintf(global_result.result_details, 
@@ -2260,6 +2266,132 @@ finish:
 
 
 
+/*Array data type*/
+/*STD assert functions for unsigned_integerArray type*/
+void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t target_size, unsigned_integer reference[], size_t reference_size, int line_number, char custom_message[])
+/**
+ * Description: This function checks if each element of the array 'target' is 
+ * respectively equal to each element of the array 'reference'. The comparisons
+ * will be done from the first element (index 0) until the element of number
+ * min(target_size - 1, reference_size - 1).
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ * 	If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (unsigned_integer []) target --> Array with values that will be compared to the respective 
+ *        values of the reference array in order to test if they are equal.
+ *        (size_t) target_size --> The size of the array 'target'. May not be 0.
+ *        (unsigned_integer []) reference --> The reference array.
+ *        (size_t) reference_size --> The size of the array 'reference'. May not be 0.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(max(target_size, reference_size))
+ *
+ * Space Complexity: O(max(target_size, reference_size))
+ */
+{
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 128;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_unsigned_integerArray_equal";
+	char std_message[] = "Each element of the target array SHOULD BE RESPECTIVELY EQUAL to each element of the reference array.";
+
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Execute the test:
+	global_result.was_successful = true; //Start with the default value
+
+	if(target_size != reference_size)
+		global_result.was_successful = false;
+	else
+	{
+		//Check each element:
+		size_t i;
+		for(i = 0; i < target_size; i++)
+		{
+			if(target[i] != reference[i])
+			{
+				global_result.was_successful = false;
+				break;
+			}
+		}
+	}
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		char equal_symbol = '|', diff_symbol = ':';
+		char *target_array_str, *reference_array_str;
+		char *target_reference_comparison_str;
+
+		//Generate the string form of each array:
+		target_array_str    = unsigned_integerArray_generate_aligned_str(target, target_size, reference, reference_size);
+		reference_array_str = unsigned_integerArray_generate_aligned_str(reference, reference_size, target, target_size);
+
+		//Generate the string that compares target and reference:
+		target_reference_comparison_str = unsigned_integerArray_compared_equal_generate_str(target, target_size, reference, reference_size, equal_symbol, diff_symbol);
+
+
+		counter = snprintf(global_result.result_details, 
+					MAX_CHARS,
+					"> Implement!\n"
+					);
+			   
+		//Free the buffers:
+		free(target_array_str);
+		free(reference_array_str);
+		free(target_reference_comparison_str);
+
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
+		{
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"\nError while generating the result message (at line %d).\n",
+					line_number
+					);
+			goto finish;
+		}
+		//------------------------------------------------------------------------------
+	}
+
+	
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	print_result(assert_name, std_message, custom_message, line_number);
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+}
 
 
 
@@ -2270,7 +2402,7 @@ finish:
 
 //------------------------------------------------------------------------------
 //Definitions for the local auxiliary functions:
-static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits)
+static char *decimal_to_binary_generate_str(unsigned_integer target, size_t num_of_digits)
 /**
  * Description: This function transforms the decimal number 'target' into its 
  * binary form and returns the result as a string. 
@@ -2294,13 +2426,11 @@ static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits
 	//------------------------------------------------------------------------------
 	//Allocate memory for the binary digits:
 	char *buffer;
-	buffer = calloc(num_of_digits + 1, sizeof *buffer);
 
-	//------------------------------------------------------------------------------
-	//Check for error during the memory allocation:
+	buffer = calloc(num_of_digits + 1, sizeof *buffer);
 	if(!buffer)
 	{
-		fprintf(stderr, "\nERROR while allocating memory in function decimal_to_binary_str.\n");
+		fprintf(stderr, "\nERROR while allocating memory in function decimal_to_binary_generate_str.\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -2320,7 +2450,7 @@ static char *decimal_to_binary_str(unsigned_integer target, size_t num_of_digits
 	//------------------------------------------------------------------------------
 }
 
-static char *mask_compare(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol)
+static char *mask_compare_generate_str(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol)
 {
 	//------------------------------------------------------------------------------
 	//Allocate memory for the binary digits:
@@ -2336,7 +2466,7 @@ static char *mask_compare(unsigned_integer target, unsigned_integer reference, u
 	//Check for error during the memory allocation:
 	if(!buffer)
 	{
-		fprintf(stderr, "\nERROR while allocating memory in function mask_compare.\n");
+		fprintf(stderr, "\nERROR while allocating memory in function mask_compare_generate_str.\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -2382,5 +2512,145 @@ static int num_of_significant_bits(unsigned_integer number)
 	//Return the result:
 	return counter;
 }
+
+
+
+
+static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_array[], size_t target_array_size, unsigned_integer reference_array[], size_t reference_array_size) 
+/**
+ * Description: This function generates the string of the array 'target_array' 
+ * of unsigned_integer's with size 'target_array_size'. The string is 
+ * generated in such a way that each element will be aligned with each 
+ * respective element of 'reference_array'. The alignment will take place 
+ * only if there is a respective element in the reference array, otherwise, it 
+ * will be used the minimum space necessary to accommodate each element plus one 
+ * extra space. 
+ * 	The alignment is done in the following way: 
+ * 	(1) - If the respective element of the reference array has more digits, 
+ * 	aditional spaces are added to the target array element;
+ * 	(2) - Otherwise, no additional spaces are added.
+ *
+ * 	The reference array may be NULL. In that situation, the reference_array_size
+ * will be ignored.
+ * 	If the size of the array is different from the size passed as argument, the 
+ * behavior is undefined.
+ *
+ * Ex:
+ * --> target_array:    [ 12, 34, 5, 123]
+ * --> reference_array: [ 12334, 2343, 5, 4, 9]
+ * --> result:          [    12,   34, 5, 123]
+ * If this functions is called again but exchanging the reference array with the 
+ * target array, the following result would be generated for the reference array:
+ * -->                  [ 12334, 2343, 5,   4, 9]
+ *  In conclusion, if this function is applied to both arrays (exchanging them 
+ *  between target and reference), they will the generated strings would have 
+ *  each respective element vertically aligned.
+ *
+ * Input: (unsigned_integer[]) target_array
+ *        (size_t) target_array_size
+ *        (unsigned_integer[]) reference_array
+ *        (size_t) reference_array_size 
+ *
+ * Output: (char *) --> The formatted string.
+ *
+ * Time Complexity: O(n^2) --> This function uses strcat in 
+ * a inefficient way.
+ */
+{
+	//------------------------------------------------------------------------------
+	//Declare local varibles:
+	char *result;
+	char number_buffer[100];
+	size_t current_buffer_size = 100, buffer_chars_used = 0;
+
+
+	//------------------------------------------------------------------------------
+	//Allocate memory for the buffer:
+	result = calloc(current_buffer_size, sizeof *result);
+	if(!result)
+	{
+		fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	//------------------------------------------------------------------------------
+	//Initialize the buffer:
+	strcat(result, "[");
+	buffer_chars_used += 2; //'[' + '\0'
+
+	//------------------------------------------------------------------------------
+	//Fill the buffer with the target_array elements:
+
+	size_t i, n; 
+	int number_of_digits;
+	char intermediate_buffer[20] = " %llu,";
+	for(i = 0; i < target_array_size; i++)
+	{
+		//Create the string of the number that will be concatenated to the result:
+		if (reference_array != NULL && i < reference_array_size)
+			number_of_digits = num_of_digits(reference_array[i]);
+		else 
+			number_of_digits = 0;
+
+		n = snprintf(intermediate_buffer, sizeof intermediate_buffer / sizeof intermediate_buffer[0], " %%%dllu,",  number_of_digits);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		n = snprintf(number_buffer, sizeof number_buffer / sizeof number_buffer[0], intermediate_buffer,  target_array[i]);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		//Check if there is enough space:
+		while(buffer_chars_used >= current_buffer_size)
+		{
+			//Allocate more memory:
+			current_buffer_size *= 2;
+			result = realloc(result, sizeof *result * current_buffer_size);
+			if(!result)
+			{
+				fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		//Add the next number to the result:
+		strcat(result, number_buffer);
+		buffer_chars_used += n;
+	}	
+
+	//------------------------------------------------------------------------------
+	//Add ']' in the end:
+	result[buffer_chars_used - 2] = ']';
+
+	//------------------------------------------------------------------------------
+	//Return the result:
+	return result;
+
+	//------------------------------------------------------------------------------
+
+}
+
+static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size, char equal_symbol, char diff_symbol)
+{
+}
+
+static int num_of_digits(unsigned_integer number)
+{
+	int result = 0;
+	while(number > 0)
+	{
+		number = number/10;
+		result++;
+	}
+
+	return result;
+}
+
 
 //------------------------------------------------------------------------------
