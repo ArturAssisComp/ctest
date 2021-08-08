@@ -2560,7 +2560,7 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
 	//------------------------------------------------------------------------------
 	//Declare local varibles:
 	char *result;
-	char number_buffer[100];
+	char number_buffer[50];
 	size_t current_buffer_size = 100, buffer_chars_used = 0;
 
 
@@ -2607,9 +2607,10 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
 		}
 
 		//Check if there is enough space:
-		while(buffer_chars_used >= current_buffer_size)
+		if(buffer_chars_used + n >= current_buffer_size)
 		{
 			//Allocate more memory:
+			current_buffer_size = buffer_chars_used;
 			current_buffer_size *= 2;
 			result = realloc(result, sizeof *result * current_buffer_size);
 			if(!result)
@@ -2638,6 +2639,7 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
 
 static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size, char equal_symbol, char diff_symbol)
 {
+	;
 }
 
 static int num_of_digits(unsigned_integer number)
