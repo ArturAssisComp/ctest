@@ -1,8 +1,15 @@
 #include "../ctest/ctest.h"
 
+//Short for casting arrays:
+#define UI (unsigned_integer[])
+#define FP (floating_point[])
+#define SI (integer[])
+#define BL (bool[])
+
 int main(void)
 {
 	char *functions_tested[] = {
+		/*Single data type*/
 		//unsigned_integer type:
 		"assert_unsigned_integer_equal",
 		"assert_unsigned_integer_notEqual",
@@ -30,12 +37,33 @@ int main(void)
 		"assert_bool_notEqual",
 		"assert_bool_true",
 		"assert_bool_false",
+		/*Arrays*/
+		//unsigned_integer type:
+		"assert_unsigned_integerArray_equal",
+		"assert_unsigned_integerArray_notEqual",
+		"assert_unsigned_integerArray_sorted",
+		"assert_unsigned_integerArray_notSorted",
+		"assert_unsigned_integerArray_permutation",
+		"assert_unsigned_integerArray_notPermutation",
+		"assert_unsigned_integerArray_isPartialPermutation",
+		"assert_unsigned_integerArray_notIsPartialPermutation",
+		"assert_unsigned_integerArray_hasPartialPermutation",
+		"assert_unsigned_integerArray_notHasPartialPermutation",
+		"assert_unsigned_integerArray_setIn",
+		"assert_unsigned_integerArray_notSetIn",
+		"assert_unsigned_integerArray_setHas",
+		"assert_unsigned_integerArray_notSetHas",
+		"assert_unsigned_integerArray_isSubarray",
+		"assert_unsigned_integerArray_notIsSubarray",
+		"assert_unsigned_integerArray_hasSubarray",
+		"assert_unsigned_integerArray_notHasSubarray",
 		NULL
 	};
 
 	//----------------------------------------------------------------------------
 	start_suite("SUCCESS", "ALL tests in this suite must be successful.", functions_tested);
 
+		/*Single data type*/
 		/*TEST CASES for unsigned_integer*/
 		
 		//----------------------assert_unsigned_integer_equal-------------------------
@@ -460,6 +488,23 @@ int main(void)
 
 		//----------------------------------------------------------------------------
 
+
+
+		/*Arrays*/
+		/*TEST CASES for unsigned_integer*/
+		
+		//----------------------assert_unsigned_integerArray_equal-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("unsigned_integerArray - Equal", "Every assert in this module must pass.", (char *[]){"assert_unsigned_integerArray_equal", NULL});
+			assert_unsigned_integerArray_equal(UI{2}, 1, UI{2}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_equal(UI{0}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_equal(UI{1, 2}, 2, UI{1, 2}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_equal(UI{1, 2, 345}, 3, UI{1, 2, 345}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_equal(UI{1, 2, 4, 4, 4}, 5, UI{1, 2, 4, 4, 4}, 5, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
 	end_suite();
 	//----------------------------------------------------------------------------
 

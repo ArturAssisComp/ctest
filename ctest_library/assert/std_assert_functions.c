@@ -23,6 +23,7 @@ static char *mask_compare_generate_str(unsigned_integer target, unsigned_integer
 static int num_of_significant_bits(unsigned_integer number);
 static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_array[], size_t target_array_size, unsigned_integer reference_array[], size_t reference_array_size); 
 static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size, char equal_symbol, char diff_symbol);
+static char *unsigned_integerArray_indexes_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size);
 static int num_of_digits(unsigned_integer number);
 
 
@@ -2340,6 +2341,7 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 		char equal_symbol = '|', diff_symbol = ':';
 		char *target_array_str, *reference_array_str;
 		char *target_reference_comparison_str;
+		char *target_reference_aligned_indexes_str;
 
 		//Generate the string form of each array:
 		target_array_str    = unsigned_integerArray_generate_aligned_str(target, target_size, reference, reference_size);
@@ -2348,10 +2350,19 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 		//Generate the string that compares target and reference:
 		target_reference_comparison_str = unsigned_integerArray_compared_equal_generate_str(target, target_size, reference, reference_size, equal_symbol, diff_symbol);
 
+		//Generate the string for indexes:
+		target_reference_aligned_indexes_str = unsigned_integerArray_indexes_generate_str(target, target_size, reference, reference_size);
 
 		counter = snprintf(global_result.result_details, 
 					MAX_CHARS,
-					"> Implement!\n"
+					"> target_array:    %s\n"\
+					">                  %s\n"\
+					"> reference_array: %s\n"\
+					"> (index)          %s\n",
+					target_array_str,
+					target_reference_comparison_str,
+					reference_array_str,
+					target_reference_aligned_indexes_str
 					);
 			   
 		//Free the buffers:
@@ -2583,7 +2594,7 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
 
 	size_t i, n; 
 	int number_of_digits;
-	char intermediate_buffer[20] = " %llu,";
+	char intermediate_buffer[20] = "   %llu,";
 	for(i = 0; i < target_array_size; i++)
 	{
 		//Create the string of the number that will be concatenated to the result:
@@ -2592,7 +2603,7 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
 		else 
 			number_of_digits = 0;
 
-		n = snprintf(intermediate_buffer, sizeof intermediate_buffer / sizeof intermediate_buffer[0], " %%%dllu,",  number_of_digits);
+		n = snprintf(intermediate_buffer, sizeof intermediate_buffer / sizeof intermediate_buffer[0], "   %%%dllu,",  number_of_digits);
 		if(n < 0)
 		{
 			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
@@ -2638,14 +2649,238 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
 }
 
 static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size, char equal_symbol, char diff_symbol)
+/**
+ * Description: This function generates a string that compares each element of 
+ * arr1 with each respertive element of arr2. If each respective pair of elements 
+ * are equal, the 'equal_symbol' is used. Otherwise, the 'diff_symbol' is used. 
+ * The symbol is aligned with the biggest element. If one of the arrays is greater
+ * that the other, the 'diff_symbol' will be used for the rest of the elements.
+ *
+ * 	If the size of the array is different from the size passed as argument, the 
+ * behavior is undefined.
+ *
+ * Ex:
+ * --> arr1:    [ 12, 34, 5, 123]
+ * --> arr2     [ 12334, 2343, 5, 4, 9]
+ * --> equal_symbol : '|'
+ * --> diff_symbol: ':'
+ * -->           [    12,   34, 5, 123]
+ * --> result:         :     :  |    :  :      
+ * -->           [ 12334, 2343, 5,   4, 9]
+ *
+ * Input: (unsigned_integer[]) arr1
+ *        (size_t) arr1_size
+ *        (unsigned_integer[]) arr2
+ *        (size_t) arr2_size 
+ *        (char)   equal_symbol
+ *        (char)   diff_symbol
+ *
+ * Output: (char *) --> The formatted string.
+ *
+ * Time Complexity: O(n^2) --> This function uses strcat in 
+ * a inefficient way.
+ */
 {
-	;
+	//------------------------------------------------------------------------------
+	//Declare local varibles:
+	char *result;
+	char symbol_buffer[50];
+	size_t current_buffer_size = 100, buffer_chars_used = 0;
+
+
+	//------------------------------------------------------------------------------
+	//Allocate memory for the buffer:
+	result = calloc(current_buffer_size, sizeof *result);
+	if(!result)
+	{
+		fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	//------------------------------------------------------------------------------
+	//Initialize the buffer:
+	strcat(result, " ");
+	buffer_chars_used += 2; //' ' + '\0'
+
+	//------------------------------------------------------------------------------
+	//Fill the buffer with the arr1 elements:
+
+	size_t i, n; 
+	size_t max_array_size = (arr1_size >= arr2_size)?arr1_size:arr2_size;
+	int number_of_digits_element_arr1, number_of_digits_element_arr2, number_of_digits;
+	char intermediate_buffer[20]; 
+	for(i = 0; i < max_array_size; i++)
+	{
+		//Create the string of the char that will be concatenated to the result:
+		number_of_digits_element_arr1 = (i < arr1_size)?num_of_digits(arr1[i]) : 0;
+		number_of_digits_element_arr2 = (i < arr2_size)?num_of_digits(arr2[i]) : 0;
+
+		number_of_digits = (number_of_digits_element_arr1 >= number_of_digits_element_arr2)? number_of_digits_element_arr1 : number_of_digits_element_arr2;
+
+
+		n = snprintf(intermediate_buffer, sizeof intermediate_buffer / sizeof intermediate_buffer[0], "   %%%dc ",  number_of_digits);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		if(i < arr1_size && i < arr2_size)
+			n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], intermediate_buffer,  (arr1[i] == arr2[i])?equal_symbol : diff_symbol);
+		else
+			n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], intermediate_buffer,  diff_symbol);
+
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		//Check if there is enough space:
+		if(buffer_chars_used + n >= current_buffer_size)
+		{
+			//Allocate more memory:
+			current_buffer_size = buffer_chars_used;
+			current_buffer_size *= 2;
+			result = realloc(result, sizeof *result * current_buffer_size);
+			if(!result)
+			{
+				fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		//Add the next number to the result:
+		strcat(result, symbol_buffer);
+		buffer_chars_used += n;
+	}	
+
+	//------------------------------------------------------------------------------
+	//Return the result:
+	return result;
+
+	//------------------------------------------------------------------------------
+}
+
+
+static char *unsigned_integerArray_indexes_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size)
+/**
+ * Description: This function generates a string with indexes for each element of 
+ * arr1/arr2. The indexes are vertically aligned with the greatest of elements 
+ * from arr1 or arr2. 
+ *
+ * 	If the size of the array is different from the size passed as argument, the 
+ * behavior is undefined.
+ *
+ * Ex:
+ * --> arr1:    [ 12, 34, 5, 123]
+ * --> arr2     [ 12334, 2343, 5, 4, 29]
+ * -->           [      12,     34,   5, 123]
+ * -->           [   12334,   2343,   5,   4,   29]
+ * --> result:          (0)     (1)  (2)  (3)   (4) 
+ *
+ * Input: (unsigned_integer[]) arr1
+ *        (size_t) arr1_size
+ *        (unsigned_integer[]) arr2
+ *        (size_t) arr2_size 
+ *
+ * Output: (char *) --> The formatted string with indexes.
+ *
+ * Time Complexity: O(n^2) --> This function uses strcat in 
+ * a inefficient way.
+ */
+{
+	//------------------------------------------------------------------------------
+	//Declare local varibles:
+	char *result;
+	char formatted_index_buffer[50];
+	size_t current_buffer_size = 100, buffer_chars_used = 0;
+
+
+	//------------------------------------------------------------------------------
+	//Allocate memory for the buffer:
+	result = calloc(current_buffer_size, sizeof *result);
+	if(!result)
+	{
+		fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	//------------------------------------------------------------------------------
+	//Initialize the buffer:
+	strcat(result, " ");
+	buffer_chars_used += 2; //' ' + '\0'
+
+	//------------------------------------------------------------------------------
+	//Fill the buffer with the arr1 elements:
+
+	size_t i, n; 
+	size_t max_array_size = (arr1_size >= arr2_size)?arr1_size:arr2_size;
+	int number_of_digits_element_arr1, number_of_digits_element_arr2, number_of_digits;
+	char intermediate_buffer[20]; 
+	char index_buffer[20];
+	for(i = 0; i < max_array_size; i++)
+	{
+		//Create the string of the char that will be concatenated to the result:
+		number_of_digits_element_arr1 = (i < arr1_size)?num_of_digits(arr1[i]) : 0;
+		number_of_digits_element_arr2 = (i < arr2_size)?num_of_digits(arr2[i]) : 0;
+
+		number_of_digits = (number_of_digits_element_arr1 >= number_of_digits_element_arr2)? number_of_digits_element_arr1 : number_of_digits_element_arr2;
+
+
+		n = snprintf(intermediate_buffer, sizeof intermediate_buffer / sizeof intermediate_buffer[0], "%%%ds",  number_of_digits + 4);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		n = snprintf(index_buffer, sizeof index_buffer / sizeof index_buffer[0], "(%d)",  i);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		n = snprintf(formatted_index_buffer, sizeof formatted_index_buffer / sizeof formatted_index_buffer[0], intermediate_buffer,  index_buffer);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		//Check if there is enough space:
+		if(buffer_chars_used + n >= current_buffer_size)
+		{
+			//Allocate more memory:
+			current_buffer_size = buffer_chars_used;
+			current_buffer_size *= 2;
+			result = realloc(result, sizeof *result * current_buffer_size);
+			if(!result)
+			{
+				fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		//Add the next number to the result:
+		strcat(result, formatted_index_buffer);
+		buffer_chars_used += n;
+	}	
+
+	//------------------------------------------------------------------------------
+	//Return the result:
+	return result;
+
+	//------------------------------------------------------------------------------
 }
 
 static int num_of_digits(unsigned_integer number)
 {
-	int result = 0;
-	while(number > 0)
+	int result = 1; //Already count the first digit.
+
+	//While the number has at least 2 digits:
+	while(number >= 10)
 	{
 		number = number/10;
 		result++;
