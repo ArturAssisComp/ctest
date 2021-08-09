@@ -2367,8 +2367,9 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 			   
 		//Free the buffers:
 		free(target_array_str);
-		free(reference_array_str);
 		free(target_reference_comparison_str);
+		free(reference_array_str);
+		free(target_reference_aligned_indexes_str);
 
 		//------------------------------------------------------------------------------
 		//Check for error:
