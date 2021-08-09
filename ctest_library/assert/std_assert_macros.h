@@ -9,9 +9,30 @@
  */
 
 /*Arrays*/
-/*STD assert functions for unsigned_integer type*/
+/*STD assert macros for unsigned_integer type*/
 
-
+/**
+ * Macro Name: ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL
+ * Description: This macro makes it possible to use arrays of any unsigned type 
+ * as parameters. It casts each element to unsigned_integer and then calls the
+ * function assert_unsigned_integerArray_equal.
+ * 	The assert macro must be ended with a semicolon.
+ * 	To pass literal arrays as arguments, the following conventions must be 
+ * used: ((unsigned <type>[]){a1, a2, ..., an}) 
+ * 	-Replace <type> with the desired type of each element of the array and 
+ * replace ai with each respective element.
+ * 	-The outer perenteses are necessary.
+ * Ex:
+ * 	ASSERT_UNSIGNED_INTEGER_ARRAY(((unsigned char[]){12, 3}),2,((unsigned int[]){1, 2, 3}),3, __LINE__, NULL);
+ *
+ * Input:
+ * 	TARGET      --> Array/pointer to any unsigned integer type.
+ * 	TARGET_SIZE --> The number of elements of TARGET.
+ * 	REFERENCE      --> Array/pointer to any unsigned integer type.
+ * 	REFERENCE_SIZE --> The number of elements of REFERENCE.
+ * 	LINE_NUMBER    --> The number of the line.
+ * 	CUSTOM_MESSAGE --> Custom message that will be printed if the assertion fails.
+ */
 #define ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL(TARGET, TARGET_SIZE, REFERENCE, REFERENCE_SIZE, LINE_NUMBER, CUSTOM_MESSAGE) \
 {\
 	unsigned_integer target[(TARGET_SIZE)];\
