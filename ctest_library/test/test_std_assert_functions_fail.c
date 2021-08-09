@@ -614,6 +614,26 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_unsigned_integerArray_notEqual-------------------------
+		//Tests that will fail:
+		start_module("unsigned_integerArray - notEqual", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integerArray_notEqual", NULL});
+			verbose = LOW;
+			assert_unsigned_integerArray_notEqual(UI{1, 2, 3}, 3, UI{1, 2, 3}, 3, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_unsigned_integerArray_notEqual(UI{2, 2}, 2, UI{2, 2}, 2, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_unsigned_integerArray_notEqual(UI{1}, 1, UI{1}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{0}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{1, 2, 3, 4, 5, 1000, 7, 8, 9, 10}, 10, UI{1, 2, 3, 4, 5, 1000, 7, 8, 9, 10}, 10, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{1, 2, 3}, 3, UI{1, 2, 3}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{10}, 1, UI{10}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{0, 0, 0}, 3, UI{0, 0, 0}, 3, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 	end_suite();
 	//----------------------------------------------------------------------------

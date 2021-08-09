@@ -505,6 +505,22 @@ int main(void)
 
 		end_module();
 		//----------------------------------------------------------------------------
+
+		//----------------------assert_unsigned_integerArray_notEqual-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("unsigned_integerArray - notEqual", "Every assert in this module must pass.", (char *[]){"assert_unsigned_integerArray_notEqual", NULL});
+			assert_unsigned_integerArray_notEqual(UI{3}, 1, UI{2}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{0}, 1, UI{6}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{1, 1}, 2, UI{1, 2}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{1, 0, 345}, 3, UI{1, 2, 345}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{10, 2, 4, 4, 4}, 5, UI{1, 2, 4, 4, 4}, 5, __LINE__, NULL);
+			assert_unsigned_integerArray_notEqual(UI{1, 2, 345, 4}, 4, UI{1, 2, 345}, 3, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
