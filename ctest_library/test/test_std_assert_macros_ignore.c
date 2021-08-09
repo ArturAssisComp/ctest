@@ -27,6 +27,7 @@ int main(void)
 		start_module("Ignore", "Ignore the following tests.", functions_tested);
 ignore = true;
 			ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL( (ULLI{0, 0, 0, 0}), 4, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL( (ULLI{0, 0, 10, 0}), 4, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------
