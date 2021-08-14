@@ -7,6 +7,9 @@
 #define SI (integer[])
 #define BL (bool[])
 
+#define ASC true
+#define DSC false
+
 int main(void)
 {
 	char *functions_tested[] = {
@@ -634,6 +637,32 @@ int main(void)
 
 		end_module();
 		//----------------------------------------------------------------------------
+
+
+		//----------------------assert_unsigned_integerArray_sorted-------------------------
+		//Tests that will fail:
+		start_module("unsigned_integerArray - sorted", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integerArray_sorted", NULL});
+			verbose = LOW;
+			assert_unsigned_integerArray_sorted(UI{1, 0}, 2, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{0, 1}, 2, DSC, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_unsigned_integerArray_sorted(UI{1, 0}, 2, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{0, 1}, 2, DSC, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_unsigned_integerArray_sorted(UI{1, 0}, 2, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{1, 2, 3, 2, 4, 5, 6}, 7, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10, 9}, 12, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{0, 1}, 2, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{0, 0, 0, 0, 1}, 5, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{100, 99, 98, 100, 0}, 5, DSC, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 
 	end_suite();
 	//----------------------------------------------------------------------------
