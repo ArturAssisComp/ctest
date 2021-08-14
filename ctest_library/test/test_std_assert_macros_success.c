@@ -7,6 +7,9 @@
 
 #define ARR_SZ(ARR) sizeof (ARR) / sizeof (ARR)[0]
 
+#define ASC true
+#define DSC false
+
 int main(void)
 {
 	char *functions_tested[] = {
@@ -14,6 +17,7 @@ int main(void)
 		//unsigned_integer type:
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL",
+		"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -58,6 +62,21 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED-------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("UNSIGNED_INTEGER ARRAY-sorted", "Every assert in this module must pass.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED", NULL});
+
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UI{1, 2, 3, 34}), 4, ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UI{1}), 1, ASC, __LINE__, NULL);
+			unsigned char arr5[] = {12, 23, 34};
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( arr3, ARR_SZ(arr5), ASC, __LINE__, "arr5 is sorted");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULI{10, 4, 3}), 3, DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UC{0, 0, 0}), 3, DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULLI{0, 0, 0, 0}), 4, ASC, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 	end_suite();

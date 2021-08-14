@@ -7,6 +7,9 @@
 
 #define ARR_SZ(ARR) sizeof (ARR) / sizeof (ARR)[0]
 
+#define ASC true
+#define DSC false
+
 int main(void)
 {
 
@@ -15,6 +18,7 @@ int main(void)
 		//unsigned_integer type:
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL",
+		"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -50,7 +54,7 @@ int main(void)
 
 		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL------------------
 		//Tests that will fail:
-		start_module("UNSIGNED_INTEGER ARRAY-equal", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL", NULL});
+		start_module("UNSIGNED_INTEGER ARRAY-notEqual", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL", NULL});
 			int arr3[] = {12, 34, 2};
 			int arr4[] = {12, 34, 2};
 
@@ -69,6 +73,34 @@ int main(void)
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL( (UC{1, 3, 2}), 3, (UC{1, 3, 2}), 3, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL( (ULLI{0, 0, 0, 0}), 4, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL( (ULLI{10}), 1, (ULLI{10}), 1, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED------------------
+		//Tests that will fail:
+		start_module("UNSIGNED_INTEGER ARRAY-sorted", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED", NULL});
+			int arr5[] = {12, 34, 2};
+			int arr6[] = {12, 222, 3123, 41231, 5612312, 5, 5, 898, 34, 2};
+
+
+			verbose = LOW;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED(arr5, ARR_SZ(arr5), ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULI{1, 2, 3}), 3, DSC, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED(arr6, ARR_SZ(arr6), ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED(arr6, ARR_SZ(arr6), DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UC{1, 2, 3}), 3, DSC, __LINE__, "(UC{1, 2, 3}), 3, DSC");
+
+			verbose = HIGH;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED(arr6, ARR_SZ(arr6), ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED(arr6, ARR_SZ(arr6), DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UC{1, 2, 3}), 3, DSC, __LINE__, "(UC{1, 2, 3}), 3, DSC");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULI{112, 2, 3}), 3, DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULLI{0, 1, 0, 0}), 4, ASC, __LINE__, NULL);
 
 
 		end_module();
