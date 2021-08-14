@@ -654,6 +654,7 @@ int main(void)
 			assert_unsigned_integerArray_sorted(UI{1, 0}, 2, ASC, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{1, 2, 3, 2, 4, 5, 6}, 7, ASC, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10, 9}, 12, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_sorted(UI{1, 200, 3000, 4238, 5209, 6000, 7001, 77003980, 8090, 999, 10, 9}, 12, ASC, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{0, 1}, 2, DSC, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{0, 0, 0, 0, 1}, 5, DSC, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{100, 99, 98, 100, 0}, 5, DSC, __LINE__, NULL);

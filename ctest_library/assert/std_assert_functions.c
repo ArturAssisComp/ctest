@@ -24,6 +24,7 @@ static int num_of_significant_bits(unsigned_integer number);
 static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_array[], size_t target_array_size, unsigned_integer reference_array[], size_t reference_array_size); 
 static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size, char equal_symbol, char diff_symbol);
 static char *unsigned_integerArray_indexes_generate_str(unsigned_integer arr1[], size_t arr1_size, unsigned_integer arr2[], size_t arr2_size);
+static char *unsigned_integerArray_sorting_result_generate_str(unsigned_integer target[], size_t target_size, bool ascending_order);
 static int num_of_digits(unsigned_integer number);
 
 
@@ -2542,7 +2543,146 @@ finish:
 	//------------------------------------------------------------------------------
 }
 
+void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t target_size, bool ascending_order,  int line_number, char custom_message[])
+/**
+ * Description: This function checks if the array 'target' is sorted in ascending 
+ * order if 'acsending_order' is true. Otherwise, it checks if 'target' is sorted
+ * in descending order. The size of 'target' is 'target_size' and the elements
+ * that will be checked are those with index from 0 to target_size - 1.
+ *
+ * Input: (unsigned_integer []) target --> Array that will be checked. 
+ *        (size_t) target_size --> The size of the array 'target'. May not be 0.
+ *        (bool) ascending_order --> true for checking ascending order sorting. Otherwise, 
+ *        descending order.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(target_size)
+ *
+ * Space Complexity: O(target_size)
+ */
+{
+	//------------------------------------------------------------------------------
+	//Define and initialize the variables:
+	int counter;
+	const int max_error_msg_sz = 128;
+	bool error = false;
+	char function_error_message[max_error_msg_sz];
+	char assert_name[] = "assert_unsigned_integerArray_sorted";
+	char std_message_asc[] = "The target array SHOULD BE SORTED IN ASCENDING ORDER.";
+	char std_message_dsc[] = "The target array SHOULD BE SORTED IN DESCENDING ORDER.";
 
+	//Reset global result (reset to success with details empty):
+	reset_global_result();
+
+
+	//------------------------------------------------------------------------------
+	//Check for ignore:
+	if(ignore)
+		goto print;
+
+	//------------------------------------------------------------------------------
+	//Execute the test:
+	global_result.was_successful = true; //Start with the default value true 
+
+	//Check if the array is sorted only if it has more than 1 element:
+	if(target_size > 1)
+	{
+		size_t i;
+		for(i = 1; i < target_size; i++)
+		{
+			if(ascending_order)
+			{
+				if(target[i] < target[i - 1])
+				{
+					global_result.was_successful = false;
+					break;
+				}
+			}
+			else
+			{
+				if(target[i] > target[i - 1])
+				{
+					global_result.was_successful = false;
+					break;
+				}
+			}
+		}
+	}
+
+	//Check if it is necessary to generate highly verbose details in case of fail:
+	if(!global_result.was_successful && verbose == HIGH)
+	{
+		//------------------------------------------------------------------------------
+		//Generate the details for a highly verbose fail message:
+		char *target_array_str;
+		char *target_sort_result_str;
+		char *target_aligned_indexes_str;
+
+		//Generate the string form of each array:
+		target_array_str    = unsigned_integerArray_generate_aligned_str(target, target_size, NULL, 0);
+
+		//Generate the string that compares target and reference:
+		target_sort_result_str = unsigned_integerArray_sorting_result_generate_str(target, target_size, ascending_order);
+
+		//Generate the string for indexes:
+		target_aligned_indexes_str = unsigned_integerArray_indexes_generate_str(target, target_size, target, target_size);
+
+		counter = snprintf(global_result.result_details, 
+					MAX_CHARS,
+					"> target_array:    %s\n"\
+					">                  %s\n"\
+					"> (index)          %s\n",
+					target_array_str,
+					target_sort_result_str,
+					target_aligned_indexes_str
+					);
+			   
+		//Free the buffers:
+		free(target_array_str);
+		free(target_sort_result_str);
+		free(target_aligned_indexes_str);
+
+		//------------------------------------------------------------------------------
+		//Check for error:
+		if (counter < 0) 
+		{
+			//Error creating the result message.
+			error = true;
+			snprintf(function_error_message, 
+					max_error_msg_sz, 
+					"\nError while generating the result message (at line %d).\n",
+					line_number
+					);
+			goto finish;
+		}
+		//------------------------------------------------------------------------------
+	}
+
+	
+	//------------------------------------------------------------------------------
+	//Print the result:
+print:
+	if(ascending_order)
+		print_result(assert_name, std_message_asc, custom_message, line_number);
+	else
+		print_result(assert_name, std_message_dsc, custom_message, line_number);
+
+	
+	//------------------------------------------------------------------------------
+	//Finish:
+finish:
+	if(error)
+	{
+		fprintf(stderr, function_error_message);
+		exit(EXIT_FAILURE);
+	}
+
+	//------------------------------------------------------------------------------
+}
 
 
 
@@ -2557,6 +2697,9 @@ static char *decimal_to_binary_generate_str(unsigned_integer target, size_t num_
  * 	The string will have exactly 'num_of_digits' rightmost digits of 
  * the binary representation of 'target'.
  * 
+ * WARNING: The user must call free for the result returned by this function
+ * after using it.
+ *
  * Ex1: if target == 0b01101 and num_of_digits == 3, the result is "101".
  * Ex2: if target == 0b01101 and num_of_digits == 6, the result is "001101".
  *
@@ -2597,6 +2740,10 @@ static char *decimal_to_binary_generate_str(unsigned_integer target, size_t num_
 }
 
 static char *mask_compare_generate_str(unsigned_integer target, unsigned_integer reference, unsigned_integer mask, char equal_symbol, char diff_symbol)
+/**
+ * WARNING: The user must call free for the result returned by this function
+ * after using it.
+ */
 {
 	//------------------------------------------------------------------------------
 	//Allocate memory for the binary digits:
@@ -2680,6 +2827,10 @@ static char *unsigned_integerArray_generate_aligned_str(unsigned_integer target_
  * will be ignored.
  * 	If the size of the array is different from the size passed as argument, the 
  * behavior is undefined.
+ *
+ *
+ * WARNING: The user must call free for the result returned by this function
+ * after using it.
  *
  * Ex:
  * --> target_array:    [ 12, 34, 5, 123]
@@ -2794,6 +2945,9 @@ static char *unsigned_integerArray_compared_equal_generate_str(unsigned_integer 
  * 	If the size of the array is different from the size passed as argument, the 
  * behavior is undefined.
  *
+ * WARNING: The user must call free for the result returned by this function
+ * after using it.
+ *
  * Ex:
  * --> arr1:    [ 12, 34, 5, 123]
  * --> arr2     [ 12334, 2343, 5, 4, 9]
@@ -2907,6 +3061,9 @@ static char *unsigned_integerArray_indexes_generate_str(unsigned_integer arr1[],
  * 	If the size of the array is different from the size passed as argument, the 
  * behavior is undefined.
  *
+ * WARNING: The user must call free for the result returned by this function
+ * after using it.
+ *
  * Ex:
  * --> arr1:    [ 12, 34, 5, 123]
  * --> arr2     [ 12334, 2343, 5, 4, 29]
@@ -3010,6 +3167,158 @@ static char *unsigned_integerArray_indexes_generate_str(unsigned_integer arr1[],
 	//------------------------------------------------------------------------------
 }
 
+
+static char *unsigned_integerArray_sorting_result_generate_str(unsigned_integer target[], size_t target_size, bool ascending_order)
+/**
+ * Description: This function generates a string that makes it easier to see that 
+ * the 'target' array is NOT sorted in ascending_order if 'ascending_order' is 
+ * true and in descending_order otherwise. It generates symbols that are aligned 
+ * with the current element from target and indicates if this element is <=, <, 
+ * >= or > than the next element. The first element that violates the sorting 
+ * requirements is checked with a '*' symbol.
+ *
+ * WARNING: The user must call free for the result returned by this function
+ * after using it.
+ *
+ * Ex1: 
+ * The array [ 12, 23, 34, 4, 23] is not sorted in ascending order. The string
+ * that will be generated by this function in this case is:
+ * target: [   12,   23,   34,   4,   23]
+ *             <=    <=     >    *
+ *
+ * Ex2:
+ * The array [ 0, 0, 0, 1] is not sorted in descending order. The string 
+ * generated by this function is:
+ * target: [   0,   0,   0,   1]
+ *            >=   >=    <    *
+ *
+ * Inputs: (unsigned_integer[]) target --> The array that will be checked for 
+ *         being sorted.
+ *         (size_t) target_size --> The size of the array 'target'.
+ *         (bool) ascending_order --> If true, means that the target array
+ *         should be sorted in ascending order, but is not. Otherwise, it means
+ *         that the array 'target' should be sorted in descending order but
+ *         it is not.
+ *
+ * Output: (char *) --> The string generated in order to make it easier to 
+ *         see that the array is not sorted.
+ *
+ *
+ * Time Complexity: O(n^2) --> This function uses strcat in 
+ * a inefficient way.
+ */
+{
+	//------------------------------------------------------------------------------
+	//Declare local varibles:
+	char *result;
+	char formatted_symbol_buffer[50];
+	size_t current_buffer_size = 100, buffer_chars_used = 0;
+
+
+	//------------------------------------------------------------------------------
+	//Allocate memory for the buffer:
+	result = calloc(current_buffer_size, sizeof *result);
+	if(!result)
+	{
+		fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	//------------------------------------------------------------------------------
+	//Initialize the buffer:
+	strcat(result, " ");
+	buffer_chars_used += 2; //' ' + '\0'
+
+	//------------------------------------------------------------------------------
+	//Fill the buffer with the arr1 elements:
+
+	size_t i, n, remaining_loops = target_size; 
+	int number_of_digits;
+	char intermediate_buffer[20]; 
+	char symbol_buffer[20];
+	for(i = 0; i < target_size && remaining_loops > 0; i++, remaining_loops--)
+	{
+		//Create the string of the char that will be concatenated to the result:
+		number_of_digits = num_of_digits(target[i]);
+
+
+		n = snprintf(intermediate_buffer, sizeof intermediate_buffer / sizeof intermediate_buffer[0], "%%%ds",  number_of_digits + 4);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		if(remaining_loops == 1)
+		{
+			n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], "%s",  "* ");
+		}
+		else if(ascending_order)
+		{
+			if(target[i] <= target[i + 1])
+			{
+				n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], "<= ");
+			}
+			else
+			{
+				remaining_loops = 2;
+				n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], "> ");
+			}
+		}
+		else /*Descending order*/
+		{
+			if(target[i] >= target[i + 1])
+			{
+				n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], ">= ");
+			}
+			else
+			{
+				remaining_loops = 2;
+				n = snprintf(symbol_buffer, sizeof symbol_buffer / sizeof symbol_buffer[0], "< ");
+			}
+		}
+
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		n = snprintf(formatted_symbol_buffer, sizeof formatted_symbol_buffer / sizeof formatted_symbol_buffer[0], intermediate_buffer,  symbol_buffer);
+		if(n < 0)
+		{
+			fprintf(stderr, "\nERROR while generating the string of array in function unsigned_integerArray_generate_aligned_str.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		//Check if there is enough space:
+		if(buffer_chars_used + n >= current_buffer_size)
+		{
+			//Allocate more memory:
+			current_buffer_size = buffer_chars_used;
+			current_buffer_size *= 2;
+			result = realloc(result, sizeof *result * current_buffer_size);
+			if(!result)
+			{
+				fprintf(stderr, "\nERROR while allocating memory in function unsigned_integerArray_generate_aligned_str.\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		//Add the next number to the result:
+		strcat(result, formatted_symbol_buffer);
+		buffer_chars_used += n;
+	}	
+
+	//------------------------------------------------------------------------------
+	//Return the result:
+	return result;
+
+	//------------------------------------------------------------------------------
+}
+
+
+
 static int num_of_digits(unsigned_integer number)
 {
 	int result = 1; //Already count the first digit.
@@ -3023,6 +3332,5 @@ static int num_of_digits(unsigned_integer number)
 
 	return result;
 }
-
 
 //------------------------------------------------------------------------------
