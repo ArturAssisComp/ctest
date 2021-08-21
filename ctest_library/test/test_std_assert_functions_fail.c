@@ -663,6 +663,31 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_unsigned_integerArray_notSorted-------------------------
+		//Tests that will fail:
+		start_module("u_iArray - notSorted", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integerArray_notSorted", NULL});
+			verbose = LOW;
+			assert_unsigned_integerArray_notSorted(UI{1, 0}, 2, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{0, 1}, 2, ASC, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_unsigned_integerArray_notSorted(UI{1, 0}, 2, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{0, 1}, 2, ASC, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_unsigned_integerArray_notSorted(UI{0}, 1, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{1, 1, 1}, 3, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{1, 0}, 2, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{1, 2, 3, 3, 4, 5, 6}, 7, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{1, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10, 11}, 12, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{1, 200, 3000, 4238, 5209, 6000, 7001, 7002, 8090, 9999, 10876, 95678}, 12, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{0, 1}, 2, ASC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{1, 0, 0, 0, 0}, 5, DSC, __LINE__, NULL);
+			assert_unsigned_integerArray_notSorted(UI{100, 99, 98, 98, 0}, 5, DSC, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 	end_suite();
