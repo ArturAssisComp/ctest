@@ -19,6 +19,7 @@ int main(void)
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED",
+		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -101,6 +102,33 @@ int main(void)
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UC{1, 2, 3}), 3, DSC, __LINE__, "(UC{1, 2, 3}), 3, DSC");
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULI{112, 2, 3}), 3, DSC, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULLI{0, 1, 0, 0}), 4, ASC, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
+
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED------------------
+		//Tests that will fail:
+		start_module("UNSIGNED_INTEGER ARRAY-sorted", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED", NULL});
+			int arr7[] = {12, 4, 2};
+			int arr8[] = {1, 2, 3, 3, 4, 5, 5, 6, 6, 78};
+
+
+			verbose = LOW;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED(arr7, ARR_SZ(arr7), DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (ULI{1, 2, 3}), 3, ASC, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED(arr8, ARR_SZ(arr8), ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (UC{1, 2, 3}), 3, ASC, __LINE__, "(UC{1, 2, 3}), 3, DSC");
+
+			verbose = HIGH;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED(arr8, ARR_SZ(arr8), ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (UC{1, 2, 3}), 3, ASC, __LINE__, "(UC{1, 2, 3}), 3, DSC");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (ULI{112, 23, 3}), 3, DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (ULLI{0, 1, 1, 1}), 4, ASC, __LINE__, NULL);
 
 
 		end_module();

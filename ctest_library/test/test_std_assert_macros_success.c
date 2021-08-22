@@ -18,6 +18,7 @@ int main(void)
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED",
+		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -70,10 +71,26 @@ int main(void)
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UI{1, 2, 3, 34}), 4, ASC, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UI{1}), 1, ASC, __LINE__, NULL);
 			unsigned char arr5[] = {12, 23, 34};
-			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( arr3, ARR_SZ(arr5), ASC, __LINE__, "arr5 is sorted");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( arr5, ARR_SZ(arr5), ASC, __LINE__, "arr5 is sorted");
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULI{10, 4, 3}), 3, DSC, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (UC{0, 0, 0}), 3, DSC, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULLI{0, 0, 0, 0}), 4, ASC, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+		//----------------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED-------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("UNSIGNED_INTEGER ARRAY-sorted", "Every assert in this module must pass.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED", NULL});
+
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (UI{1, 2, 1, 34}), 4, ASC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (UI{1, 0}), 2, ASC, __LINE__, NULL);
+			unsigned char arr6[] = {12, 23, 14};
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( arr6, ARR_SZ(arr6), ASC, __LINE__, "arr5 is sorted");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (ULI{10, 4, 5}), 3, DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (UC{0, 1, 0}), 3, DSC, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (ULLI{23, 0, 0, 0}), 4, ASC, __LINE__, NULL);
 
 		end_module();
 		//----------------------------------------------------------------------------
