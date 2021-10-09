@@ -16,6 +16,8 @@
 #include <math.h>
 #include <string.h>
 
+//Constants:
+#define MAX_ERROR_MSG_SZ 128
 
 //Local auxiliary functions:
 static char *decimal_to_binary_generate_str(unsigned_integer target, size_t num_of_digits); 
@@ -58,7 +60,7 @@ void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_equal";
@@ -152,7 +154,7 @@ void assert_unsigned_integer_notEqual(unsigned_integer target, unsigned_integer 
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_notEqual";
@@ -245,7 +247,7 @@ void assert_unsigned_integer_greater(unsigned_integer target, unsigned_integer r
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_greater";
@@ -338,7 +340,7 @@ void assert_unsigned_integer_greaterEqual (unsigned_integer target, unsigned_int
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_greaterEqual";
@@ -431,7 +433,7 @@ void assert_unsigned_integer_less (unsigned_integer target, unsigned_integer ref
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_less";
@@ -523,7 +525,7 @@ void assert_unsigned_integer_lessEqual (unsigned_integer target, unsigned_intege
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_lessEqual";
@@ -620,7 +622,7 @@ void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_int
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integer_bitMaskEqual";
@@ -745,7 +747,7 @@ void assert_integer_equal(integer target, integer reference, int line_number, ch
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_integer_equal";
@@ -837,7 +839,7 @@ void assert_integer_notEqual     (integer target, integer reference, int line_nu
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_integer_notEqual";
@@ -930,7 +932,7 @@ void assert_integer_greater(integer target, integer reference, int line_number, 
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_integer_greater";
@@ -1024,7 +1026,7 @@ void assert_integer_greaterEqual (integer target, integer reference, int line_nu
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_integer_greaterEqual";
@@ -1118,7 +1120,7 @@ void assert_integer_less (integer target, integer reference, int line_number, ch
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_integer_less";
@@ -1212,7 +1214,7 @@ void assert_integer_lessEqual (integer target, integer reference, int line_numbe
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_integer_lessEqual";
@@ -1317,7 +1319,7 @@ void assert_floating_point_almostEqual(floating_point target, floating_point ref
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_floating_point_almostEqual";
@@ -1441,7 +1443,7 @@ void assert_floating_point_notAlmostEqual(floating_point target, floating_point 
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_floating_point_notAlmostEqual";
@@ -1555,7 +1557,7 @@ void assert_floating_point_greater(floating_point target, floating_point referen
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_floating_point_greater";
@@ -1648,7 +1650,7 @@ void assert_floating_point_greaterEqual (floating_point target, floating_point r
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_floating_point_greaterEqual";
@@ -1741,7 +1743,7 @@ void assert_floating_point_less (floating_point target, floating_point reference
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_floating_point_less";
@@ -1834,7 +1836,7 @@ void assert_floating_point_lessEqual (floating_point target, floating_point refe
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_floating_point_lessEqual";
@@ -1930,7 +1932,7 @@ void assert_bool_equal(bool target, bool reference, int line_number, char custom
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_bool_equal";
@@ -2023,7 +2025,7 @@ void assert_bool_notEqual(bool target, bool reference, int line_number, char cus
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_bool_notEqual";
@@ -2114,7 +2116,7 @@ void assert_bool_true(bool target, int line_number, char custom_message[])
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_bool_true";
@@ -2202,7 +2204,7 @@ void assert_bool_false(bool target, int line_number, char custom_message[])
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_bool_false";
@@ -2300,7 +2302,7 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integerArray_equal";
@@ -2437,7 +2439,7 @@ void assert_unsigned_integerArray_notEqual (unsigned_integer target[], size_t ta
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integerArray_notEqual";
@@ -2569,7 +2571,7 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integerArray_sorted";
@@ -2711,7 +2713,7 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 	//------------------------------------------------------------------------------
 	//Define and initialize the variables:
 	int counter;
-	const int max_error_msg_sz = 128;
+	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
 	char assert_name[] = "assert_unsigned_integerArray_notSorted";
