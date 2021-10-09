@@ -63,11 +63,14 @@ void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_equal";
-	char std_message[] = "The target value SHOULD BE EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_equal",                            //assert_name
+					     "The target value SHOULD BE EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 
 	//------------------------------------------------------------------------------
@@ -77,14 +80,14 @@ void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target == reference);
+	assert_result.was_successful = (target == reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20llu != %-20llu\n",
@@ -114,7 +117,7 @@ void assert_unsigned_integer_equal(unsigned_integer target, unsigned_integer ref
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -157,11 +160,14 @@ void assert_unsigned_integer_notEqual(unsigned_integer target, unsigned_integer 
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_notEqual";
-	char std_message[] = "The target value SHOULD NOT BE EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
+	assert_result_struct assert_result = {
+		                             true,                                                           //was_successful
+					     line_number,                                                    //line_number
+					     "",                                                             //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_notEqual",                             //assert_name
+					     "The target value SHOULD NOT BE EQUAL to the reference value.", //std_message
+					     custom_message                                                  //custom_message
+	                                     };
 
 
 	//------------------------------------------------------------------------------
@@ -171,14 +177,14 @@ void assert_unsigned_integer_notEqual(unsigned_integer target, unsigned_integer 
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target != reference);
+	assert_result.was_successful = (target != reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20llu == %-20llu\n",
@@ -208,7 +214,7 @@ void assert_unsigned_integer_notEqual(unsigned_integer target, unsigned_integer 
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -250,11 +256,14 @@ void assert_unsigned_integer_greater(unsigned_integer target, unsigned_integer r
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_greater";
-	char std_message[] = "The target value SHOULD BE GREATER than the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
+	assert_result_struct assert_result = {
+		                             true,                                                           //was_successful
+					     line_number,                                                    //line_number
+					     "",                                                             //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_greater",                              //assert_name
+					     "The target value SHOULD BE GREATER than the reference value.", //std_message
+					     custom_message                                                  //custom_message
+	                                     };
 
 
 	//------------------------------------------------------------------------------
@@ -264,14 +273,14 @@ void assert_unsigned_integer_greater(unsigned_integer target, unsigned_integer r
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target > reference);
+	assert_result.was_successful = (target > reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20llu <= %-20llu\n",
@@ -301,7 +310,7 @@ void assert_unsigned_integer_greater(unsigned_integer target, unsigned_integer r
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -343,11 +352,14 @@ void assert_unsigned_integer_greaterEqual (unsigned_integer target, unsigned_int
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_greaterEqual";
-	char std_message[] = "The target value SHOULD BE GREATER OR EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
+	assert_result_struct assert_result = {
+		                             true,                                                                  //was_successful
+					     line_number,                                                           //line_number
+					     "",                                                                    //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_greaterEqual",                                //assert_name
+					     "The target value SHOULD BE GREATER OR EQUAL to the reference value.", //std_message
+					     custom_message                                                         //custom_message
+	                                     };
 
 
 	//------------------------------------------------------------------------------
@@ -357,14 +369,14 @@ void assert_unsigned_integer_greaterEqual (unsigned_integer target, unsigned_int
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target >= reference);
+	assert_result.was_successful = (target >= reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20llu <  %-20llu\n",
@@ -394,7 +406,7 @@ void assert_unsigned_integer_greaterEqual (unsigned_integer target, unsigned_int
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -436,12 +448,14 @@ void assert_unsigned_integer_less (unsigned_integer target, unsigned_integer ref
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_less";
-	char std_message[] = "The target value SHOULD BE LESS than the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                        //was_successful
+					     line_number,                                                 //line_number
+					     "",                                                          //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_less",                              //assert_name
+					     "The target value SHOULD BE LESS than the reference value.", //std_message
+					     custom_message                                               //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -450,14 +464,14 @@ void assert_unsigned_integer_less (unsigned_integer target, unsigned_integer ref
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target < reference);
+	assert_result.was_successful = (target < reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20llu >= %-20llu\n",
@@ -487,7 +501,7 @@ void assert_unsigned_integer_less (unsigned_integer target, unsigned_integer ref
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -528,12 +542,14 @@ void assert_unsigned_integer_lessEqual (unsigned_integer target, unsigned_intege
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_lessEqual";
-	char std_message[] = "The target value SHOULD BE LESS OR EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                               //was_successful
+					     line_number,                                                        //line_number
+					     "",                                                                 //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_lessEqual",                                //assert_name
+					     "The target value SHOULD BE LESS OR EQUAL to the reference value.", //std_message
+					     custom_message                                                      //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -542,14 +558,14 @@ void assert_unsigned_integer_lessEqual (unsigned_integer target, unsigned_intege
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target <= reference);
+	assert_result.was_successful = (target <= reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20llu >  %-20llu\n",
@@ -579,7 +595,7 @@ void assert_unsigned_integer_lessEqual (unsigned_integer target, unsigned_intege
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -625,13 +641,14 @@ void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_int
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integer_bitMaskEqual";
-	char std_message[] = "The bits selected by the bit mask from the target and the reference values SHOULD BE RESPECTIVELY EQUAL.";
-
- 
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                                                                       //was_successful
+					     line_number,                                                                                                //line_number
+					     "",                                                                                                         //result_details[MAX_CHARS]
+					     "assert_unsigned_integer_bitMaskEqual",                                                                     //assert_name
+					     "The bits selected by the bit mask from the target and the reference values SHOULD BE RESPECTIVELY EQUAL.", //std_message
+					     custom_message                                                                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -640,10 +657,10 @@ void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_int
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (~(target ^ reference) & mask) == mask;
+	assert_result.was_successful = (~(target ^ reference) & mask) == mask;
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
@@ -661,7 +678,7 @@ void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_int
 		target_reference_comparison_str = mask_compare_generate_str(target, reference, mask, equal_symbol, diff_symbol);
 
 		//Create the datailed message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					">            <binary>  (<hexadecimal>)\n"\
 					"> target:    0b%s (0x%llX)\n"\
@@ -704,7 +721,7 @@ void assert_unsigned_integer_bitMaskEqual (unsigned_integer target, unsigned_int
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -750,12 +767,14 @@ void assert_integer_equal(integer target, integer reference, int line_number, ch
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_integer_equal";
-	char std_message[] = "The target value SHOULD BE EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_integer_equal",                                     //assert_name
+					     "The target value SHOULD BE EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -764,14 +783,14 @@ void assert_integer_equal(integer target, integer reference, int line_number, ch
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target == reference);
+	assert_result.was_successful = (target == reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %+20lld != %+-20lld\n",
@@ -801,7 +820,7 @@ void assert_integer_equal(integer target, integer reference, int line_number, ch
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -842,12 +861,14 @@ void assert_integer_notEqual     (integer target, integer reference, int line_nu
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_integer_notEqual";
-	char std_message[] = "The target value SHOULD NOT BE EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_integer_notEqual",                            //assert_name
+					     "The target value SHOULD NOT BE EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -856,14 +877,14 @@ void assert_integer_notEqual     (integer target, integer reference, int line_nu
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target != reference);
+	assert_result.was_successful = (target != reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %+20lld == %+-20lld\n",
@@ -893,7 +914,7 @@ void assert_integer_notEqual     (integer target, integer reference, int line_nu
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -935,12 +956,14 @@ void assert_integer_greater(integer target, integer reference, int line_number, 
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_integer_greater";
-	char std_message[] = "The target value SHOULD BE GREATER than the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_integer_greater",                            //assert_name
+					     "The target value SHOULD BE GREATER than the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -949,14 +972,14 @@ void assert_integer_greater(integer target, integer reference, int line_number, 
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target > reference);
+	assert_result.was_successful = (target > reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %+20lld <= %+-20lld\n",
@@ -986,7 +1009,7 @@ void assert_integer_greater(integer target, integer reference, int line_number, 
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1029,12 +1052,14 @@ void assert_integer_greaterEqual (integer target, integer reference, int line_nu
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_integer_greaterEqual";
-	char std_message[] = "The target value SHOULD BE GREATER OR EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_integer_greaterEqual",                            //assert_name
+					     "The target value SHOULD BE GREATER OR EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1043,14 +1068,14 @@ void assert_integer_greaterEqual (integer target, integer reference, int line_nu
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target >= reference);
+	assert_result.was_successful = (target >= reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %+20lld <  %+-20lld\n",
@@ -1080,7 +1105,7 @@ void assert_integer_greaterEqual (integer target, integer reference, int line_nu
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1123,12 +1148,14 @@ void assert_integer_less (integer target, integer reference, int line_number, ch
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_integer_less";
-	char std_message[] = "The target value SHOULD BE LESS than the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_integer_less",                            //assert_name
+					     "The target value SHOULD BE LESS than the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1137,14 +1164,14 @@ void assert_integer_less (integer target, integer reference, int line_number, ch
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target < reference);
+	assert_result.was_successful = (target < reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %+20lld >= %+-20lld\n",
@@ -1174,7 +1201,7 @@ void assert_integer_less (integer target, integer reference, int line_number, ch
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1217,12 +1244,14 @@ void assert_integer_lessEqual (integer target, integer reference, int line_numbe
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_integer_lessEqual";
-	char std_message[] = "The target value SHOULD BE LESS OR EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_integer_lessEqual",                            //assert_name
+					     "The target value SHOULD BE LESS OR EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1231,14 +1260,14 @@ void assert_integer_lessEqual (integer target, integer reference, int line_numbe
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target <= reference);
+	assert_result.was_successful = (target <= reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %+20lld >  %+-20lld\n",
@@ -1268,7 +1297,7 @@ void assert_integer_lessEqual (integer target, integer reference, int line_numbe
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1322,12 +1351,14 @@ void assert_floating_point_almostEqual(floating_point target, floating_point ref
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_floating_point_almostEqual";
-	char std_message[] = "The target value SHOULD BE ALMOST EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_floating_point_almostEqual",                            //assert_name
+					     "The target value SHOULD BE ALMOST EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1349,15 +1380,15 @@ void assert_floating_point_almostEqual(floating_point target, floating_point ref
 	}
 	
 	//Execute the test:
-	global_result.was_successful = fabs(target - reference) < max_diff;
+	assert_result.was_successful = fabs(target - reference) < max_diff;
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %15s     %-15s\n"\
 					"> %+15lg !~= %+-15lg\n"\
@@ -1394,7 +1425,7 @@ void assert_floating_point_almostEqual(floating_point target, floating_point ref
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1446,12 +1477,14 @@ void assert_floating_point_notAlmostEqual(floating_point target, floating_point 
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_floating_point_notAlmostEqual";
-	char std_message[] = "The target value SHOULD BE NOT ALMOST EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_floating_point_notAlmostEqual",                            //assert_name
+					     "The target value SHOULD BE NOT ALMOST EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1473,15 +1506,15 @@ void assert_floating_point_notAlmostEqual(floating_point target, floating_point 
 	}
 	
 	//Execute the test:
-	global_result.was_successful = fabs(target - reference) >= min_diff;
+	assert_result.was_successful = fabs(target - reference) >= min_diff;
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %15s    %-15s\n"\
 					"> %+15lg ~= %+-15lg\n"\
@@ -1518,7 +1551,7 @@ void assert_floating_point_notAlmostEqual(floating_point target, floating_point 
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1560,12 +1593,14 @@ void assert_floating_point_greater(floating_point target, floating_point referen
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_floating_point_greater";
-	char std_message[] = "The target value SHOULD BE GREATER than the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_floating_point_greater",                            //assert_name
+					     "The target value SHOULD BE GREATER than the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1574,14 +1609,14 @@ void assert_floating_point_greater(floating_point target, floating_point referen
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target > reference);
+	assert_result.was_successful = (target > reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20lg <= %-20lg\n",
@@ -1611,7 +1646,7 @@ void assert_floating_point_greater(floating_point target, floating_point referen
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1653,12 +1688,14 @@ void assert_floating_point_greaterEqual (floating_point target, floating_point r
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_floating_point_greaterEqual";
-	char std_message[] = "The target value SHOULD BE GREATER OR EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_floating_point_greaterEqual",                            //assert_name
+					     "The target value SHOULD BE GREATER OR EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1667,14 +1704,14 @@ void assert_floating_point_greaterEqual (floating_point target, floating_point r
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target >= reference);
+	assert_result.was_successful = (target >= reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20lg <  %-20lg\n",
@@ -1704,7 +1741,7 @@ void assert_floating_point_greaterEqual (floating_point target, floating_point r
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1746,12 +1783,14 @@ void assert_floating_point_less (floating_point target, floating_point reference
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_floating_point_less";
-	char std_message[] = "The target value SHOULD BE LESS than the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_floating_point_less",                            //assert_name
+					     "The target value SHOULD BE LESS than the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1760,14 +1799,14 @@ void assert_floating_point_less (floating_point target, floating_point reference
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target < reference);
+	assert_result.was_successful = (target < reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20lg >= %-20lg\n",
@@ -1797,7 +1836,7 @@ void assert_floating_point_less (floating_point target, floating_point reference
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1839,12 +1878,14 @@ void assert_floating_point_lessEqual (floating_point target, floating_point refe
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_floating_point_lessEqual";
-	char std_message[] = "The target value SHOULD BE LESS OR EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_floating_point_lessEqual",                            //assert_name
+					     "The target value SHOULD BE LESS OR EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1853,14 +1894,14 @@ void assert_floating_point_lessEqual (floating_point target, floating_point refe
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target <= reference);
+	assert_result.was_successful = (target <= reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %20s    %-20s\n"\
 					"> %20lg >  %-20lg\n",
@@ -1890,7 +1931,7 @@ void assert_floating_point_lessEqual (floating_point target, floating_point refe
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -1935,12 +1976,14 @@ void assert_bool_equal(bool target, bool reference, int line_number, char custom
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_bool_equal";
-	char std_message[] = "The target value SHOULD BE EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_bool_equal",                            //assert_name
+					     "The target value SHOULD BE EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -1949,14 +1992,14 @@ void assert_bool_equal(bool target, bool reference, int line_number, char custom
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target == reference);
+	assert_result.was_successful = (target == reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %10s    %-10s\n"\
 					"> %10s != %-10s\n",
@@ -1986,7 +2029,7 @@ void assert_bool_equal(bool target, bool reference, int line_number, char custom
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -2028,12 +2071,14 @@ void assert_bool_notEqual(bool target, bool reference, int line_number, char cus
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_bool_notEqual";
-	char std_message[] = "The target value SHOULD NOT BE EQUAL to the reference value.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_bool_notEqual",                            //assert_name
+					     "The target value SHOULD NOT BE EQUAL to the reference value.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -2042,14 +2087,14 @@ void assert_bool_notEqual(bool target, bool reference, int line_number, char cus
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target != reference);
+	assert_result.was_successful = (target != reference);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %10s    %-10s\n"\
 					"> %10s == %-10s\n",
@@ -2079,7 +2124,7 @@ void assert_bool_notEqual(bool target, bool reference, int line_number, char cus
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -2119,12 +2164,14 @@ void assert_bool_true(bool target, int line_number, char custom_message[])
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_bool_true";
-	char std_message[] = "The target value SHOULD BE true.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_bool_true",                            //assert_name
+					     "The target value SHOULD BE true.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -2133,14 +2180,14 @@ void assert_bool_true(bool target, int line_number, char custom_message[])
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target == true);
+	assert_result.was_successful = (target == true);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %10s == %-10s\n",
 				        "target",
@@ -2167,7 +2214,7 @@ void assert_bool_true(bool target, int line_number, char custom_message[])
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -2207,12 +2254,14 @@ void assert_bool_false(bool target, int line_number, char custom_message[])
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_bool_false";
-	char std_message[] = "The target value SHOULD BE false.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_bool_false",                            //assert_name
+					     "The target value SHOULD BE false.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -2221,14 +2270,14 @@ void assert_bool_false(bool target, int line_number, char custom_message[])
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = (target == false);
+	assert_result.was_successful = (target == false);
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> %10s == %-10s\n",
 				        "target",
@@ -2255,7 +2304,7 @@ void assert_bool_false(bool target, int line_number, char custom_message[])
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -2305,12 +2354,14 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integerArray_equal";
-	char std_message[] = "Each element of the target array SHOULD BE EQUAL to each respective element of the reference array.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_unsigned_integerArray_equal",                            //assert_name
+					     "Each element of the target array SHOULD BE EQUAL to each respective element of the reference array.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -2319,10 +2370,10 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = true; //Start with the default value
+	assert_result.was_successful = true; //Start with the default value
 
 	if(target_size != reference_size)
-		global_result.was_successful = false;
+		assert_result.was_successful = false;
 	else
 	{
 		//Check each element:
@@ -2331,14 +2382,14 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 		{
 			if(target[i] != reference[i])
 			{
-				global_result.was_successful = false;
+				assert_result.was_successful = false;
 				break;
 			}
 		}
 	}
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
@@ -2357,7 +2408,7 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 		//Generate the string for indexes:
 		target_reference_aligned_indexes_str = unsigned_integerArray_indexes_generate_str(target, target_size, reference, reference_size);
 
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> target_array:    %s\n"\
 					">                  %s\n"\
@@ -2395,7 +2446,7 @@ void assert_unsigned_integerArray_equal (unsigned_integer target[], size_t targe
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -2442,12 +2493,14 @@ void assert_unsigned_integerArray_notEqual (unsigned_integer target[], size_t ta
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integerArray_notEqual";
-	char std_message[] = "The target array SHOULD NOT BE EQUAL to the reference array.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
-
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_unsigned_integerArray_notEqual",                            //assert_name
+					     "The target array SHOULD NOT BE EQUAL to the reference array.", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 
 	//------------------------------------------------------------------------------
 	//Check for ignore:
@@ -2456,10 +2509,10 @@ void assert_unsigned_integerArray_notEqual (unsigned_integer target[], size_t ta
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = false; //Start with the default value false
+	assert_result.was_successful = false; //Start with the default value false
 
 	if(target_size != reference_size)
-		global_result.was_successful = true;
+		assert_result.was_successful = true;
 	else
 	{
 		//Check each element:
@@ -2468,14 +2521,14 @@ void assert_unsigned_integerArray_notEqual (unsigned_integer target[], size_t ta
 		{
 			if(target[i] != reference[i])
 			{
-				global_result.was_successful = true;
+				assert_result.was_successful = true;
 				break;
 			}
 		}
 	}
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
@@ -2494,7 +2547,7 @@ void assert_unsigned_integerArray_notEqual (unsigned_integer target[], size_t ta
 		//Generate the string for indexes:
 		target_reference_aligned_indexes_str = unsigned_integerArray_indexes_generate_str(target, target_size, reference, reference_size);
 
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> target_array:    %s\n"\
 					">                  %s\n"\
@@ -2532,7 +2585,7 @@ void assert_unsigned_integerArray_notEqual (unsigned_integer target[], size_t ta
 	//------------------------------------------------------------------------------
 	//Print the result:
 print:
-	print_result(assert_name, std_message, custom_message, line_number);
+	print_assert_result(assert_result);
 	
 	//------------------------------------------------------------------------------
 	//Finish:
@@ -2574,12 +2627,16 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integerArray_sorted";
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_unsigned_integerArray_sorted",                            //assert_name
+					     "", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 	char std_message_asc[] = "The target array SHOULD BE SORTED IN ASCENDING ORDER.";
 	char std_message_dsc[] = "The target array SHOULD BE SORTED IN DESCENDING ORDER.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
 
 
 	//------------------------------------------------------------------------------
@@ -2589,7 +2646,7 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = true; //Start with the default value true 
+	assert_result.was_successful = true; //Start with the default value true 
 
 	//Check if the array is sorted only if it has more than 1 element:
 	if(target_size > 1)
@@ -2601,7 +2658,7 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 			{
 				if(target[i] < target[i - 1])
 				{
-					global_result.was_successful = false;
+					assert_result.was_successful = false;
 					break;
 				}
 			}
@@ -2609,7 +2666,7 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 			{
 				if(target[i] > target[i - 1])
 				{
-					global_result.was_successful = false;
+					assert_result.was_successful = false;
 					break;
 				}
 			}
@@ -2617,7 +2674,7 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 	}
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
@@ -2634,7 +2691,7 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 		//Generate the string for indexes:
 		target_aligned_indexes_str = unsigned_integerArray_indexes_generate_str(target, target_size, target, target_size);
 
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> target_array:    %s\n"\
 					">                  %s\n"\
@@ -2670,9 +2727,11 @@ void assert_unsigned_integerArray_sorted(unsigned_integer target[], size_t targe
 	//Print the result:
 print:
 	if(ascending_order)
-		print_result(assert_name, std_message_asc, custom_message, line_number);
+		assert_result.std_message = std_message_asc;
 	else
-		print_result(assert_name, std_message_dsc, custom_message, line_number);
+		assert_result.std_message = std_message_dsc;
+
+	print_assert_result(assert_result);
 
 	
 	//------------------------------------------------------------------------------
@@ -2716,12 +2775,16 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 	const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
 	bool error = false;
 	char function_error_message[max_error_msg_sz];
-	char assert_name[] = "assert_unsigned_integerArray_notSorted";
+	assert_result_struct assert_result = {
+		                             true,                                                       //was_successful
+					     line_number,                                                //line_number
+					     "",                                                         //result_details[MAX_CHARS]
+					     "assert_unsigned_integerArray_notSorted",                            //assert_name
+					     "", //std_message
+					     custom_message                                              //custom_message
+	                                     };
 	char std_message_asc[] = "The target array SHOULD NOT BE SORTED IN ASCENDING ORDER.";
 	char std_message_dsc[] = "The target array SHOULD NOT BE SORTED IN DESCENDING ORDER.";
-
-	//Reset global result (reset to success with details empty):
-	reset_global_result();
 
 
 	//------------------------------------------------------------------------------
@@ -2731,7 +2794,7 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 
 	//------------------------------------------------------------------------------
 	//Execute the test:
-	global_result.was_successful = false; //Start with the default value false 
+	assert_result.was_successful = false; //Start with the default value false 
 
 	//Check if the array is sorted only if it has more than 1 element:
 	if(target_size > 1)
@@ -2743,7 +2806,7 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 			{
 				if(target[i] < target[i - 1]) //Not sorted
 				{
-					global_result.was_successful = true;
+					assert_result.was_successful = true;
 					break;
 				}
 			}
@@ -2751,7 +2814,7 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 			{
 				if(target[i] > target[i - 1]) //Not sorted
 				{
-					global_result.was_successful = true;
+					assert_result.was_successful = true;
 					break;
 				}
 			}
@@ -2759,7 +2822,7 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 	}
 
 	//Check if it is necessary to generate highly verbose details in case of fail:
-	if(!global_result.was_successful && verbose == HIGH)
+	if(!assert_result.was_successful && verbose == HIGH)
 	{
 		//------------------------------------------------------------------------------
 		//Generate the details for a highly verbose fail message:
@@ -2776,7 +2839,7 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 		//Generate the string for indexes:
 		target_aligned_indexes_str = unsigned_integerArray_indexes_generate_str(target, target_size, target, target_size);
 
-		counter = snprintf(global_result.result_details, 
+		counter = snprintf(assert_result.result_details, 
 					MAX_CHARS,
 					"> target_array:    %s\n"\
 					">                  %s\n"\
@@ -2812,9 +2875,11 @@ void assert_unsigned_integerArray_notSorted(unsigned_integer target[], size_t ta
 	//Print the result:
 print:
 	if(ascending_order)
-		print_result(assert_name, std_message_asc, custom_message, line_number);
+		assert_result.std_message = std_message_asc;
 	else
-		print_result(assert_name, std_message_dsc, custom_message, line_number);
+		assert_result.std_message = std_message_dsc;
+
+	print_assert_result(assert_result);
 
 	
 	//------------------------------------------------------------------------------

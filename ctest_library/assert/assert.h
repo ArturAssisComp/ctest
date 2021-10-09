@@ -10,20 +10,25 @@
 
 
 //Declarations of structs:
-struct
+struct assert_result_struct
 {
 	bool was_successful;
+	int line_number;
 	char result_details[MAX_CHARS];
-} global_result;
+	char *assert_name;
+	char *std_message;
+	char *custom_message;
+};
 
+
+typedef struct assert_result_struct assert_result_struct;
 typedef long long int integer;
 typedef unsigned long long int unsigned_integer;
 typedef double floating_point;
 
 
 //Declaration of auxiliary functions:
-void print_result(char assert_name[], char std_message[], char custom_message[], int line_number);
-void reset_global_result();
+void print_assert_result(assert_result_struct assert_result);
 
 
 //Declaration of functions:

@@ -10,7 +10,8 @@ bool ignore = false;
 
 
 //Definitions:
-void print_result(char assert_name[], char std_message[], char custom_message[], int line_number)
+
+void print_assert_result(assert_result_struct assert_result)
 /**
  * Description: This function must be called after each assertion. It prints 
  * the result using the stdout stream.
@@ -53,7 +54,7 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 	}
 
 	//Handle the result:
-	if (global_result.was_successful)
+	if (assert_result.was_successful)
 	{
 		//Print the result:
 		n = fprintf(stdout, ".");
@@ -75,7 +76,7 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 	else //Fail
 	{
 		//Print the header:
-		n = fprintf(stdout, "F\n\nFAILURE MESSAGE (Assert number %d at LINE %d):\n", ctest_info.num_of_results + 1, line_number);
+		n = fprintf(stdout, "F\n\nFAILURE MESSAGE (Assert number %d at LINE %d):\n", ctest_info.num_of_results + 1, assert_result.line_number);
 		if (n < 0)
 		{
 			fprintf(stderr, "Error while printing the header of the result.\n");
@@ -83,7 +84,7 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 		}
 
 		//Print the assert name:
-		n = fprintf(stdout, "<assert name> --> %s\n", assert_name);
+		n = fprintf(stdout, "<assert name> --> %s\n", assert_result.assert_name);
 		if (n < 0)
 		{
 			fprintf(stderr, "Error while printing the assert name of the result.\n");
@@ -93,7 +94,7 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 		//Print the std message:
 		if(verbose == MEDIUM || verbose == HIGH)
 		{
-			buffer_str = break_line(std_message, MAX_CHARS, "<std msg>     --> ", "    ", "", line_length);
+			buffer_str = break_line(assert_result.std_message, MAX_CHARS, "<std msg>     --> ", "    ", "", line_length);
 			n = fprintf(stdout, "%s", buffer_str );
 			if (n < 0)
 			{
@@ -104,9 +105,9 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 		}
 
 		//Print the custom message:
-		if(custom_message != NULL && (verbose == MEDIUM || verbose == HIGH))
+		if(assert_result.custom_message != NULL && (verbose == MEDIUM || verbose == HIGH))
 		{
-			buffer_str = break_line(custom_message, MAX_CHARS, "<custom msg>  --> ", "    ", "", line_length);
+			buffer_str = break_line(assert_result.custom_message, MAX_CHARS, "<custom msg>  --> ", "    ", "", line_length);
 			n = fprintf(stdout, "%s", buffer_str);
 			if (n < 0)
 			{
@@ -119,7 +120,7 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 		//Print the details of the failure:
 		if(verbose == HIGH)
 		{
-			n = fprintf(stdout, "<details>     -->\n%s", global_result.result_details);
+			n = fprintf(stdout, "<details>     -->\n%s", assert_result.result_details);
 			if (n < 0)
 			{
 				fprintf(stderr, "Error while printing the custom message of the result.\n");
@@ -149,9 +150,5 @@ void print_result(char assert_name[], char std_message[], char custom_message[],
 }
 
 
-void reset_global_result()
-/*This function resets the global_result struct*/
-{
-	global_result.was_successful = true;
-	global_result.result_details[0] = '\0';
-}
+
+
