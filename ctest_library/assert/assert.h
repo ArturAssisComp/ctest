@@ -3,6 +3,7 @@
 //Includes:
 #include <stdlib.h>
 #include <stdbool.h>
+#include "..\globals\globals.h"
 #include "std_assert_macros.h"
 
 //Constants:
@@ -22,9 +23,7 @@ struct assert_result_struct
 
 
 typedef struct assert_result_struct assert_result_struct;
-typedef long long int integer;
-typedef unsigned long long int unsigned_integer;
-typedef double floating_point;
+
 
 
 //Declaration of auxiliary functions:

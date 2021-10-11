@@ -24,6 +24,10 @@ typedef struct {
         int total_ignored;
 } ctest_info_struct;
 
+typedef long long int integer;
+typedef unsigned long long int unsigned_integer;
+typedef double floating_point;
+
 //Declare global Variables:
 extern bool ignore;
 extern int verbose;
