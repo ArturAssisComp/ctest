@@ -111,7 +111,7 @@ int main(void)
 
 		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED------------------
 		//Tests that will fail:
-		start_module("UNSIGNED_INTEGER ARRAY-sorted", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED", NULL});
+		start_module("UNSIGNED_INTEGER ARRAY-notSorted", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED", NULL});
 			int arr7[] = {12, 4, 2};
 			int arr8[] = {1, 2, 3, 3, 4, 5, 5, 6, 6, 78};
 
