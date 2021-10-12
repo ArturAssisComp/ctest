@@ -36,6 +36,7 @@ typedef struct
 {
         struct linked_list **table;
         hash_type table_size;
+        size_t num_of_items;
 }dict;
 
 typedef struct 

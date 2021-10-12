@@ -51,6 +51,7 @@ dict *create_dict(hash_type table_size)
 	}
 	
 	created_dict->table_size = table_size;
+	created_dict->num_of_items = 0;
 	
 result:
 	return created_dict;
@@ -66,4 +67,51 @@ void delete_dict(dict **ptr_to_dict)
 	;
 }
 
+
+
+void assign_value_to_key(element key, element value, dict *target_dict)
+/**
+ * Description: This function assigns the value 'value' to the key 'key' into 
+ * the dict 'target_dict'. If key is not hashable, an error occurs.
+ *
+ * Input: (element) key, value --> A copy of the key and the value that will be 
+ *         used as reference to create an item key:value and to add it into the 
+ *         target dict.
+ *         (dict *) target_dict;
+ *
+ * Output: (void)
+ */
+{
+	//Variables:
+	dict_item dict_item_to_add;
+	hash_type hash_value;
+	linked_list *current_linked_list;
+	linked_list_element *found_element;
+
+	//Generate the hash value:
+	hash_value  = generate_hash(key, target_dict->table_size);
+	
+
+	//Check if the element already exist:
+	current_linked_list = target_dict->table[hash_value];
+	found_element = get_linked_list_element(key, current_linked_list);
+	if(found_element)
+	{
+		free_element(found_element->item.value);
+		found_element->item.value = value;
+	}
+	else
+	{
+		//Initialize the dict that will be added:
+		dict_item_to_add.hash  = hash_value;
+		dict_item_to_add.key   = key;
+		dict_item_to_add.value = value;
+
+		//Add the element into the linked list of the dict:
+		insert_item(dict_item_to_add, current_linked_list);
+		target_dict->num_of_items++;
+	}
+
+
+}
 
