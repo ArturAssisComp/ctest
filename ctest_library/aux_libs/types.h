@@ -44,7 +44,6 @@ typedef struct
 		array arr;
 		dict dct;
 	} value;
-	size_t num_of_components; 
 	data_type type;
 } element;
 
@@ -72,5 +71,10 @@ typedef struct
 	size_t num_of_elements;
 
 }linked_list;
+
+
+//Function declarations:
+bool is_equal(element e1, element e2);
+
 
 #endif

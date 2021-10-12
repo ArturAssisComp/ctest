@@ -8,11 +8,11 @@
 
 //Declaration of functions:
 
-linked_list *create_linked_list();
-void delete_linked_list(linked_list **ptr_to_ptr_to_linked_list);
-void insert_element(element *ptr_to_element, linked_list *ptr_to_linked_list);
-element *get_and_delete_element(element *ptr_to_ref_element, linked_list *ptr_to_linked_list);
-element *get_element(element *ptr_to_ref_element, linked_list *ptr_to_linked_list);
+linked_list *create_linked_list(void);
+void delete_linked_list(linked_list **ptr_to_target_linked_list);
+linked_list_element *insert_item(dict_item item, linked_list *target_linked_list);
+linked_list_element *get_and_delete_linked_list_element(element key, linked_list *target_linked_list);
+linked_list_element *get_linked_list_element(element key, linked_list *target_linked_list);
 
 
 
