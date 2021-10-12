@@ -22,7 +22,8 @@ typedef enum
         STRING,
 	//Group elements:
 	ARRAY, //Array of generic elements
-	DICT   //Dict of generic elements
+	DICT,   //Dict of generic elements
+        _NULL
 } data_type;
 
 
@@ -75,6 +76,7 @@ typedef struct
 
 //Function declarations:
 bool is_equal(element e1, element e2);
+void free_element(element e);
 
 
 #endif

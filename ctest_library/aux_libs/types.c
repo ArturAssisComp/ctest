@@ -39,6 +39,9 @@ bool is_equal(element e1, element e2)
 		case BOOL:
 			result = (e1.value.b == e2.value.b);
 			break;
+		case _NULL:
+			result = true;
+			break;
 		case FLOATING_POINT:
 		case ARRAY:
 		case DICT:
@@ -57,3 +60,42 @@ error:
 	fprintf(stderr, error_msg);
 	exit(EXIT_FAILURE);
 }
+
+void free_element(element e)
+{
+	//Variables:
+	char *error_msg;
+
+	//Compare the values:
+	switch (e.type)
+	{
+		case UNSIGNED_INTEGER:
+		case INTEGER:
+		case CHAR:
+		case STRING:
+		case BOOL:
+			e.type = _NULL;
+			break;
+		case _NULL:
+			error_msg = "Calling free_element for a _NULL element.";
+			goto error;
+			break;
+		case FLOATING_POINT:
+		case ARRAY:
+		case DICT:
+			error_msg = "Comparison for equality is not implemented.";
+			goto error;
+			break;
+		default:
+			break;
+			
+	}
+
+result:
+	return;
+
+error:
+	fprintf(stderr, error_msg);
+	exit(EXIT_FAILURE);
+}
+

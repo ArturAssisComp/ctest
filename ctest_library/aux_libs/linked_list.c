@@ -12,7 +12,7 @@ static void _delete_head_element(linked_list *target_linked_list);
 
 
 //Definition of functions:
-linked_list *create_linked_list()
+linked_list *create_linked_list(void)
 /**
  * Description: This function creates a new linked list allocating memory and 
  * initializing it with 0 elements. The user must delete the linked list calling 
@@ -180,6 +180,41 @@ result:
 	return found_element;
 }
 
+
+void delete_linked_list(linked_list **ptr_to_target_linked_list)
+/**
+ * Description: This function deletes the linked list pointed by 'ptr_to_target_linked_list'. 
+ * It frees all memeory allocated by each element and frees the pointer that is 
+ * pointed by 'ptr_to_taget_linked_list', assgning NULL value to it.
+ *
+ * Input: (linked_list **) ptr_to_target_linked_list --> Pointer to the pointer 
+ *        that points to the target linked list.
+ *
+ * Output: (void)
+ */
+{
+	//Variables:
+	linked_list_element *current_linked_list_element_to_free;
+	dict_item current_item;
+	linked_list *target_linked_list;
+
+	//Free memory allocated for each element of the linked list:
+	target_linked_list = *ptr_to_target_linked_list;
+	while(target_linked_list->num_of_elements > 0)
+	{
+		current_linked_list_element_to_free = target_linked_list->head;
+		_delete_head_element(target_linked_list);
+		//Free the linked list element:
+		current_item = current_linked_list_element_to_free->item;
+		free_element(current_item.key);
+		free_element(current_item.value);
+		free(current_linked_list_element_to_free);
+	}
+
+	//Free the linked list pointer:
+	free(target_linked_list);
+	*ptr_to_target_linked_list = NULL;
+}
 
 //Definition of local functions:
 static void _delete_next_element(linked_list_element *previous_element, linked_list *target_linked_list)
