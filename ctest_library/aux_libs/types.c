@@ -1,4 +1,5 @@
 #include "types.h"
+#include "dict.h"
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -65,8 +66,10 @@ void free_element(element e)
 {
 	//Variables:
 	char *error_msg;
+	linked_list *current_linked_list;
+	int i;
 
-	//Compare the values:
+	//Free the values:
 	switch (e.type)
 	{
 		case UNSIGNED_INTEGER:
@@ -74,16 +77,24 @@ void free_element(element e)
 		case CHAR:
 		case STRING:
 		case BOOL:
+		case FLOATING_POINT:
 			e.type = _NULL;
+			break;
+		case DICT:
+			e.type = _NULL;
+			delete_dict(&e.value.dct);
+			if(e.value.dct)
+			{
+				error_msg = "Problems while deleting the dict.";
+				goto error;
+			}
 			break;
 		case _NULL:
 			error_msg = "Calling free_element for a _NULL element.";
 			goto error;
 			break;
-		case FLOATING_POINT:
 		case ARRAY:
-		case DICT:
-			error_msg = "Comparison for equality is not implemented.";
+			error_msg = "Free for ARRAY type is not implemented.";
 			goto error;
 			break;
 		default:

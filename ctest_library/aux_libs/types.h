@@ -29,9 +29,14 @@ typedef enum
 
 struct element;
 struct linked_list;
+typedef size_t hash_type;
 
 typedef struct element *array;
-typedef struct linked_list *dict;
+typedef struct 
+{
+        struct linked_list **table;
+        hash_type table_size;
+}dict;
 
 typedef struct 
 {
@@ -42,15 +47,14 @@ typedef struct
 		bool b;
 		char c;
 		char *str; //A string is considered an individual element. 
-		array arr;
-		dict dct;
+		array *arr;
+		dict *dct;
 	} value;
 	data_type type;
 } element;
 
 
 /*Dict element*/
-typedef size_t hash_type;
 typedef struct 
 {
 	element key;
@@ -66,12 +70,13 @@ struct linked_list_element
 };
 typedef struct linked_list_element linked_list_element;
 
-typedef struct
+struct linked_list
 {
 	linked_list_element *head;
 	size_t num_of_elements;
 
-}linked_list;
+};
+typedef struct linked_list linked_list;
 
 
 //Function declarations:
