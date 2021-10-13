@@ -115,3 +115,31 @@ void assign_value_to_key(element key, element value, dict *target_dict)
 
 }
 
+element *get_value(element key, dict *target_dict)
+/**
+ * Description: This function returns a pointer to the value of the item of 
+ * 'target_dict' that has key equals to 'key'. If the element with key 'key'
+ * is not found, NULL is returned. 'key' must be a hashable element, otherwise
+ * an error is raised.
+ *
+ * Input: (element) key
+ *        (dict *) target_dict
+ *
+ * Output: (element *)
+ */
+{
+	//Variables:
+	element *found_value = NULL;
+	linked_list_element *found_linked_list_element;
+	hash_type hash_value;
+
+	//Calculate the hash:
+	hash_value  = generate_hash(key, target_dict->table_size);
+
+	//Get the element:
+	found_linked_list_element = get_linked_list_element(key, target_dict->table[hash_value]);
+
+	if(found_linked_list_element) found_value = &(found_linked_list_element->item.value);
+
+	return found_value;
+}
