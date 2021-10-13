@@ -1,5 +1,6 @@
 #include "types.h"
 #include "dict.h"
+#include "array.h"
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -89,14 +90,20 @@ void free_element(element e)
 				goto error;
 			}
 			break;
+		case ARRAY:
+			e.type = _NULL;
+			delete_array(&e.value.arr);
+			if(e.value.arr)
+			{
+				error_msg = "Problems while deleting the array.";
+				goto error;
+			}
+			break;
 		case _NULL:
 			error_msg = "Calling free_element for a _NULL element.";
 			goto error;
 			break;
-		case ARRAY:
-			error_msg = "Free for ARRAY type is not implemented.";
-			goto error;
-			break;
+
 		default:
 			break;
 			
