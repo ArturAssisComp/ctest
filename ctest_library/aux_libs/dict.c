@@ -143,3 +143,39 @@ element *get_value(element key, dict *target_dict)
 
 	return found_value;
 }
+
+bool delete_element(element key, dict *target_dict)
+/**
+ * Description: This function tries to delete the element of 'target_dict' with 
+ * key 'key' if this element exists. If the elment exists and is deleted, it 
+ * returns true. If the element does not exist, it returns false.
+ *
+ * Input: (element) key
+ *        (dict *) target_dict
+ *
+ * Output: (bool)
+ */
+{
+	//Variables:
+	hash_type hash_value;
+	linked_list_element *found_element;
+	bool result = false;
+
+	//Generate the hash value:
+	hash_value  = generate_hash(key, target_dict->table_size);
+	
+
+	//Try to delete the element:
+	found_element = get_and_delete_linked_list_element(key, target_dict->table[hash_value]);
+
+	//Check if it was deleted:
+	if(found_element)
+	{
+		free_element(found_element->item.value);
+		target_dict->num_of_items--;
+		result = true;
+	}
+
+	return result;
+
+}

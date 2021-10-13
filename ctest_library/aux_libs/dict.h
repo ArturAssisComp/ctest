@@ -10,7 +10,7 @@
 dict *create_dict(hash_type table_size);
 void assign_value_to_key(element key, element value, dict *target_dict);
 element *get_value(element key, dict *target_dict);
-//delete_element(key, dict)
+bool delete_element(element key, dict *target_dict);
 void delete_dict(dict **ptr_to_dict);
 
 #endif
