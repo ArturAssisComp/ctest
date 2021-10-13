@@ -67,6 +67,7 @@ element *get_element(size_t index, array *current_array)
 	return found_element;
 }
 
+
 void append_element(element e, array *current_array)
 /**
  * Description: This function appends the element 'e' at the end of the array 
@@ -119,6 +120,59 @@ error:
 	exit(EXIT_FAILURE);
 }
 
+
+element pop(array *current_array)
+/**
+ * Description: This function deletes the last element of 'current_array' and 
+ * returns a copy of that element. The user must call free_element after using
+ * the element.
+ *
+ * Input: (array *) current_array
+ *
+ * Output: (element)
+ */
+{
+	//Variables:
+	element e;
+	size_t new_capacity;
+	char *error_message;
+	element *temp;
+
+	//Copy the element:
+	if(current_array->num_of_elements > 0) e = current_array->el_array[--current_array->num_of_elements];
+	else 
+	{
+		error_message = "There is no element to pop";
+		goto error;
+	}
+
+	//Reduce the array if necessary:
+	if(5 * current_array->num_of_elements < current_array->capacity)
+	{
+		//Allocate more memory:
+		new_capacity = 1 + current_array->capacity / 5;
+		temp = realloc(current_array->el_array, new_capacity * sizeof *current_array->el_array);
+
+		if(temp)
+		{
+			current_array->el_array = temp;
+			current_array->capacity = new_capacity;
+		}
+		else
+		{
+			delete_array(&current_array);
+			error_message = "Error while reducing the capacity of the array.\n";
+			goto error;
+		}
+	}
+
+result:
+	return e;
+
+error:
+	fprintf(stderr, error_message);
+	exit(EXIT_FAILURE);
+}
 
 void delete_array(array **ptr_to_array)
 {
