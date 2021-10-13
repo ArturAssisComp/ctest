@@ -155,7 +155,8 @@ linked_list_element *get_and_delete_linked_list_element(element key, linked_list
 	//Search for the element:
 	head_element = target_linked_list->head;
 	/*Check for the first element*/
-	if(head_element && is_equal(key, head_element->item.key))
+	if (!head_element) goto result;
+	if(is_equal(key, head_element->item.key))
 	{
 		found_element = head_element;
 		_delete_head_element(target_linked_list);
@@ -164,6 +165,7 @@ linked_list_element *get_and_delete_linked_list_element(element key, linked_list
 
 	/*Check for the remaining elements*/
 	previous_element = head_element;
+
 	while(previous_element->next_element)
 	{
 		if (is_equal(key, previous_element->next_element->item.key))
