@@ -64,7 +64,42 @@ error:
 
 void delete_dict(dict **ptr_to_dict)
 {
-	;
+	//Variables:
+	dict *current_dict;
+	linked_list *current_linked_list;
+	hash_type i;
+	char *error_msg;
+
+	//Free each linked list from the table:
+	current_dict = *ptr_to_dict;
+	for(i = 0; i < current_dict->table_size; i++)
+	{
+		current_linked_list = current_dict->table[i];
+		current_dict->num_of_items -= current_linked_list->num_of_elements;
+		delete_linked_list(&current_linked_list);
+		if(current_linked_list)
+		{
+			error_msg = "Error while deleting linked list from table of dict.";
+			goto error;
+		}
+	}
+	if(current_dict->num_of_items != 0)
+	{
+		error_msg = "Error while the table of dict.";
+		goto error;
+	}
+
+	free(current_dict->table);
+	free(current_dict);
+	*ptr_to_dict = NULL;
+
+result:
+	return;
+
+error:
+	fprintf(stderr, error_msg);
+	exit(EXIT_FAILURE);
+
 }
 
 
