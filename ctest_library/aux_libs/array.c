@@ -180,7 +180,9 @@ void delete_array(array **ptr_to_array)
 	array *current_array;
 	size_t i;
 
+
 	//Free all elements:
+	current_array = *ptr_to_array;
 	for(i = 0; i < current_array->num_of_elements; i++) free_element(&(current_array->el_array[i]));
 
 	//Free the el_array:
