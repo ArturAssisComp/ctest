@@ -176,7 +176,19 @@ error:
 
 void delete_array(array **ptr_to_array)
 {
-	;
+	//Variables:
+	array *current_array;
+	size_t i;
+
+	//Free all elements:
+	for(i = 0; i < current_array->num_of_elements; i++) free_element(&(current_array->el_array[i]));
+
+	//Free the el_array:
+	if(current_array->capacity > 0)	free(current_array->el_array);
+	
+	//Free the array itself:
+	free(current_array);
+	*ptr_to_array = NULL;
 }
 
 
