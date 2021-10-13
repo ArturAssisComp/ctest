@@ -43,6 +43,30 @@ error:
 }
 
 
+
+element *get_element(size_t index, array *current_array)
+/**
+ * Description: this function returns a pointer that point to the element of 
+ * 'current_array' with index 'index'. If the 'index' is greater than the 
+ * number of elements of 'current_array', NULL is returned.
+ *
+ * Input: (size_t) index
+ *        (array *) current_array
+ *
+ * Output: (element *) --> the element of 'current_array' with index equals 
+ *         to 'index'.
+ */
+{
+	//Variables:
+	element *found_element = NULL;
+
+	//Try to get the element:
+	if(index < current_array->num_of_elements) found_element = &(current_array->el_array[index]);
+
+
+	return found_element;
+}
+
 void append_element(element e, array *current_array)
 /**
  * Description: This function appends the element 'e' at the end of the array 
@@ -100,3 +124,6 @@ void delete_array(array **ptr_to_array)
 {
 	;
 }
+
+
+
