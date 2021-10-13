@@ -132,7 +132,7 @@ void assign_value_to_key(element key, element value, dict *target_dict)
 	found_element = get_linked_list_element(key, current_linked_list);
 	if(found_element)
 	{
-		free_element(found_element->item.value);
+		free_element(&(found_element->item.value));
 		found_element->item.value = value;
 	}
 	else
@@ -206,7 +206,7 @@ bool delete_element(element key, dict *target_dict)
 	//Check if it was deleted:
 	if(found_element)
 	{
-		free_element(found_element->item.value);
+		free_element(&(found_element->item.value));
 		target_dict->num_of_items--;
 		result = true;
 	}

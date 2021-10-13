@@ -63,7 +63,7 @@ error:
 	exit(EXIT_FAILURE);
 }
 
-void free_element(element e)
+void free_element(element *e)
 {
 	//Variables:
 	char *error_msg;
@@ -71,7 +71,7 @@ void free_element(element e)
 	int i;
 
 	//Free the values:
-	switch (e.type)
+	switch (e->type)
 	{
 		case UNSIGNED_INTEGER:
 		case INTEGER:
@@ -79,21 +79,21 @@ void free_element(element e)
 		case STRING:
 		case BOOL:
 		case FLOATING_POINT:
-			e.type = _NULL;
+			e->type = _NULL;
 			break;
 		case DICT:
-			e.type = _NULL;
-			delete_dict(&e.value.dct);
-			if(e.value.dct)
+			e->type = _NULL;
+			delete_dict(&(e->value.dct));
+			if(e->value.dct)
 			{
 				error_msg = "Problems while deleting the dict.";
 				goto error;
 			}
 			break;
 		case ARRAY:
-			e.type = _NULL;
-			delete_array(&e.value.arr);
-			if(e.value.arr)
+			e->type = _NULL;
+			delete_array(&(e->value.arr));
+			if(e->value.arr)
 			{
 				error_msg = "Problems while deleting the array.";
 				goto error;

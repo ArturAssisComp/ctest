@@ -89,7 +89,7 @@ typedef struct linked_list linked_list;
 
 //Function declarations:
 bool is_equal(element e1, element e2);
-void free_element(element e);
+void free_element(element *e);
 
 
 #endif

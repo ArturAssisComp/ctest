@@ -208,8 +208,8 @@ void delete_linked_list(linked_list **ptr_to_target_linked_list)
 		_delete_head_element(target_linked_list);
 		//Free the linked list element:
 		current_item = current_linked_list_element_to_free->item;
-		free_element(current_item.key);
-		free_element(current_item.value);
+		free_element(&(current_item.key));
+		free_element(&(current_item.value));
 		free(current_linked_list_element_to_free);
 	}
 
