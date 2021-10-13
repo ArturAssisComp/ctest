@@ -31,7 +31,13 @@ struct element;
 struct linked_list;
 typedef size_t hash_type;
 
-typedef struct element *array;
+typedef struct
+{
+	struct element *el_array;
+	size_t num_of_elements;
+	size_t capacity;
+} array;
+
 typedef struct 
 {
         struct linked_list **table;
@@ -39,7 +45,7 @@ typedef struct
         size_t num_of_items;
 }dict;
 
-typedef struct 
+struct element 
 {
 	union {
 		unsigned_integer u_i;
@@ -52,7 +58,8 @@ typedef struct
 		dict *dct;
 	} value;
 	data_type type;
-} element;
+};
+typedef struct element element;
 
 
 /*Dict element*/
