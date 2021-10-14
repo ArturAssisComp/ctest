@@ -12,7 +12,7 @@
 
 //Declaration of functions:
 dict *count_elements(array *target_array);
-size_t get_next_index(element key, dict *target_dict);
+size_t pop_next_index(element key, dict *target_dict);
 size_t get_count(element key, dict *target_dict);
 
 #endif

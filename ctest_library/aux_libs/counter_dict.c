@@ -87,3 +87,64 @@ error:
 	fprintf(stderr, error_message);
 	exit(EXIT_FAILURE);
 }
+
+
+size_t pop_next_index(element key, dict *target_counter_dict)
+/**
+ * Description: This function pops the minimun index of the element 'key' in 
+ * relation to the array that was used to create the target counter dict. If 
+ * there is no item with key equals 'key', an error is raised.
+ *
+ * Input: (element) key
+ *        (dict *) target_counter_dict
+ * Output: (size_t)
+ */
+{
+	//Variables:
+	size_t result;
+	element *temp_element, popped_index_element, *count_element;
+	array *indices_array;
+	char *error_message;
+
+
+	//Get the index:
+	temp_element = get_value(key, target_counter_dict);
+	if(!temp_element)
+	{
+		error_message = "Error: The counter does not have any item with the current key.\n";
+		goto error;
+	}
+	indices_array = get_value((element){{.str = "indices"}, STRING}, temp_element->value.dct)->value.arr;
+	popped_index_element = pop(indices_array);
+	result = popped_index_element.value.u_i;
+	//Update the count:
+	count_element = get_value((element){{.str = "count"}, STRING}, temp_element->value.dct);
+	if(count_element->type != UNSIGNED_INTEGER)
+	{
+		error_message = "Error: count element is not an unsigned integer.\n";
+		goto error;
+	}
+	count_element->value.u_i--;
+
+	//Delete the item if count reaches 0:
+	if(count_element->value.u_i == 0)
+	{
+		if(!delete_element(key, target_counter_dict))
+		{
+			error_message = "Error while deleting the item with count 0.\n";
+			goto error;
+		}
+	}
+
+	//Free the popped element:
+	free_element(&popped_index_element);
+
+result:
+	return result;
+
+error:
+	fprintf(stderr, error_message);
+	exit(EXIT_FAILURE);
+	
+}
+

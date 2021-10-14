@@ -206,7 +206,9 @@ bool delete_element(element key, dict *target_dict)
 	//Check if it was deleted:
 	if(found_element)
 	{
+		free_element(&(found_element->item.key));
 		free_element(&(found_element->item.value));
+
 		target_dict->num_of_items--;
 		result = true;
 	}
