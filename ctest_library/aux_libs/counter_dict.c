@@ -148,3 +148,49 @@ error:
 	
 }
 
+size_t get_count(element key, dict *target_dict)
+/**
+ * Description: This function returns the current "count" related to the element 
+ * 'key' in the target_dict. It returns 0 if the element is not found.
+ *
+ * Input: (element) key
+ *        (dict *) target_dict
+ *
+ * Output: (size_t)
+ */
+{
+	//Variables:
+	element *intermediate_dict, *result_element;
+	size_t result;
+	char *error_message;
+
+	//Get the count value:
+	intermediate_dict = get_value(key, target_dict);
+	if(!intermediate_dict)
+	{
+		result = 0;
+	}
+	else
+	{
+		if(intermediate_dict->type != DICT)
+		{
+			error_message = "Target dict corrupted.\n";
+			goto error;
+		}
+		result_element = get_value((element){{.str = "count"}, STRING}, intermediate_dict->value.dct);
+		if(result_element->type != UNSIGNED_INTEGER)
+		{
+			error_message = "Target dict corrupted.\n";
+			goto error;
+		}
+		result = result_element->value.u_i;
+	}
+
+result:
+	return result;
+
+error:
+	fprintf(stderr, error_message);
+	exit(EXIT_FAILURE);
+
+}
