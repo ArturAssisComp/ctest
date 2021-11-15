@@ -1,4 +1,4 @@
-#include "../ctest/ctest.h"
+#include "ctest.h"
 #include <stdbool.h>
 
 //Short for casting arrays:

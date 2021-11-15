@@ -1,4 +1,4 @@
-#include "../ctest/ctest.h"
+#include "ctest.h"
 
 //Short for casting arrays:
 #define UI (unsigned_integer[])

@@ -1,4 +1,4 @@
-#include "../ctest/ctest.h"
+#include "ctest.h"
 
 #define UI (unsigned int[])
 #define UC (unsigned char[])
