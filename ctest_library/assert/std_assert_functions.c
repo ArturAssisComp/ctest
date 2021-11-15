@@ -10,7 +10,7 @@
 
 //Includes:
 #include "assert.h"
-#include "../globals/globals.h"
+#include "globals.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>

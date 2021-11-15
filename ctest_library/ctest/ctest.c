@@ -10,9 +10,9 @@
  */
 
 //Includes:
-#include "../globals/globals.h"
+#include "globals.h"
 #include "ctest_functions.h"
-#include "../aux_libs/text_formatting.h"
+#include "text_formatting.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>

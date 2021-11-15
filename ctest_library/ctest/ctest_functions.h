@@ -1,7 +1,7 @@
 #ifndef CTEST_FUNCTIONS_H
 #define CTEST_FUNCTIONS_H
 
-#include "../globals/globals.h"
+#include "globals.h"
 
 //Macros:
 #define MAX_NAME 32          //Maximum number of chars per name.

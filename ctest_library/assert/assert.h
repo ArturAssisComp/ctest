@@ -1,9 +1,9 @@
 #ifndef ASSERT_H
 #define ASSERT_H
-//Includes:
+//Includes: 
 #include <stdlib.h>
 #include <stdbool.h>
-#include "..\globals\globals.h"
+#include "globals.h"
 #include "std_assert_macros.h"
 
 //Constants:
