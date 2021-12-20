@@ -8,8 +8,8 @@
 
 
 //Declaration of functions:
-bool is_hashable(element e);
-hash_type generate_hash(element e, hash_type max_limit);
+bool HF_is_hashable(T_element e);
+T_hash_type HF_generate_hash(T_element e, T_hash_type max_limit);
 
 
 

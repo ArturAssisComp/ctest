@@ -1,18 +1,19 @@
 #include "hash_function.h"
 #include "types.h"
+#include "..\globals\globals.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
 //Declaration of local functions:
-static hash_type _generate_unsigned_integer_hash(unsigned_integer value, hash_type max_limit);
-static hash_type _generate_integer_hash(integer value, hash_type max_limit);
-static hash_type _generate_char_hash(char value, hash_type max_limit);
-static hash_type _generate_string_hash(char *value, hash_type max_limit);
-static hash_type _generate_bool_hash(bool value, hash_type max_limit);
+static T_hash_type _generate_unsigned_integer_hash(unsigned_integer value, T_hash_type max_limit);
+static T_hash_type _generate_integer_hash(integer value, T_hash_type max_limit);
+static T_hash_type _generate_char_hash(char value, T_hash_type max_limit);
+static T_hash_type _generate_string_hash(char *value, T_hash_type max_limit);
+static T_hash_type _generate_bool_hash(bool value, T_hash_type max_limit);
 
 //Definitions of the functions:
-bool is_hashable(element e)
+bool HF_is_hashable(T_element e)
 {
 	//Variables:
 	char *error_msg;
@@ -44,27 +45,27 @@ bool is_hashable(element e)
 }
 
 
-hash_type generate_hash(element e, hash_type max_limit)
+T_hash_type HF_generate_hash(T_element e, T_hash_type max_limit)
 /**
- * Description: This function calculates the hash value of the elment 'e'. If 
- * the element 'e' is not hashable, it raises an error. The max_limit is the 
+ * Description: This function calculates the hash value of the T_element 'e'. If 
+ * the T_element 'e' is not hashable, it raises an error. The max_limit is the 
  * maximum value of the hash without including it.
- * Ex.: The hash of an element 'e' with max_limit == 3 is in the set {0, 1, 2}.
+ * Ex.: The hash of an T_element 'e' with max_limit == 3 is in the set {0, 1, 2}.
  *
- * Input: (element) e --> It is a copy of the element that will have the hash 
+ * Input: (T_element) e --> It is a copy of the T_element that will have the hash 
  *         calculated.
- *        (hash_type) max_limit --> The maximum hash value that can be generated, 
+ *        (T_hash_type) max_limit --> The maximum hash value that can be generated, 
  *         not including itself.
  *
- * Output: (hash_type) --> The hash value calculated.
+ * Output: (T_hash_type) --> The hash value calculated.
  */
 {
 	//Variables:
 	char *error_msg;
-	hash_type hash;
+	T_hash_type hash;
 
-	//Check if the element is hashable:
-	if(is_hashable(e))
+	//Check if the T_element is hashable:
+	if(HF_is_hashable(e))
 	{
 		switch (e.type)
 		{
@@ -85,7 +86,7 @@ hash_type generate_hash(element e, hash_type max_limit)
 				hash = _generate_bool_hash(e.value.b, max_limit);
 				break;
 			default:
-				error_msg = "The element type is not specified.\n";
+				error_msg = "The T_element type is not specified.\n";
 				goto error;
 				break;
 				
@@ -93,7 +94,7 @@ hash_type generate_hash(element e, hash_type max_limit)
 	}
 	else
 	{
-		error_msg = "The element is not hashable.\n";
+		error_msg = "The T_element is not hashable.\n";
 		goto error;
 	}
 	
@@ -107,39 +108,39 @@ error:
 }
 
 //Definitions of local functions:
-static hash_type _generate_unsigned_integer_hash(unsigned_integer value, hash_type max_limit)
+static T_hash_type _generate_unsigned_integer_hash(unsigned_integer value, T_hash_type max_limit)
 {
 	while(value < (unsigned_integer) max_limit) value = value * 3 + 13;
-	return (hash_type) value % max_limit;
+	return (T_hash_type) value % max_limit;
 }
 
-static hash_type _generate_integer_hash(integer value, hash_type max_limit)
+static T_hash_type _generate_integer_hash(integer value, T_hash_type max_limit)
 {
 	if(value < 0) value *= -2;
 	while(value < (integer) max_limit) value = value * 3 + 13;
-	return (hash_type) value % max_limit;
+	return (T_hash_type) value % max_limit;
 }
 
-static hash_type _generate_char_hash(char value, hash_type max_limit)
+static T_hash_type _generate_char_hash(char value, T_hash_type max_limit)
 {
-	hash_type current_hash_type_value = (hash_type) value;
+	T_hash_type current_hash_type_value = (T_hash_type) value;
 	while(current_hash_type_value <  max_limit) current_hash_type_value = current_hash_type_value * 3 + 13;
-	return (hash_type) current_hash_type_value % max_limit;
+	return (T_hash_type) current_hash_type_value % max_limit;
 }
 
-static hash_type _generate_string_hash(char *value, hash_type max_limit)
+static T_hash_type _generate_string_hash(char *value, T_hash_type max_limit)
 {
-	hash_type current_hash_type_value = 0;
+	T_hash_type current_hash_type_value = 0;
 	size_t i;
 	for (i = 0; i < strlen(value); i++)
 	{
 		current_hash_type_value += value[i];
 	}
 	while(current_hash_type_value <  max_limit) current_hash_type_value = current_hash_type_value * 3 + 13;
-	return (hash_type) current_hash_type_value % max_limit;
+	return (T_hash_type) current_hash_type_value % max_limit;
 }
 
-static hash_type _generate_bool_hash(bool value, hash_type max_limit)
+static T_hash_type _generate_bool_hash(bool value, T_hash_type max_limit)
 {
 	if(value)
 		return 127 % max_limit;

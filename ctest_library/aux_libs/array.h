@@ -6,9 +6,9 @@
 #include <stdlib.h>
 
 //Declarations of functions:
-array *create_array(void);
-element *get_element(size_t index, array *current_array);
-void append_element(element e, array *current_array);
-element pop(array *current_array);
-void delete_array(array **ptr_to_array);
+T_array *A_create_array(void);
+T_element *A_get_element(size_t index, T_array *current_array);
+void A_append_element(T_element e, T_array *current_array);
+T_element A_pop(T_array *current_array);
+void A_delete_array(T_array **ptr_to_array);
 #endif

@@ -5,19 +5,19 @@
 
 
 //Definitions of functions:
-array *create_array(void)
+T_array *A_create_array(void)
 /**
- * Description: This function creates an array and returns the pointer to that 
- * array. After using, the user must call delete_array unless this array will 
- * be an element of another element that will be deleted.
+ * Description: This function creates an T_array and returns the pointer to that 
+ * T_array. After using, the user must call A_delete_array unless this T_array will 
+ * be an T_element of another T_element that will be deleted.
  *
  * Input: (void)
  *
- * Output: (array *)
+ * Output: (T_array *)
  */
 {
 	//Variables:
-	array *new_array;
+	T_array *new_array;
 	char *error_msg;
 
 	//Allocate memory:
@@ -25,11 +25,11 @@ array *create_array(void)
 
 	if(!new_array)
 	{
-		error_msg = "Error while allocating memory for the array.";
+		error_msg = "Error while allocating memory for the T_array.";
 		goto error;
 	}
 
-	//Initialize the array:
+	//Initialize the T_array:
 	new_array->el_array = NULL;
 	new_array->num_of_elements = 0;
 	new_array->capacity = 0;
@@ -44,23 +44,23 @@ error:
 
 
 
-element *get_element(size_t index, array *current_array)
+T_element *A_get_element(size_t index, T_array *current_array)
 /**
- * Description: this function returns a pointer that point to the element of 
+ * Description: this function returns a pointer that point to the T_element of 
  * 'current_array' with index 'index'. If the 'index' is greater than the 
  * number of elements of 'current_array', NULL is returned.
  *
  * Input: (size_t) index
- *        (array *) current_array
+ *        (T_array *) current_array
  *
- * Output: (element *) --> the element of 'current_array' with index equals 
+ * Output: (T_element *) --> the T_element of 'current_array' with index equals 
  *         to 'index'.
  */
 {
 	//Variables:
-	element *found_element = NULL;
+	T_element *found_element = NULL;
 
-	//Try to get the element:
+	//Try to get the T_element:
 	if(index < current_array->num_of_elements) found_element = &(current_array->el_array[index]);
 
 
@@ -68,14 +68,14 @@ element *get_element(size_t index, array *current_array)
 }
 
 
-void append_element(element e, array *current_array)
+void A_append_element(T_element e, T_array *current_array)
 /**
- * Description: This function appends the element 'e' at the end of the array 
- * 'current_array'. If the array does not have the capacity to receive this new 
- * element, it allocates more memory.
+ * Description: This function appends the T_element 'e' at the end of the T_array 
+ * 'current_array'. If the T_array does not have the capacity to receive this new 
+ * T_element, it allocates more memory.
  *
- * Input: (element) e
- *        (array *) current_array
+ * Input: (T_element) e
+ *        (T_array *) current_array
  *
  * Output: (void)
  */
@@ -84,7 +84,7 @@ void append_element(element e, array *current_array)
 	//Variables:
 	size_t new_capacity, index;
 	char *error_message;
-	element *temp;
+	T_element *temp;
 	
 
 	//Check if capacity is enough:
@@ -101,13 +101,13 @@ void append_element(element e, array *current_array)
 		}
 		else
 		{
-			delete_array(&current_array);
-			error_message = "Error while expanding the capacity of the array.\n";
+			A_delete_array(&current_array);
+			error_message = "Error while expanding the capacity of the T_array.\n";
 			goto error;
 		}
 	}
 
-	//Add the new element:
+	//Add the new T_element:
 	index = current_array->num_of_elements;
 	current_array->el_array[index] = e;
 	current_array->num_of_elements++;
@@ -121,32 +121,32 @@ error:
 }
 
 
-element pop(array *current_array)
+T_element A_pop(T_array *current_array)
 /**
- * Description: This function deletes the last element of 'current_array' and 
- * returns a copy of that element. The user must call free_element after using
- * the element.
+ * Description: This function deletes the last T_element of 'current_array' and 
+ * returns a copy of that T_element. The user must call free_element after using
+ * the T_element.
  *
- * Input: (array *) current_array
+ * Input: (T_array *) current_array
  *
- * Output: (element)
+ * Output: (T_element)
  */
 {
 	//Variables:
-	element e;
+	T_element e;
 	size_t new_capacity;
 	char *error_message;
-	element *temp;
+	T_element *temp;
 
-	//Copy the element:
+	//Copy the T_element:
 	if(current_array->num_of_elements > 0) e = current_array->el_array[--current_array->num_of_elements];
 	else 
 	{
-		error_message = "There is no element to pop";
+		error_message = "There is no T_element to A_pop";
 		goto error;
 	}
 
-	//Reduce the array if necessary:
+	//Reduce the T_array if necessary:
 	if(5 * current_array->num_of_elements < current_array->capacity)
 	{
 		//Allocate more memory:
@@ -160,8 +160,8 @@ element pop(array *current_array)
 		}
 		else
 		{
-			delete_array(&current_array);
-			error_message = "Error while reducing the capacity of the array.\n";
+			A_delete_array(&current_array);
+			error_message = "Error while reducing the capacity of the T_array.\n";
 			goto error;
 		}
 	}
@@ -174,10 +174,10 @@ error:
 	exit(EXIT_FAILURE);
 }
 
-void delete_array(array **ptr_to_array)
+void A_delete_array(T_array **ptr_to_array)
 {
 	//Variables:
-	array *current_array;
+	T_array *current_array;
 	size_t i;
 
 
@@ -188,7 +188,7 @@ void delete_array(array **ptr_to_array)
 	//Free the el_array:
 	if(current_array->capacity > 0)	free(current_array->el_array);
 	
-	//Free the array itself:
+	//Free the T_array itself:
 	free(current_array);
 	*ptr_to_array = NULL;
 }

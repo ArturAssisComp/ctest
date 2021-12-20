@@ -24,28 +24,28 @@ typedef enum
 	ARRAY, //Array of generic elements
 	DICT,   //Dict of generic elements
         _NULL
-} data_type;
+} T_data_type;
 
 
-struct element;
-struct linked_list;
-typedef size_t hash_type;
+struct T_element;
+struct T_linked_list;
+typedef size_t T_hash_type;
 
 typedef struct
 {
-	struct element *el_array;
+	struct T_element *el_array;
 	size_t num_of_elements;
 	size_t capacity;
-} array;
+} T_array;
 
 typedef struct 
 {
-        struct linked_list **table;
-        hash_type table_size;
+        struct T_linked_list **table;
+        T_hash_type table_size;
         size_t num_of_items;
-}dict;
+}T_dict;
 
-struct element 
+struct T_element 
 {
 	union {
 		unsigned_integer u_i;
@@ -54,42 +54,42 @@ struct element
 		bool b;
 		char c;
 		char *str; //A string is considered an individual element. 
-		array *arr;
-		dict *dct;
+		T_array *arr;
+		T_dict *dct;
 	} value;
-	data_type type;
+	T_data_type type;
 };
-typedef struct element element;
+typedef struct T_element T_element;
 
 
 /*Dict element*/
 typedef struct 
 {
-	element key;
-	element value;
-	hash_type hash;
-} dict_item; //Pair of a key associated with a value.
+	T_element key;
+	T_element value;
+	T_hash_type hash;
+} T_dict_item; //Pair of a key associated with a value.
 
 /*Linked list of dict elements*/
-struct linked_list_element 
+struct T_linked_list_element 
 {
-	dict_item item;
-	struct linked_list_element *next_element;
+	T_dict_item item;
+	struct T_linked_list_element *next_element;
 };
-typedef struct linked_list_element linked_list_element;
+typedef struct T_linked_list_element T_linked_list_element;
 
-struct linked_list
+struct T_linked_list
 {
-	linked_list_element *head;
+	T_linked_list_element *head;
 	size_t num_of_elements;
 
 };
-typedef struct linked_list linked_list;
+typedef struct T_linked_list T_linked_list;
 
 
 //Function declarations:
-bool is_equal(element e1, element e2);
-void free_element(element *e);
+bool T_is_equal(T_element e1, T_element e2);
+void T_free_element(T_element *e);
 
 
 #endif

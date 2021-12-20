@@ -1,5 +1,5 @@
-#ifndef COUNTER_H
-#define COUNTER_H
+#ifndef DICT_H
+#define DICT_H
 
 //Include libs:
 #include "types.h"
@@ -7,10 +7,10 @@
 
 
 //Declarations of functions:
-dict *create_dict(hash_type table_size);
-void assign_value_to_key(element key, element value, dict *target_dict);
-element *get_value(element key, dict *target_dict);
-bool delete_element(element key, dict *target_dict);
-void delete_dict(dict **ptr_to_dict);
+T_dict *D_create_dict(hash_type table_size);
+void D_assign_value_to_key(T_element key, T_element value, T_dict *target_dict);
+T_element *D_get_value(T_element key, T_dict *target_dict);
+bool D_delete_element(T_element key, T_dict *target_dict);
+void D_delete_dict(T_dict **ptr_to_dict);
 
 #endif

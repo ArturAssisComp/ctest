@@ -6,12 +6,12 @@
 #include <stdio.h>
 
 
-bool is_equal(element e1, element e2)
+bool T_is_equal(T_element e1, T_element e2)
 /**
  * Description: This function returns true if e1 is equal to e2. It returns false 
  * otherwise.
  *
- * Input: (element) e1, e2 --> Elements that will be compared for equality.
+ * Input: (T_element) e1, e2 --> Elements that will be compared for equality.
  *
  * Output: (bool) --> Boolean that says if e1 is equal to e2.
  */
@@ -63,11 +63,11 @@ error:
 	exit(EXIT_FAILURE);
 }
 
-void free_element(element *e)
+void free_element(T_element *e)
 {
 	//Variables:
 	char *error_msg;
-	linked_list *current_linked_list;
+	T_linked_list *current_linked_list;
 	int i;
 
 	//Free the values:
