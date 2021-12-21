@@ -557,7 +557,21 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_unsigned_integerArray_permutation-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will be successful:
+		start_module("u_iArray - permutation", "Every assert in this module must pass.", (char *[]){"assert_unsigned_integerArray_permutation", NULL});
+			assert_unsigned_integerArray_permutation(UI{1}, 1, UI{1}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 0}, 2, UI{1, 0}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 0}, 2, UI{0, 1}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{100, 100}, 2, UI{100, 100}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 2, 3}, 3, UI{2, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 2, 1}, 3, UI{2, 1, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{11, 52, 1, 0, 0}, 5, UI{0, 1, 11, 0, 52}, 5, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{11, 52, 0, 0, 0}, 5, UI{0, 0, 11, 0, 52}, 5, __LINE__, NULL);
 
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 	end_suite();

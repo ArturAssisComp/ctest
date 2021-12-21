@@ -93,6 +93,7 @@ ignore = true;
 			assert_unsigned_integerArray_notEqual(UI{12, 34}, 2, UI{3,3,3,3}, 4, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{1, 2, 3}, 3, true, __LINE__, NULL);
 			assert_unsigned_integerArray_notSorted(UI{1, 2, 3}, 3, true, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
 
 ignore = false;
 		end_module();

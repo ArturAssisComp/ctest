@@ -690,6 +690,37 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 
+		//----------------------assert_unsigned_integerArray_permutation-------------------------
+		//Tests that will fail:
+		start_module("u_iArray - permutation", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integerArray_permutation", NULL});
+			verbose = LOW;
+			assert_unsigned_integerArray_permutation(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{31, 62, 43}, 3, UI{8, 900, 5, 4}, 4, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_unsigned_integerArray_permutation(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{31, 62, 43}, 3, UI{8, 900, 5, 4}, 4, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_unsigned_integerArray_permutation(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 0}, 2, UI{1, 1}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{0, 0}, 2, UI{1, 1}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 2, 3}, 3, UI{1, 1, 3}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 2, 3}, 3, UI{3, 1, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 2, 3, 4, 5}, 5, UI{32, 45, 32, 56, 93}, 5, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1}, 2, UI{0, 1}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 0}, 2, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{1, 2, 3}, 3, UI{1, 1, 3, 2}, 4, __LINE__, NULL);
+			assert_unsigned_integerArray_permutation(UI{31, 62, 43}, 3, UI{8, 900, 5, 4}, 4, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
