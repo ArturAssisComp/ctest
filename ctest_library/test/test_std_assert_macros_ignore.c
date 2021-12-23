@@ -20,6 +20,7 @@ int main(void)
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION",
+		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -38,6 +39,7 @@ ignore = true;
 			ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED( (ULLI{0, 0, 10, 0}), 4, ASC, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED( (ULLI{0, 0, 10, 0}), 4, ASC, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (ULLI{0, 0, 0}), 3, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION( (UI{1}), 1, (UI{2}), 1, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------
