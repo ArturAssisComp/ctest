@@ -43,7 +43,7 @@ $(archive_lib_dir)/ctest.a: $(objects)
 $(obj_dir)/assert_aux_functions.o: ctest_library/assert/assert_aux_functions.c ctest_library/assert/assert.h ctest_library/globals/globals.h ctest_library/aux_libs/text_formatting.h 
 	cc -c $(tmp_lib_dir)/assert_aux_functions.c -o $(obj_dir)/assert_aux_functions.o
 
-$(obj_dir)/std_assert_functions.o: ctest_library/assert/std_assert_functions.c ctest_library/assert/assert.h ctest_library/globals/globals.h  ctest_library/aux_libs/types.h  ctest_library/aux_libs/array.h ctest_library/aux_libs/counter_dict.h
+$(obj_dir)/std_assert_functions.o: ctest_library/assert/std_assert_functions.c ctest_library/assert/assert.h ctest_library/globals/globals.h  ctest_library/aux_libs/types.h  ctest_library/aux_libs/array.h ctest_library/aux_libs/counter_dict.h ctest_library/aux_libs/text_formatting.h
 	cc -c $(tmp_lib_dir)/std_assert_functions.c -o $(obj_dir)/std_assert_functions.o
 
 
@@ -72,7 +72,7 @@ $(obj_dir)/types.o: ctest_library/aux_libs/types.c ctest_library/aux_libs/types.
 $(obj_dir)/ctest.o: ctest_library/ctest/ctest.c ctest_library/ctest/ctest_functions.h ctest_library/aux_libs/text_formatting.h ctest_library/globals/globals.h 
 	cc -c $(tmp_lib_dir)/ctest.c -o $(obj_dir)/ctest.o
 
-.PHONY: clean test
+.PHONY: clean test test_to_txt
 .SILENT: test
 
 clean:
@@ -123,4 +123,33 @@ test: create_lib
 	rm -fr test_tmp
 	
 
+test_to_txt: create_lib
+	rm -fr test_tmp build/test_results
+	mkdir test_tmp
+	mkdir build/test_results
+	cp $(include_lib_dir)/*.h $(archive_lib_dir)/ctest.a $(test_dir)/test_*.c ./test_tmp/
+	cc test_tmp/test_std_assert_functions_success.c test_tmp/ctest.a -o test.out
+	./test.out > build/test_results/functions_successes.txt
+	rm ./test.out
+	
+	cc test_tmp/test_std_assert_functions_fail.c test_tmp/ctest.a -o test.out
+	./test.out > build/test_results/functions_failures.txt
+	rm ./test.out
+	
+	cc test_tmp/test_std_assert_functions_ignore.c test_tmp/ctest.a -o test.out
+	./test.out > build/test_results/functions_ignores.txt
+	rm ./test.out
+	
+	cc test_tmp/test_std_assert_macros_success.c test_tmp/ctest.a -o test.out
+	./test.out > build/test_results/macros_successes.txt
+	rm ./test.out
+	
+	cc test_tmp/test_std_assert_macros_fail.c test_tmp/ctest.a -o test.out
+	./test.out > build/test_results/macros_failures.txt
+	rm ./test.out
+	
+	cc test_tmp/test_std_assert_macros_ignore.c test_tmp/ctest.a -o test.out
+	./test.out > build/test_results/macros_ignores.txt
+	rm ./test.out
+	rm -fr test_tmp
 
