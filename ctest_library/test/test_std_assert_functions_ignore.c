@@ -95,6 +95,7 @@ ignore = true;
 			assert_unsigned_integerArray_notSorted(UI{1, 2, 3}, 3, true, __LINE__, NULL);
 			assert_unsigned_integerArray_permutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
 			assert_unsigned_integerArray_notPermutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_isPartialPermutation(UI{100, 100}, 2, UI{100, 100, 5}, 3, __LINE__, NULL);
 
 ignore = false;
 		end_module();
