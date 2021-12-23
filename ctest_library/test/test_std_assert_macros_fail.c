@@ -20,6 +20,7 @@ int main(void)
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_EQUAL",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_SORTED",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED",
+        "ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -134,6 +135,27 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION------------------
+		//Tests that will fail:
+		start_module("UNSIGNED_INTEGER ARRAY-permutation", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION", NULL});
+
+			verbose = LOW;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (UI{1}), 1, (UI{2}), 1, __LINE__, NULL);
+			verbose = MEDIUM;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (UI{1}), 1, (UI{2}), 1, __LINE__, NULL);
+			unsigned char arr9[] = {12, 23, 34}, arr10[] = {2, 23, 45};
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( arr9, ARR_SZ(arr9), arr10, ARR_SZ(arr10), __LINE__, "arr1 != arr2");
+
+			verbose = HIGH;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 223, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 29}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (ULLI{0, 0, 0}), 3, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( arr9, ARR_SZ(arr9), arr10, ARR_SZ(arr10), __LINE__, "arr1 != arr2");
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 	end_suite();
