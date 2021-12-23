@@ -462,14 +462,14 @@ char *merge_str(char *str_arr[], char sep[], char end[])
     return merged_str;
 }
 
-bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[], size_t **result_list_of_alligned_sizes_address, char *error_msg, size_t min_width)
+bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[], size_t **result_list_of_alligned_sizes_address, char **error_msg_address, size_t min_width)
 /**
  * Description: This function receives a list of lists of sizes. It creates a 
  * single array with the size of the greatest list of sizes from the input list 
  * of lists and with the size necessary for each element (each element is related 
  * to each index) to be alligned with the respective element with the same index 
  * from other lists. It returns true if the operation was successful and false 
- * otherwise. If false is returned, the error_msg is defined.
+ * otherwise. If false is returned, the error_msg_address is defined.
  * 
  * Input: (size_t ** []) input_list_of_lists_of_sizes -> NULL terminated list of 
  *                                                     lists of sizes. Each list 
@@ -482,12 +482,12 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
  *                                                    input lists or the 'min_width'.
  *                                                    It has the size of the greatest
  *                                                    list of sizes from the input.
- *        (char *) error_msg -> Pointer to char. Its value must be NULL.
+ *        (char **) error_msg_address -> Pointer to pointer to char. Its deferenced value must be NULL.
  *        (size_t) min_width -> The minimun size for each element that will be returned
  *                              as the result.
  *
  * Error Handling: This function returns false if an error happens and true otherwise.
- * If an error happens, the error message is stored into the variable 'error_msg',
+ * If an error happens, the error message is stored into the variable 'error_msg_address',
  * and 'result_list_of_alligned_sizes_address' is not changed.
  *
  * Memory Allocation issues: If the function returns true, the result will be stored
@@ -502,19 +502,19 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
     //Check the inputs:
     if(input_list_of_lists_of_sizes == NULL) 
     {
-        error_msg = "First input (list of lists of sizes) may not be NULL.";
+        *error_msg_address = "First input (list of lists of sizes) may not be NULL.";
         goto return_result;
     }
 
     if(*result_list_of_alligned_sizes_address != NULL)
     {
-        error_msg = "The pointer to store the result must have initially the value NULL.";
+        *error_msg_address = "The pointer to store the result must have initially the value NULL.";
         goto return_result;
     }
 
-    if(error_msg != NULL)
+    if(*error_msg_address != NULL)
     {
-        error_msg = "The pointer to store the error message must have initially the value NULL.";
+        *error_msg_address = "The pointer to store the error message must have initially the value NULL.";
         goto return_result;
     }
 
@@ -542,7 +542,7 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
 
     if(*result_list_of_alligned_sizes_address == NULL)
     {
-        error_msg = "Error while allocating memory for the result.";
+        *error_msg_address = "Error while allocating memory for the result.";
         goto return_result;
     }
 
