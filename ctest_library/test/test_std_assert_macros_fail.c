@@ -183,6 +183,29 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION------------------
+		//Tests that will fail:
+		start_module("UI ARRAY-permutation", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION", NULL});
+
+			verbose = LOW;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2}), 1, __LINE__, NULL);
+			verbose = MEDIUM;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2}), 1, __LINE__, NULL);
+			unsigned char arr13[] = {12, 23, 34}, arr14[] = {2, 23, 45};
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( arr13, ARR_SZ(arr13), arr14, ARR_SZ(arr14), __LINE__, "arr1 != arr2");
+
+			verbose = HIGH;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 223, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 29}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (ULLI{4, 4, 0}), 3, (ULLI{4, 0, 0, 0}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( arr13, ARR_SZ(arr13), arr14, ARR_SZ(arr14), __LINE__, "arr1 != arr2");
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 
 
 	end_suite();

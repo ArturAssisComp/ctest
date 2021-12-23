@@ -133,6 +133,22 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION------------------
+		//Tests that will be successful:
+		start_module("UI_ARRAY-isPartialPermutation", "Every assert in this module must be successful.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION", NULL});
+
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 34, 2, 3}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2, 3, 4, 1}), 4, __LINE__, NULL);
+			unsigned char arr11[] = {1, 12, 23, 34}, arr12[] = {1, 1, 12, 34, 23, 90};
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( arr11, ARR_SZ(arr11), arr12, ARR_SZ(arr12), __LINE__, "arr1 != arr2");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 2}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (ULLI{0, 0, 0, 0}), 4, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
 	end_suite();
 	//----------------------------------------------------------------------------
 
