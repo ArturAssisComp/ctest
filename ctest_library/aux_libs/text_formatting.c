@@ -462,7 +462,7 @@ char *merge_str(char *str_arr[], char sep[], char end[])
     return merged_str;
 }
 
-bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[], size_t *result_list_of_alligned_sizes, char *error_msg, size_t min_width)
+bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[], size_t **result_list_of_alligned_sizes_address, char *error_msg, size_t min_width)
 /**
  * Description: This function receives a list of lists of sizes. It creates a 
  * single array with the size of the greatest list of sizes from the input list 
@@ -474,7 +474,7 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
  * Input: (size_t ** []) input_list_of_lists_of_sizes -> NULL terminated list of 
  *                                                     lists of sizes. Each list 
  *                                                     of sizes is NULL terminated.
- *        (size_t *) result_list_of_alligned_sizes -> A pointer to size_t with value
+ *        (size_t **) result_list_of_alligned_sizes_address -> the address of a pointer to size_t with value
  *                                                    equals NULL. The result will
  *                                                    be allocated using that pointer
  *                                                    and consists of an array with
@@ -488,11 +488,11 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
  *
  * Error Handling: This function returns false if an error happens and true otherwise.
  * If an error happens, the error message is stored into the variable 'error_msg',
- * and 'result_list_of_alligned_sizes' is not changed.
+ * and 'result_list_of_alligned_sizes_address' is not changed.
  *
  * Memory Allocation issues: If the function returns true, the result will be stored
- * into 'result_list_of_alligned_sizes'. It is necessary to call the function free 
- * for the result_list_of_alligned_sizes pointer.
+ * into 'result_list_of_alligned_sizes_address'. It is necessary to call the function free 
+ * for the result_list_of_alligned_sizes_address pointer.
  */
 {
     bool result = false;
@@ -506,7 +506,7 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
         goto return_result;
     }
 
-    if(result_list_of_alligned_sizes != NULL)
+    if(*result_list_of_alligned_sizes_address != NULL)
     {
         error_msg = "The pointer to store the result must have initially the value NULL.";
         goto return_result;
@@ -533,20 +533,20 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
 
     //Allocate memory for the result and initialize it:
     
-    result_list_of_alligned_sizes = calloc(result_size, sizeof *result_list_of_alligned_sizes);
+    *result_list_of_alligned_sizes_address = calloc(result_size, sizeof **result_list_of_alligned_sizes_address);
     if(result_size == 0) //avoid returning false if calloc returned NULL in the case result_size is 0.
     {
         result = true;
         goto return_result;
     }
 
-    if(result_list_of_alligned_sizes == NULL)
+    if(*result_list_of_alligned_sizes_address == NULL)
     {
         error_msg = "Error while allocating memory for the result.";
         goto return_result;
     }
 
-    for(i = 0; i < result_size; i++) result_list_of_alligned_sizes[i] = min_width;
+    for(i = 0; i < result_size; i++) (*result_list_of_alligned_sizes_address)[i] = min_width;
 
     //Get the maximum size for each index:
     i = 0;
@@ -556,8 +556,8 @@ bool TF_generate_array_of_alligned_sizes(size_t ** input_list_of_lists_of_sizes[
         while(input_list_of_lists_of_sizes[i][j] != NULL) 
         {
             //Check the index j:
-            if(*input_list_of_lists_of_sizes[i][j] > result_list_of_alligned_sizes[j]) 
-                result_list_of_alligned_sizes[j] = *input_list_of_lists_of_sizes[i][j];
+            if(*input_list_of_lists_of_sizes[i][j] > (*result_list_of_alligned_sizes_address)[j]) 
+                (*result_list_of_alligned_sizes_address)[j] = *input_list_of_lists_of_sizes[i][j];
             j++;
         }
         i++;

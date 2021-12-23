@@ -41,7 +41,7 @@ bool T_is_equal(T_element e1, T_element e2)
 		case BOOL:
 			result = (e1.value.b == e2.value.b);
 			break;
-		case _NULL:
+		case NULL_TYPE:
 			result = true;
 			break;
 		case FLOATING_POINT:
@@ -63,7 +63,7 @@ error:
 	exit(EXIT_FAILURE);
 }
 
-void free_element(T_element *e)
+void T_free_element(T_element *e)
 {
 	//Variables:
 	char *error_msg;
@@ -79,11 +79,11 @@ void free_element(T_element *e)
 		case STRING:
 		case BOOL:
 		case FLOATING_POINT:
-			e->type = _NULL;
+			e->type = NULL_TYPE;
 			break;
 		case DICT:
-			e->type = _NULL;
-			delete_dict(&(e->value.dct));
+			e->type = NULL_TYPE;
+			D_delete_dict(&(e->value.dct));
 			if(e->value.dct)
 			{
 				error_msg = "Problems while deleting the dict.";
@@ -91,16 +91,16 @@ void free_element(T_element *e)
 			}
 			break;
 		case ARRAY:
-			e->type = _NULL;
-			delete_array(&(e->value.arr));
+			e->type = NULL_TYPE;
+			A_delete_array(&(e->value.arr));
 			if(e->value.arr)
 			{
 				error_msg = "Problems while deleting the array.";
 				goto error;
 			}
 			break;
-		case _NULL:
-			error_msg = "Calling free_element for a _NULL element.";
+		case NULL_TYPE:
+			error_msg = "Calling T_free_element for a NULL_TYPE element.";
 			goto error;
 			break;
 

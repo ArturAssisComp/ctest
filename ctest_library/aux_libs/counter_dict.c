@@ -93,7 +93,8 @@ size_t CD_pop_next_index(T_element key, T_dict *target_counter_dict)
 /**
  * Description: This function pops the minimun index of the T_element 'key' in 
  * relation to the T_array that was used to create the target counter T_dict. If 
- * there is no item with key equals 'key', an error is raised.
+ * there is no item with key equals 'key', an error is raised. If an element
+ * is deleted and count becomes 0, the element is removed from the dictionary.
  *
  * Input: (T_element) key
  *        (T_dict *) target_counter_dict
@@ -137,7 +138,7 @@ size_t CD_pop_next_index(T_element key, T_dict *target_counter_dict)
 	}
 
 	//Free the popped T_element:
-	free_element(&popped_index_element);
+	T_free_element(&popped_index_element);
 
 result:
 	return result;

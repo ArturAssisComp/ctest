@@ -1,6 +1,6 @@
 #include "hash_function.h"
 #include "types.h"
-#include "..\globals\globals.h"
+#include "globals.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -31,7 +31,7 @@ bool HF_is_hashable(T_element e)
 			result = true;
 			break;
 		//Is not hashable:
-		case _NULL:
+		case NULL_TYPE:
 		case FLOATING_POINT:
 		case ARRAY:
 		case DICT:

@@ -7,8 +7,8 @@
 //Definitions of functions:
 T_array *A_create_array(void)
 /**
- * Description: This function creates an T_array and returns the pointer to that 
- * T_array. After using, the user must call A_delete_array unless this T_array will 
+ * Description: This function creates a T_array and returns the pointer to that 
+ * T_array. After using, the user must call A_delete_array unless in the situation in which this T_array will 
  * be an T_element of another T_element that will be deleted.
  *
  * Input: (void)
@@ -124,7 +124,7 @@ error:
 T_element A_pop(T_array *current_array)
 /**
  * Description: This function deletes the last T_element of 'current_array' and 
- * returns a copy of that T_element. The user must call free_element after using
+ * returns a copy of that T_element. The user must call T_free_element after using
  * the T_element.
  *
  * Input: (T_array *) current_array
@@ -183,7 +183,7 @@ void A_delete_array(T_array **ptr_to_array)
 
 	//Free all elements:
 	current_array = *ptr_to_array;
-	for(i = 0; i < current_array->num_of_elements; i++) free_element(&(current_array->el_array[i]));
+	for(i = 0; i < current_array->num_of_elements; i++) T_free_element(&(current_array->el_array[i]));
 
 	//Free the el_array:
 	if(current_array->capacity > 0)	free(current_array->el_array);
