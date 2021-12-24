@@ -23,6 +23,7 @@ int main(void)
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION",
 		"ASSERT_UI_ARRAY_IS_PP",
 		"ASSERT_UI_ARRAY_NOT_IS_PP",
+		"ASSERT_UI_ARRAY_HAS_PP",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -158,6 +159,21 @@ int main(void)
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 223, 3}), 3, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 29}), 3, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (ULLI{4, 4, 0}), 3, (ULLI{4, 0, 0, 0}), 4, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION------------------
+		//Tests that will be successful:
+		start_module("UI_ARRAY-hasPP", "Every assert in this module must be successful.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION", NULL});
+
+			ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 34, 2, 3}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION( (UI{2, 3, 4, 1}), 4,  (UI{1}), 1,__LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION( arr12, ARR_SZ(arr12), arr11, ARR_SZ(arr11), __LINE__, "arr1 != arr2");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 2}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_HAS_PARTIAL_PERMUTATION( (ULLI{0, 0, 0, 0}), 4, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
 
 		end_module();
 		//----------------------------------------------------------------------------
