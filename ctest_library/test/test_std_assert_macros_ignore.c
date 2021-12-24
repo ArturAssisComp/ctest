@@ -41,6 +41,7 @@ ignore = true;
 			ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION( (ULLI{0, 0, 0}), 3, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION( (UI{1}), 1, (UI{2}), 1, __LINE__, NULL);
 			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 2}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2, 3, 4, 1}), 4, __LINE__, NULL);
 ignore = false;
 		end_module();
 		//----------------------------------------------------------------------------

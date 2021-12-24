@@ -22,6 +22,8 @@ int main(void)
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_SORTED",
         "ASSERT_UNSIGNED_INTEGER_ARRAY_PERMUTATION",
 		"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION",
+		"ASSERT_UI_ARRAY_IS_PP",
+		"ASSERT_UI_ARRAY_NOT_IS_PP",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -205,6 +207,28 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION------------------
+		//Tests that will fail:
+		start_module("UI_ARRAY-notIsPartPerm", "Every assert in this module must fail.", (char *[]){"..._NOT_IS_PARTIAL_PERMUTATION", NULL});
+			verbose = LOW;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 34, 2, 3}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2, 3, 4, 1}), 4, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 34, 2, 3}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2, 3, 4, 1}), 4, __LINE__, NULL);
+             
+			verbose = HIGH;
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 34, 2, 3}), 4, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UI{1}), 1, (UI{2, 3, 4, 1}), 4, __LINE__, NULL);
+			unsigned char arr15[] = {1, 12, 23, 34}, arr16[] = {1, 1, 12, 34, 23, 90};
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( arr15, ARR_SZ(arr15), arr16, ARR_SZ(arr16), __LINE__, "arr1 != arr2");
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 2, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 2}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_IS_PARTIAL_PERMUTATION( (ULLI{0, 0, 0, 0}), 4, (ULLI{0, 0, 0, 0}), 4, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 
