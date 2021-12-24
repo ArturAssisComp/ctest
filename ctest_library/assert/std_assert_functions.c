@@ -3659,6 +3659,197 @@ finish:
 }
 
 
+//#################developing###################
+void assert_unsigned_integerArray_hasPartialPermutation(unsigned_integer target[], size_t target_size, unsigned_integer reference[], size_t reference_size, int line_number, char custom_message[])
+/**
+ * Description: This function checks if 'reference' is  a partital permutation of 'target'.
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ *     If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (unsigned_integer []) target --> The target array.
+ *        (size_t) target_size --> The size of the array 'target'. May not be 0.
+ *        (unsigned_integer []) reference --> The reference array.
+ *        (size_t) reference_size --> The size of the array 'reference'. May not be 0.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(max(target_size, reference_size))
+ *
+ * Space Complexity: O(max(target_size, reference_size))
+ */
+{
+    //------------------------------------------------------------------------------
+    //Define and initialize the variables:
+    int counter;
+    const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
+    bool error = false;
+    char function_error_message[max_error_msg_sz];
+    size_t i;
+    T_array *target_T_array;
+    T_dict *target_counter_dict;
+    T_element tmp_element;
+    size_t relative_index_array[reference_size]; //Stores the index that relates 
+                                              //each element from the reference array 
+                                              //with an element from the target array. 
+                                              //If there is no correspondence, we have 
+                                              //relative_index_array[i] == target_size (invalid value)
+    size_t aux_relative_index_array[reference_size]; //Stores the index that relates 
+                                                  //each element from the reference array 
+                                                  //with an element from the target array. 
+                                                  //If there is no correspondence, we have 
+                                                  //relative_index_array[i] == 0 (invalid value)
+    size_t target_index_array[target_size];
+    const size_t NUMBER_OF_LISTS = 4;
+    size_t **list_of_lists_of_size[NUMBER_OF_LISTS];
+    size_t *target_size_list[target_size + 1];
+    size_t *target_index_size_list[target_size + 1];
+    size_t *reference_size_list[reference_size + 1];
+    size_t *relative_index_array_size_list[reference_size + 1];
+    size_t *result_list_with_final_sizes = NULL;
+    assert_result_struct assert_result = {
+                                     true,                                                               //was_successful
+                                     line_number,                                                        //line_number
+                                     "",                                                                 //result_details[MAX_CHARS]
+                                     "assert_unsigned_integerArray_hasPartitalPermutation",                         //assert_name
+                                     "The target array SHOULD HAVE AS PARTIAL PERMUTATION the reference array.", //std_message
+                                     custom_message                                                      //custom_message
+                                         };
+
+    //------------------------------------------------------------------------------
+    //Check for ignore:
+    if(ignore)
+        goto print;
+
+    //------------------------------------------------------------------------------
+    //Execute the test and create the relative index array:
+    assert_result.was_successful = true; //Start with the default value
+    target_T_array = unsigned_integerArray_to_T_array(target, target_size);
+    target_counter_dict = CD_count_elements(target_T_array);
+    A_delete_array(&target_T_array);
+
+    for(i = 0; i < reference_size; i++)
+    {
+        tmp_element = unsigned_integer_to_T_element(reference[i]);
+        if(CD_get_count(tmp_element, target_counter_dict) == 0) //There is no match for the element reference[i]
+        {
+            relative_index_array[i] = target_size;
+            aux_relative_index_array[i] = 0;
+            if(assert_result.was_successful) assert_result.was_successful = false;
+        }
+        else aux_relative_index_array[i] = relative_index_array[i] = CD_pop_next_index(tmp_element, target_counter_dict);
+
+        T_free_element(&tmp_element);
+    }
+
+    D_delete_dict(&target_counter_dict);
+
+    //Check if it is necessary to generate highly verbose details in case of fail:
+    if(!assert_result.was_successful && verbose == HIGH)
+    {
+        //------------------------------------------------------------------------------
+        //Generate the details for a highly verbose fail message:
+        char *target_array_str, *reference_array_str;
+        char *reference_target_relative_index_str;
+        char *target_index_str;
+
+
+        //Create the array with final sizes:
+        list_of_lists_of_size[0] = target_size_list;
+        list_of_lists_of_size[1] = target_index_size_list;
+        list_of_lists_of_size[2] = reference_size_list;
+        list_of_lists_of_size[3] = relative_index_array_size_list;
+
+        unsigned_integerArray_to_array_of_sizes(target, target_size, target_size_list, 0);
+
+        for(i = 0; i < target_size; i++) target_index_array[i] = i;
+        size_tArray_to_array_of_sizes(target_index_array, target_size, target_index_size_list, 1);
+        unsigned_integerArray_to_array_of_sizes(reference, reference_size, reference_size_list, 0);
+        size_tArray_to_array_of_sizes(aux_relative_index_array, reference_size, relative_index_array_size_list, 1);
+
+
+        char *tmp_error_msg=NULL;
+        if(!TF_generate_array_of_alligned_sizes(list_of_lists_of_size, &result_list_with_final_sizes, &tmp_error_msg, 0))
+        {
+            //Error creating the result message.
+            error = true;
+            snprintf(function_error_message, 
+                    max_error_msg_sz, 
+                    tmp_error_msg
+                    );
+            goto finish;
+        }
+
+
+
+        //Generate the strings to print:
+        target_array_str    = unsigned_integerArray_to_str(target, target_size, result_list_with_final_sizes); 
+        reference_array_str = unsigned_integerArray_to_str(reference, reference_size, result_list_with_final_sizes); 
+        reference_target_relative_index_str = size_tArray_to_index_str(relative_index_array, reference_size, result_list_with_final_sizes, target_size); 
+        target_index_str = size_tArray_to_index_str(target_index_array, target_size, result_list_with_final_sizes, target_size);
+
+
+
+        counter = snprintf(assert_result.result_details, 
+                    MAX_CHARS,
+                    "> target_array:    %s\n"\
+                    "> (index)          %s\n"\
+                    "> reference_array: %s\n"\
+                    "> (relative index) %s\n",
+                    target_array_str,
+                    target_index_str,
+                    reference_array_str,
+                    reference_target_relative_index_str
+                    );
+               
+        //Free the buffers:
+        free_size_t_pointer_list(target_size_list);
+        free_size_t_pointer_list(relative_index_array_size_list);
+        free_size_t_pointer_list(reference_size_list);
+        free_size_t_pointer_list(target_index_size_list);
+        free(result_list_with_final_sizes);
+        free(target_array_str);
+        free(reference_target_relative_index_str);
+        free(reference_array_str);
+        free(target_index_str);
+
+        //------------------------------------------------------------------------------
+        //Check for error:
+        if (counter < 0) 
+        {
+            //Error creating the result message.
+            error = true;
+            snprintf(function_error_message, 
+                    max_error_msg_sz, 
+                    "\nError while generating the result message (at line %d).\n",
+                    line_number
+                    );
+            goto finish;
+        }
+        //------------------------------------------------------------------------------
+    }
+
+    
+    //------------------------------------------------------------------------------
+    //Print the result:
+print:
+    print_assert_result(assert_result);
+    
+    //------------------------------------------------------------------------------
+    //Finish:
+finish:
+    if(error)
+    {
+        fprintf(stderr, function_error_message);
+        exit(EXIT_FAILURE);
+    }
+
+    //------------------------------------------------------------------------------
+}
+//###################finish_developing##########
 
 
 //------------------------------------------------------------------------------
@@ -4616,7 +4807,8 @@ static char *size_tArray_to_index_str(size_t index_array[], size_t index_array_s
  * Description: This function generates the string of the array 'index_array' 
  * of size_ts with size 'index_array_size'. The string is 
  * generated in such a way that each i-th element will have a total size given 
- * by array_of_size_reference[i] - 1 (ignoring the '(' char).  
+ * by array_of_size_reference[i] - 1 (ignoring the '(' char). If index_array[i] >= max_limit,
+ * "(*)" will be printed instead of the number index_array[i]. 
  *
  * Input: the size of array_of_size_reference must be greater or equal than 'index_array_size'.
  * Otherwise, behaviour is undefined.
