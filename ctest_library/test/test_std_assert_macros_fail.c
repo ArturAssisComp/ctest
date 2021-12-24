@@ -161,7 +161,7 @@ int main(void)
 
 		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION------------------
 		//Tests that will fail:
-		start_module("UNSIGNED_INTEGER ARRAY-permutation", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION", NULL});
+		start_module("UNSIGNED_INTEGER ARRAY- not permutation", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION", NULL});
 
 			verbose = LOW;
 			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 34, 2, 3}), 4, __LINE__, NULL);
@@ -185,7 +185,7 @@ int main(void)
 
 		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION------------------
 		//Tests that will fail:
-		start_module("UI ARRAY-permutation", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION", NULL});
+		start_module("UI ARRAY-partial permutation", "Every assert in this module must fail.", (char *[]){"ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION", NULL});
 
 			verbose = LOW;
 			ASSERT_UNSIGNED_INTEGER_ARRAY_IS_PARTIAL_PERMUTATION( (UI{1, 2, 3, 34}), 4, (UC{1, 2, 3}), 3, __LINE__, NULL);
