@@ -24,6 +24,7 @@ int main(void)
 		"ASSERT_UI_ARRAY_IS_PP",
 		"ASSERT_UI_ARRAY_NOT_IS_PP",
 		"ASSERT_UI_ARRAY_HAS_PP",
+		"ASSERT_UI_ARRAY_NOT_HAS_PP",
 		//integer type:
 		//floating_point type:
 		//bool type:
@@ -179,6 +180,16 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 
+		//---------------ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_HAS_PARTIAL_PERMUTATION------------------
+		//Tests that will pass:
+		start_module("UI ARRAY-notHasPP", "Every assert in this module must pass.", (char *[]){"A_UI_ARRAY_NOT_HAS_PP", NULL});
+
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_HAS_PARTIAL_PERMUTATION( (ULI{1, 2, 3}), 3, (UC{1, 223, 3}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_HAS_PARTIAL_PERMUTATION( (UC{1, 2, 3}), 3, (UC{1, 3, 29}), 3, __LINE__, NULL);
+			ASSERT_UNSIGNED_INTEGER_ARRAY_NOT_HAS_PARTIAL_PERMUTATION( (ULLI{4, 4, 0}), 3, (ULLI{4, 0, 0, 0}), 4, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 	end_suite();
 	//----------------------------------------------------------------------------
