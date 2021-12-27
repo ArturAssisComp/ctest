@@ -8,6 +8,18 @@
  * Description: This file contains the standard assert macros.
  */
 
+#ifndef STD_ASSERT_MACROS_H
+#define STD_ASSERT_MACROS_H
+
+/*STD macros for I/O*/
+/*WITH_ASSERT_STDOUT_EQUAL(EXPECTED_CONTENT, LINE_NUMBER, MSG){ <PIECE_OF_CODE> }END_WITH;*/
+/*WITH_ASSERT_STDERR_EQUAL(EXPECTED_CONTENT, LINE_NUMBER, MSG){ <PIECE_OF_CODE> }END_WITH;*/
+/*WITH_ASSERT_STREAM_OUT_EQUAL(STREAM_OUT, EXPECTED_CONTENT, LINE_NUMBER, MSG){ <PIECE_OF_CODE> }END_WITH;*/
+/*WITH_ASSERT_EXIT_STATUS_EQUAL(EXPECTED_STATUS, LINE_NUMBER, MSG){ <PIECE_OF_CODE> }END_WITH;*/
+/*WITH_ASSERT_EXIT_STATUS_NOT_EQUAL(UNEXPECTED_STATUS, LINE_NUMBER, MSG){ <PIECE_OF_CODE> }END_WITH;*/
+
+
+
 /*Arrays*/
 /*STD assert macros for unsigned_integer type*/
 
@@ -433,3 +445,9 @@ void assert_unsigned_integerArray_notIsSubarray            (unsigned_integer tar
 void assert_unsigned_integerArray_hasSubarray              (unsigned_integer target[], size_t target_size, unsigned_integer reference[], size_t reference_size, int line_number, char custom_message[]);
 void assert_unsigned_integerArray_notHasSubarray           (unsigned_integer target[], size_t target_size, unsigned_integer reference[], size_t reference_size, int line_number, char custom_message[]);
 */
+
+
+
+
+#endif
+
