@@ -637,7 +637,6 @@ int main(void)
 
 
 		//----------------------assert_unsigned_integerArray_hasPartialPermutation-------------------------
-		//----------------------------------------------------------------------------
 		//Tests that will be successful:
 		start_module("uiArray-hasPartialPermutation", "Every assert in this module must pass.", (char *[]){"assert_unsigned_integerArray_hasPartialPermutation", NULL});
 			assert_unsigned_integerArray_hasPartialPermutation(UI{1}, 1, UI{1}, 1, __LINE__, NULL);
@@ -651,6 +650,30 @@ int main(void)
 
 		end_module();
 		//----------------------------------------------------------------------------
+
+
+		//----------------------assert_unsigned_integerArray_notHasPartialPermutation-------------------------
+		//Tests that will pass:
+		start_module("u_iArray - notHasPP", "Every assert in this module must pass.", (char *[]){"assert_unsigned_integerArray_notHasPartialPermutation", NULL});
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 0}, 2, UI{1, 1, 2}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{0, 0}, 2, UI{1, 1}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 2, 3}, 3, UI{1, 1, 3}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 1}, 2, UI{1, 1, 4}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 2, 3}, 3, UI{3, 1, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 2, 3, 4, 5}, 5, UI{32, 45, 32, 56, 93}, 5, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{0, 9}, 2, UI{1}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{0}, 1, UI{1, 0}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 2, 3}, 3, UI{1, 1, 90, 2}, 4, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{8, 900, 5, 4}, 4, UI{31, 62, 43}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{838992, 900, 8, 3889262, 32, 5, 4}, 7, UI{318, 3889262, 843}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_notHasPartialPermutation(UI{1279982, 12333341, 3, 2772, 9902, 8}, 6, UI{12333341, 98, 1279982, 2772, 9902}, 5, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
 
 	end_suite();
 	//----------------------------------------------------------------------------
