@@ -77,6 +77,10 @@ void assert_files_binaryContentEqual           (char target_file_path[], char re
 void assert_files_contentEqual                 (char target_file_path[], char reference_file_path[], bool ignore_case, int line_number, char custom_message[]);
 void assert_file_path_contentEqual             (char target_file_path[], char reference_content[], bool ignore_case, int line_number, char custom_message[]);
 
+/*STD assert functions for void pointers*/
+void assert_pointer_isNULL    (void *target, int line_number, char custom_message[]);
+void assert_pointer_notIsNULL (void *target, int line_number, char custom_message[]);
+
 /*Arrays data type*/
 /*STD assert functions for unsigned_integerArray type*/
 void assert_unsigned_integerArray_equal                    (unsigned_integer target[], size_t target_size, unsigned_integer reference[], size_t reference_size, int line_number, char custom_message[]);
