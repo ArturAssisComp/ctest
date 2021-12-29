@@ -2335,6 +2335,97 @@ finish:
 }
 
 
+//#################developing###################
+void assert_pointer_isNULL(void *target, int line_number, char custom_message[])
+/**
+ * Description: This function checks if 'target' is NULL. 
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ *     If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (void *) target --> Value that will be checked for NULL. 
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(1)
+ *
+ * Space Complexity: O(1)
+ */
+{
+    //------------------------------------------------------------------------------
+    //Define and initialize the variables:
+    int counter;
+    const int max_error_msg_sz = MAX_ERROR_MSG_SZ;
+    bool error = false;
+    char function_error_message[max_error_msg_sz];
+    assert_result_struct assert_result = {
+                                     true,                       //was_successful
+                         line_number,                            //line_number
+                         "",                                     //result_details[MAX_CHARS]
+                         "assert_pointer_isNULL",                //assert_name
+                         "The pointer 'target' SHOULD BE NULL.", //std_message
+                         custom_message                          //custom_message
+                                         };
+
+    //------------------------------------------------------------------------------
+    //Check for ignore:
+    if(ignore)
+        goto print;
+
+    //------------------------------------------------------------------------------
+    //Execute the test:
+    assert_result.was_successful = (target == NULL);
+
+    //Check if it is necessary to generate highly verbose details in case of fail:
+    if(!assert_result.was_successful && verbose == HIGH)
+    {
+        //------------------------------------------------------------------------------
+        //Generate the details for a highly verbose fail message:
+        counter = snprintf(assert_result.result_details, 
+                    MAX_CHARS,
+                    "> %10s (%p) != NULL(%p)\n",
+                    "target", 
+                    target,
+                    NULL
+                    );
+               
+        //------------------------------------------------------------------------------
+        //Check for error:
+        if (counter < 0) 
+        {
+            //Error creating the result message.
+            error = true;
+            snprintf(function_error_message, 
+                    max_error_msg_sz, 
+                    "\nError while generating the result message (at line %d).\n",
+                    line_number
+                    );
+            goto finish;
+        }
+        //------------------------------------------------------------------------------
+    }
+
+    
+    //------------------------------------------------------------------------------
+    //Print the result:
+print:
+    print_assert_result(assert_result);
+    
+    //------------------------------------------------------------------------------
+    //Finish:
+finish:
+    if(error)
+    {
+        fprintf(stderr, function_error_message);
+        exit(EXIT_FAILURE);
+    }
+
+    //------------------------------------------------------------------------------
+}
+//###################finish_developing##########
 
 /*Array data type*/
 /*STD assert functions for unsigned_integerArray type*/
@@ -4030,8 +4121,6 @@ finish:
     //------------------------------------------------------------------------------
 }
 
-//#################developing###################
-//###################finish_developing##########
 
 
 //------------------------------------------------------------------------------
