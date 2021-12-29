@@ -509,6 +509,23 @@ int main(void)
 		end_module();
 
 		//----------------------------------------------------------------------------
+        
+
+		//----------------------assert_pointer_notIsNULL----------------------
+		//Tests that will pass:
+		start_module("pointer - is not NULL", "Every assert in this module must pass.", (char *[]){"assert_pointer_notIsNULL", NULL});
+            test_char_pointer = "";
+            int a = 12;
+            test_int_pointer = &a;
+            test_void_pointer = (void *) test_char_pointer;
+			assert_pointer_notIsNULL(test_char_pointer, __LINE__, NULL);
+			assert_pointer_notIsNULL(test_int_pointer, __LINE__, NULL);
+			assert_pointer_notIsNULL(test_void_pointer, __LINE__, NULL);
+
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 
 		/*Arrays*/
 		/*TEST CASES for unsigned_integer*/

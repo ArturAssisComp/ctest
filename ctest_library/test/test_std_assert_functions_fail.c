@@ -618,6 +618,30 @@ int main(void)
 		end_module();
 
 		//----------------------------------------------------------------------------
+        
+
+		//----------------------assert_pointer_notIsNULL----------------------
+		//Tests that will fail:
+		start_module("pointer - is not NULL", "Every assert in this module must fail.", (char *[]){"assert_pointer_notIsNULL", NULL});
+            test_char_pointer = NULL;
+            test_int_pointer = NULL;
+            test_void_pointer = NULL;
+			verbose = LOW;
+			assert_pointer_notIsNULL(NULL, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_pointer_notIsNULL(NULL, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_pointer_notIsNULL(NULL, __LINE__, NULL);
+			assert_pointer_notIsNULL(test_char_pointer, __LINE__, NULL);
+			assert_pointer_notIsNULL(test_int_pointer, __LINE__, NULL);
+			assert_pointer_notIsNULL(test_void_pointer, __LINE__, NULL);
+
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 
 
 		/*Arrays*/
