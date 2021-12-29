@@ -1,6 +1,7 @@
 #include "ctest.h"
 #include <stdbool.h>
 
+
 //Short for casting arrays:
 #define UI (unsigned_integer[])
 #define FP (floating_point[])
@@ -41,6 +42,9 @@ int main(void)
 		"assert_bool_notEqual",
 		"assert_bool_true",
 		"assert_bool_false",
+        //Pointer
+        "assert_pointer_isNULL",
+        "assert_pointer_notIsNULL",
 		/*Arrays*/
 		//unsigned_integer type:
 		"assert_unsigned_integerArray_equal",
@@ -591,6 +595,30 @@ int main(void)
 
 		end_module();
 		//----------------------------------------------------------------------------
+
+
+		//----------------------assert_pointer_isNULL----------------------
+		//Tests that will fail:
+		start_module("pointer - is NULL", "Every assert in this module must fail.", (char *[]){"assert_pointer_isNULL", NULL});
+            char *test_char_pointer = "";
+            int a = 12;
+            int *test_int_pointer = &a;
+            void *test_void_pointer = (void *) test_char_pointer;
+			verbose = LOW;
+			assert_pointer_isNULL(test_char_pointer, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_pointer_isNULL(test_char_pointer, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_pointer_isNULL(test_char_pointer, __LINE__, NULL);
+			assert_pointer_isNULL(test_int_pointer, __LINE__, NULL);
+			assert_pointer_isNULL(test_void_pointer, __LINE__, NULL);
+
+		end_module();
+
+		//----------------------------------------------------------------------------
+
 
 		/*Arrays*/
 		/*TEST CASES for unsigned_integer*/

@@ -36,6 +36,9 @@ int main(void)
 		"assert_bool_notEqual",
 		"assert_bool_true",
 		"assert_bool_false",
+        //Pointer
+        "assert_pointer_isNULL",
+        "assert_pointer_notIsNULL",
 		/*Arrays*/
 		//unsigned_integer type:
 		"assert_unsigned_integerArray_equal",
@@ -89,6 +92,7 @@ ignore = true;
 			assert_bool_notEqual (true, true, __LINE__, NULL);
 			assert_bool_true     (true, __LINE__, NULL);
 			assert_bool_false    (false, __LINE__, NULL);
+			assert_pointer_isNULL(NULL, __LINE__, NULL);
 			assert_unsigned_integerArray_equal(UI{12, 34}, 2, UI{3,3,3,3}, 4, __LINE__, NULL);
 			assert_unsigned_integerArray_notEqual(UI{12, 34}, 2, UI{3,3,3,3}, 4, __LINE__, NULL);
 			assert_unsigned_integerArray_sorted(UI{1, 2, 3}, 3, true, __LINE__, NULL);

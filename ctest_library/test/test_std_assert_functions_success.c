@@ -40,6 +40,9 @@ int main(void)
 		"assert_bool_notEqual",
 		"assert_bool_true",
 		"assert_bool_false",
+        //Pointer
+        "assert_pointer_isNULL",
+        "assert_pointer_notIsNULL",
 		/*Arrays*/
 		//unsigned_integer type:
 		"assert_unsigned_integerArray_equal",
@@ -492,6 +495,20 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 
+		//----------------------assert_pointer_isNULL----------------------
+		//Tests that will be successful:
+		start_module("pointer - is NULL", "Every assert in this module must pass.", (char *[]){"assert_pointer_isNULL", NULL});
+            char *test_char_pointer = NULL;
+            int *test_int_pointer = NULL;
+            void *test_void_pointer = NULL;
+			assert_pointer_isNULL(NULL, __LINE__, NULL);
+			assert_pointer_isNULL(test_char_pointer, __LINE__, NULL);
+			assert_pointer_isNULL(test_int_pointer, __LINE__, NULL);
+			assert_pointer_isNULL(test_void_pointer, __LINE__, NULL);
+
+		end_module();
+
+		//----------------------------------------------------------------------------
 
 		/*Arrays*/
 		/*TEST CASES for unsigned_integer*/
