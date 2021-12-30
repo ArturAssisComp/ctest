@@ -65,6 +65,8 @@ int main(void)
 		"assert_unsigned_integerArray_notIsSubarray",
 		"assert_unsigned_integerArray_hasSubarray",
 		"assert_unsigned_integerArray_notHasSubarray",
+		//String (char []) type:
+		"assert_string_equal",
 		NULL
 	};
 
@@ -928,6 +930,28 @@ int main(void)
 		//----------------------------------------------------------------------------
 
 
+		//----------------------assert_string_equal-------------------------
+		//----------------------------------------------------------------------------
+		//Tests that will fail:
+		start_module("string - Equal", "Every assert in this module must fail.", (char *[]){"assert_string_equal", NULL});
+            char my_str[] = "!@#%$", *my_str_pointer = "\n\n\n";
+			verbose = LOW;
+			assert_string_equal(my_str, "!@#%4", false, __LINE__, NULL);
+
+			verbose = MEDIUM;
+			assert_string_equal(my_str, "!@#%4", false, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_string_equal(my_str, "!@#%4", false, __LINE__, NULL);
+			assert_string_equal(my_str_pointer, "\nk\n", true, __LINE__, NULL);
+			assert_string_equal("", "A", true, __LINE__, NULL);
+			assert_string_equal(" ", "  ", true, __LINE__, NULL);
+			assert_string_equal("a", "A", false, __LINE__, NULL);
+			assert_string_equal("ba\t", "bA\b", true, __LINE__, NULL);
+			assert_string_equal("This is a text.\nHello world.", "this is a txt.\nHello world.", true, __LINE__, NULL);
+
+		end_module();
+		//----------------------------------------------------------------------------
 
 
 	end_suite();

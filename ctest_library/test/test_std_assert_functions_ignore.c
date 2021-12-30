@@ -59,6 +59,8 @@ int main(void)
 		"assert_unsigned_integerArray_notIsSubarray",
 		"assert_unsigned_integerArray_hasSubarray",
 		"assert_unsigned_integerArray_notHasSubarray",
+		//String (char []) type:
+		"assert_string_equal",
 		NULL
 	};
 
@@ -104,6 +106,7 @@ ignore = true;
 			assert_unsigned_integerArray_notIsPartialPermutation(UI{1, 0}, 2, UI{1, 1, 2}, 3, __LINE__, NULL);
 			assert_unsigned_integerArray_hasPartialPermutation(UI{0, 8, 4, 1}, 4, UI{1, 0}, 2,  __LINE__, NULL);
 			assert_unsigned_integerArray_notHasPartialPermutation(UI{1, 2, 3}, 3, UI{1, 1, 90, 2}, 4, __LINE__, NULL);
+			assert_string_equal("a", "A", false, __LINE__, NULL);
 
 ignore = false;
 		end_module();
