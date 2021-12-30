@@ -20,6 +20,9 @@
 #include <stdbool.h>
 #include <math.h>
 #include <string.h>
+#include <strings.h>
+#include <ctype.h>
+
 
 //Constants:
 #define MAX_ERROR_MSG_SZ 128
@@ -43,6 +46,10 @@ static char *size_tArray_to_index_str(size_t index_array[], size_t index_array_s
 
 static T_element unsigned_integer_to_T_element(unsigned_integer n);
 static T_array *unsigned_integerArray_to_T_array(unsigned_integer arr[], size_t arr_size);
+static bool is_special_char(char c);
+static bool check_for_special_char(char str[]);
+static char *string_to_one_line_formatted_string(char unformatted_str[]);
+static char *target_reference_chars_comparison_to_string(char target[], char reference[], bool ignore_case, char equality_char, char difference_char, size_t std_char_width);
 
 
 
@@ -2427,7 +2434,6 @@ finish:
 
 
 
-//#################developing###################
 void assert_pointer_notIsNULL(void *target, int line_number, char custom_message[])
 /**
  * Description: This function checks if 'target' is not NULL. 
@@ -2517,7 +2523,6 @@ finish:
 
     //------------------------------------------------------------------------------
 }
-//###################finish_developing##########
 
 /*Array data type*/
 /*STD assert functions for unsigned_integerArray type*/
@@ -4213,6 +4218,135 @@ finish:
     //------------------------------------------------------------------------------
 }
 
+/*STD assert functions for string type*/
+void assert_string_equal (char target[], char reference[], bool ignore_case, int line_number, char custom_message[])
+/**
+ * Description: This function checks if the string 'target' is equal to the string
+ * 'reference'. A string is a (char []) terminated by '\0' char.
+ * Then, it returns the result of the test with details, if it fails. The level of
+ * details is managed by the global variable 'verbose' --> LOW, MEDIUM, or HIGH.
+ *     If 'ignore' is true, this function will not test anything.
+ *
+ * Input: (char []) target --> target string that will be compared with the 
+ *                             reference string.
+ *        (char []) reference --> The reference string.
+ *        (int) line_number --> The number of the line on which this function was written in the
+ *        source code.
+ *        (char []) custom_message --> Personalized message that will be printed if the test fails.
+ *
+ * Output: (void)
+ *
+ * Time Complexity: O(max(strlen(target), strlen(reference)))
+ *
+ * Space Complexity: O(max(strlen(target), strlen(reference)))
+ */
+{
+    //------------------------------------------------------------------------------
+    //Define and initialize the variables:
+    int counter;
+    const int max_error_msg_sz = MAX_ERROR_MSG_SZ, max_string_size = 4096, number_of_lists = 3;
+    size_t std_char_width;
+    bool error = false;
+    char function_error_message[max_error_msg_sz];
+    char *target_reference_comparison_str;
+    char *target_formatted_str;
+    char *reference_formatted_str;
+    assert_result_struct assert_result = {
+                         true,                                                             //was_successful
+                         line_number,                                                      //line_number
+                         "",                                                               //result_details[MAX_CHARS]
+                         "assert_string_equal",                                            //assert_name
+                         "The string 'target' SHOULD BE EQUAL to the string 'reference'.", //std_message
+                         custom_message                                                    //custom_message
+                                         };
+
+    //------------------------------------------------------------------------------
+    //Check for ignore:
+    if(ignore)
+        goto print;
+
+    //------------------------------------------------------------------------------
+    //Execute the test:
+    if(ignore_case) assert_result.was_successful = !strncasecmp(target, reference, max_string_size);
+    else assert_result.was_successful = !strncmp(target, reference, max_string_size);
+
+    //Check if it is necessary to generate highly verbose details in case of fail:
+    if(!assert_result.was_successful && verbose == HIGH)
+    {
+        //Check for chars like '\n', '\t':
+        if(check_for_special_char(target) || check_for_special_char(reference)) 
+        {
+            std_char_width = 2;
+            target_formatted_str = string_to_one_line_formatted_string(target);
+            reference_formatted_str = string_to_one_line_formatted_string(reference);
+        }
+        else 
+        {
+            std_char_width = 1;
+            target_formatted_str = NULL;
+            reference_formatted_str = NULL;
+        }
+
+        target_reference_comparison_str = target_reference_chars_comparison_to_string(target, reference, ignore_case, '|', '*', std_char_width);
+
+
+        counter = snprintf(assert_result.result_details, 
+                    MAX_CHARS,
+                    "> ignore_case = %s\n"\
+                    ">\n"\
+                    "> target    (len %5zu): [%s]\n"\
+                    ">                         %s\n"\
+                    "> reference (len %5zu): [%s]\n",
+                    ignore_case?"true":"false",
+                    strlen(target),
+                    target_formatted_str?target_formatted_str:target,
+                    target_reference_comparison_str,
+                    strlen(reference),
+                    reference_formatted_str?reference_formatted_str:reference
+                    );
+               
+
+        //Free allocated memory:
+        free(target_reference_comparison_str);
+        if(target_formatted_str) free(target_formatted_str);
+        if(reference_formatted_str) free(reference_formatted_str);
+
+        //------------------------------------------------------------------------------
+        //Check for error:
+        if (counter < 0) 
+        {
+            //Error creating the result message.
+            error = true;
+            snprintf(function_error_message, 
+                    max_error_msg_sz, 
+                    "\nError while generating the result message (at line %d).\n",
+                    line_number
+                    );
+            goto finish;
+        }
+        //------------------------------------------------------------------------------
+    }
+
+    
+    //------------------------------------------------------------------------------
+    //Print the result:
+print:
+    print_assert_result(assert_result);
+    
+    //------------------------------------------------------------------------------
+    //Finish:
+finish:
+    if(error)
+    {
+        fprintf(stderr, function_error_message);
+        exit(EXIT_FAILURE);
+    }
+
+    //------------------------------------------------------------------------------
+}
+
+//#################developing###################
+//###################finish_developing##########
 
 
 //------------------------------------------------------------------------------
@@ -5311,5 +5445,174 @@ static T_array *unsigned_integerArray_to_T_array(unsigned_integer arr[], size_t 
 
     return result_array;
 }
+
+
+static bool is_special_char(char c)
+/**
+ * A special character is any character in the set {'\t', '\n', '\b', '\v', '\r'}.
+ */
+{
+    return c == '\t' || c == '\n' || c == '\b' || c == '\v' || c == '\r';
+}
+
+static bool check_for_special_char(char str[])
+/**
+ * Description: This function returns true if the string 'str' has any special
+ * char and returns false otherwise. A string is a char array teminated with '\0' and a 
+ * special character is any character that returns true if passed to the function
+ * 'is_special_char'.
+ *
+ * Input: (char []) str --> It is a char array terminated with '\0', otherwise,
+ * the behavior is undefined.
+ */
+{
+    size_t i = 0;
+    for(; i < strlen(str); i++)
+    {
+        if(is_special_char(str[i])) return true;
+    }
+    return false;
+} 
+
+static char *string_to_one_line_formatted_string(char unformatted_str[])
+/**
+ * Description: This function creates a new string with each char having a total 
+ * width of 2 in order to support printing the string with special chars in only 
+ * one line. 
+ *
+ * Memory issues: After using the returned string, it is necessary to free it.
+ *
+ * Error handling: If an error occurs, this function prints an error message and
+ * exits a failure code.
+ */
+{
+    size_t i, strlength = strlen(unformatted_str);
+    char *resultant_string;
+    resultant_string = calloc(2 * strlength + 1, sizeof *resultant_string);
+    if(resultant_string == NULL)
+    {
+        fprintf(stderr, "Error (string_to_one_line_formatted_string at line %d): memory allocation was not possible.\n", __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    for(i = 0; i < strlength; i++)
+    {
+        switch (unformatted_str[i])
+        {
+            case '\t':
+                resultant_string[2 * i] = '\\';
+                resultant_string[2 * i + 1] = 't';
+                break;
+            case '\n':
+                resultant_string[2 * i] = '\\';
+                resultant_string[2 * i + 1] = 'n';
+                break;
+            case '\b':
+                resultant_string[2 * i] = '\\';
+                resultant_string[2 * i + 1] = 'b';
+                break;
+            case '\v':
+                resultant_string[2 * i] = '\\';
+                resultant_string[2 * i + 1] = 'v';
+                break;
+            case '\r':
+                resultant_string[2 * i] = '\\';
+                resultant_string[2 * i + 1] = 'r';
+                break;
+            default:
+                resultant_string[2 * i] = ' ';
+                resultant_string[2 * i + 1] = unformatted_str[i];
+                break;
+            
+        }
+    }
+    resultant_string[2 * strlength] = '\0';
+
+    return resultant_string;
+}
+
+
+static char *target_reference_chars_comparison_to_string(char target[], char reference[], bool ignore_case, char equality_char, char difference_char, size_t std_char_width)
+/**
+ * Description: This function compares target string with reference string, 
+ * creating and returning a formatted string with 'equality_char' for each
+ * correspondence (target[i] == reference[i]) and 'difference_char' otherwise.
+ * Each char of the comparinson string will have a total width of 'std_char_width'
+ * and will be alligned to the right (>).
+ *
+ * Example: target = "abc\nd", reference = "abcdef", ignore_case = true, equality_char = ' ',
+ * difference_char = ':', and std_char_width = 3.
+ * The result is: 
+ * formatted(target):    "  a  B  c \n  d"
+ * comparison_string:    "           :  :  :"
+ * formatted(reference): "  a  b  c  d  e  f"
+ * Input: std_char_width must be greater than 0.
+ *
+ * Memory Issues: After using the returned pointer, the user must free it.
+ *
+ * Error handling: If an error occurs, this function prints an error message and
+ * exits a failure code.
+ *
+ */
+{
+    size_t target_len = strlen(target);
+    size_t reference_len = strlen(reference);
+    size_t min_len = (target_len <= reference_len)?target_len:reference_len;
+    size_t max_len = (target_len >= reference_len)?target_len:reference_len;
+    size_t i, j;
+    size_t init_index, final_index;
+    char *comparison_string;
+    char reference_char, target_char;
+
+    if(std_char_width < 1) 
+    {
+        fprintf(stderr, "Error (target_reference_chars_comparison_to_string line %d): std_char_width must be greater than 0.\n", __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+    comparison_string = calloc(max_len * std_char_width + 1, sizeof *comparison_string);
+    if(comparison_string == NULL)
+    {
+        fprintf(stderr, "Error (target_reference_chars_comparison_to_string line %d): memory allocation was not possible.\n", __LINE__);
+        exit(EXIT_FAILURE);
+    }
+
+
+
+    for(i = 0; i < min_len; i++)
+    {
+        init_index = i * std_char_width;
+        final_index = init_index + std_char_width - 1; 
+        for(j = init_index; j < final_index; j++) comparison_string[j] = ' ';
+
+        if(ignore_case) 
+        {
+            reference_char = tolower(reference[i]);
+            target_char = tolower(target[i]);
+        }
+        else
+        {
+            reference_char = reference[i];
+            target_char = target[i];
+        }
+        
+        if(target_char == reference_char) comparison_string[final_index] = equality_char;
+        else comparison_string[final_index] = difference_char;
+    }
+    for(; i < max_len; i++)
+    {
+        init_index = i * std_char_width;
+        final_index = init_index + std_char_width - 1; 
+        for(j = init_index; j < final_index; j++) comparison_string[j] = ' ';
+
+        comparison_string[final_index] = difference_char;
+    }
+    comparison_string[max_len * std_char_width] = '\0';
+
+    return comparison_string;
+}
+
+
+
 
 //------------------------------------------------------------------------------
