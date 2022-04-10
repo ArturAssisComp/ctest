@@ -5,9 +5,9 @@ archive_lib_dir = $(base_lib_dir)/lib
 obj_dir         = ./build/obj
 test_dir        = ./ctest_library/test
 
-include_files = $(addprefix ./ctest_library/, $(addprefix assert/, assert.h std_assert_macros.h) $(addprefix aux_libs/, array.h counter_dict.h dict.h hash_function.h linked_list.h text_formatting.h types.h) $(addprefix ctest/, ctest.h ctest_functions.h) $(addprefix globals/, globals.h))
-source_files  = $(addprefix ./ctest_library/, $(addprefix assert/, assert_aux_functions.c std_assert_functions.c) $(addprefix aux_libs/, array.c counter_dict.c dict.c hash_function.c linked_list.c text_formatting.c types.c) $(addprefix ctest/, ctest.c))
-objects       = $(addprefix $(obj_dir)/, assert_aux_functions.o std_assert_functions.o array.o counter_dict.o dict.o hash_function.o linked_list.o text_formatting.o types.o ctest.o)
+include_files = $(addprefix ./ctest_library/, $(addprefix assert/, assert.h std_assert_macros.h) $(addprefix aux_libs/, array.h counter_dict.h dict.h hash_function.h linked_list.h set.h text_formatting.h types.h) $(addprefix ctest/, ctest.h ctest_functions.h) $(addprefix globals/, globals.h))
+source_files  = $(addprefix ./ctest_library/, $(addprefix assert/, assert_aux_functions.c std_assert_functions.c) $(addprefix aux_libs/, array.c counter_dict.c dict.c hash_function.c linked_list.c set.c text_formatting.c types.c) $(addprefix ctest/, ctest.c))
+objects       = $(addprefix $(obj_dir)/, assert_aux_functions.o std_assert_functions.o array.o counter_dict.o dict.o hash_function.o linked_list.o text_formatting.o types.o set.o ctest.o)
 
 create_lib: build $(base_lib_dir) $(include_lib_dir) $(obj_dir) $(archive_lib_dir) $(tmp_lib_dir)  $(archive_lib_dir)/ctest.a
 	rm -fr $(tmp_lib_dir)
@@ -43,17 +43,20 @@ $(archive_lib_dir)/ctest.a: $(objects)
 $(obj_dir)/assert_aux_functions.o: ctest_library/assert/assert_aux_functions.c ctest_library/assert/assert.h ctest_library/globals/globals.h ctest_library/aux_libs/text_formatting.h 
 	cc -c $(tmp_lib_dir)/assert_aux_functions.c -o $(obj_dir)/assert_aux_functions.o
 
-$(obj_dir)/std_assert_functions.o: ctest_library/assert/std_assert_functions.c ctest_library/assert/assert.h ctest_library/globals/globals.h  ctest_library/aux_libs/types.h  ctest_library/aux_libs/array.h ctest_library/aux_libs/counter_dict.h ctest_library/aux_libs/text_formatting.h
+$(obj_dir)/std_assert_functions.o: ctest_library/assert/std_assert_functions.c ctest_library/assert/assert.h ctest_library/globals/globals.h  ctest_library/aux_libs/types.h  ctest_library/aux_libs/array.h ctest_library/aux_libs/counter_dict.h ctest_library/aux_libs/text_formatting.h ctest_library/aux_libs/set.h
 	cc -c $(tmp_lib_dir)/std_assert_functions.c -o $(obj_dir)/std_assert_functions.o
 
 
 $(obj_dir)/array.o: ctest_library/aux_libs/array.c ctest_library/aux_libs/array.h 
 	cc -c $(tmp_lib_dir)/array.c -o $(obj_dir)/array.o
 
+$(obj_dir)/set.o: ctest_library/aux_libs/set.c ctest_library/aux_libs/set.h ctest_library/aux_libs/dict.h 
+	cc -c $(tmp_lib_dir)/set.c -o $(obj_dir)/set.o
+
 $(obj_dir)/counter_dict.o: ctest_library/aux_libs/counter_dict.c ctest_library/aux_libs/counter_dict.h 
 	cc -c $(tmp_lib_dir)/counter_dict.c -o $(obj_dir)/counter_dict.o
 
-$(obj_dir)/dict.o: ctest_library/aux_libs/dict.c ctest_library/aux_libs/dict.h 
+$(obj_dir)/dict.o: ctest_library/aux_libs/dict.c ctest_library/aux_libs/dict.h ctest_library/aux_libs/array.h 
 	cc -c $(tmp_lib_dir)/dict.c -o $(obj_dir)/dict.o
 
 $(obj_dir)/hash_function.o: ctest_library/aux_libs/hash_function.c ctest_library/aux_libs/hash_function.h 
