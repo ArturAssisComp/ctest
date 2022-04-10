@@ -45,6 +45,11 @@ typedef struct
         size_t num_of_items;
 }T_dict;
 
+typedef struct
+{
+    T_dict *dict;
+}T_set;
+
 struct T_element 
 {
     union {
