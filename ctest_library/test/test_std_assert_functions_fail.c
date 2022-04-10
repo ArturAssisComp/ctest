@@ -57,6 +57,7 @@ int main(void)
 		"assert_unsigned_integerArray_notIsPartialPermutation",
 		"assert_unsigned_integerArray_hasPartialPermutation",
 		"assert_unsigned_integerArray_notHasPartialPermutation",
+        "assert_unsigned_integerArray_setEqual",
 		"assert_unsigned_integerArray_setIn",
 		"assert_unsigned_integerArray_notSetIn",
 		"assert_unsigned_integerArray_setHas",
@@ -929,7 +930,44 @@ int main(void)
 		end_module();
 		//----------------------------------------------------------------------------
 
+		//----------------------assert_unsigned_integerArray_setEqual-------------------------
+		//Tests that will fail:
+		start_module("u_iArray - setEqual", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integerArray_setEqual", NULL});
+			verbose = LOW;
+			assert_unsigned_integerArray_setEqual(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{31, 62, 43}, 3, UI{8, 900, 5, 4}, 4, __LINE__, NULL);
 
+			verbose = MEDIUM;
+			assert_unsigned_integerArray_setEqual(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{31, 62, 43}, 3, UI{8, 900, 5, 4}, 4, __LINE__, NULL);
+
+			verbose = HIGH;
+			assert_unsigned_integerArray_setEqual(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 1}, 2, UI{0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 2}, 2, UI{1}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1}, 2, UI{0, 0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1}, 2, UI{1, 0}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 0}, 2, UI{1, 1, 2}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{0, 0}, 2, UI{1, 1}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 2, 3}, 3, UI{1, 1, 3}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 1, 4}, 3, UI{1, 3, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 1}, 2, UI{1, 1, 4}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 2, 3}, 3, UI{3, 1, 1}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 2, 3, 4, 5}, 5, UI{32, 45, 32, 56, 93}, 5, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{0, 9}, 2, UI{1}, 1, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{0}, 1, UI{1, 0}, 2, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1, 2, 3}, 3, UI{1, 1, 90, 2}, 4, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{8, 900, 5, 4}, 4, UI{31, 62, 43}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{838992, 900, 8, 3889262, 32, 5, 4}, 7, UI{318, 3889262, 843}, 3, __LINE__, NULL);
+			assert_unsigned_integerArray_setEqual(UI{1279982, 12333341, 3, 2772, 9902, 8}, 6, UI{12333341, 98, 1279982, 2772, 9902}, 5, __LINE__, NULL);
+
+
+		end_module();
+		//----------------------------------------------------------------------------
+
+        /*Strings*/
 		//----------------------assert_string_equal-------------------------
 		//----------------------------------------------------------------------------
 		//Tests that will fail:
