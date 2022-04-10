@@ -1,6 +1,7 @@
 #include "types.h"
 #include "dict.h"
 #include "linked_list.h"
+#include "array.h"
 #include "hash_function.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -132,7 +133,7 @@ void D_assign_value_to_key(T_element key, T_element value, T_dict *target_dict)
 	found_element = LL_get_linked_list_element(key, current_linked_list);
 	if(found_element)
 	{
-		T_free_element(&(found_element->item.value));
+		if(found_element->item.value.type != NULL_TYPE) T_free_element(&(found_element->item.value));
 		found_element->item.value = value;
 	}
 	else
@@ -206,8 +207,8 @@ bool D_delete_element(T_element key, T_dict *target_dict)
 	//Check if it was deleted:
 	if(found_element)
 	{
-		T_free_element(&(found_element->item.key));
-		T_free_element(&(found_element->item.value));
+		if(found_element->item.key.type != NULL_TYPE) T_free_element(&(found_element->item.key));
+		if(found_element->item.value.type != NULL_TYPE) T_free_element(&(found_element->item.value));
 
 		target_dict->num_of_items--;
 		result = true;
@@ -215,4 +216,29 @@ bool D_delete_element(T_element key, T_dict *target_dict)
 
 	return result;
 
+}
+
+
+T_array *D_dict_to_array(T_dict *target_dict)
+/**
+ * Description: This function creates a T_array using the elements from 'target_dict'.
+ * There is not a specific order for the elements in the array. The user must delete
+ * the array after using it by calling A_delete_array.
+ */
+{
+    T_array *new_array = NULL;
+    T_linked_list_element *tmp = NULL;
+    int i;
+
+    new_array = A_create_array();
+    for (i = 0; i < target_dict->table_size; i++)
+    {
+        tmp = target_dict->table[i]->head;
+        while (tmp)
+        {
+            A_append_element(tmp->item.key, new_array);
+            tmp = tmp->next_element;
+        }
+    }
+    return new_array;
 }
