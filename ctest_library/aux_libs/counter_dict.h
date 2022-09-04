@@ -1,5 +1,5 @@
-#ifndef COUNTER_DICT_H
-#define COUNTER_DICT_H
+#ifndef _CTEST_COUNTER_DICT_H
+#define _CTEST_COUNTER_DICT_H
 
 //Include libs:
 #include "types.h"

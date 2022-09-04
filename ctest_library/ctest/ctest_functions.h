@@ -1,5 +1,5 @@
-#ifndef CTEST_FUNCTIONS_H
-#define CTEST_FUNCTIONS_H
+#ifndef _CTEST_CTEST_FUNCTIONS_H
+#define _CTEST_CTEST_FUNCTIONS_H
 
 #include "globals.h"
 

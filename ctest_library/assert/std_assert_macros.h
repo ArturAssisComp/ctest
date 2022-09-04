@@ -8,8 +8,8 @@
  * Description: This file contains the standard assert macros.
  */
 
-#ifndef STD_ASSERT_MACROS_H
-#define STD_ASSERT_MACROS_H
+#ifndef _CTEST_STD_ASSERT_MACROS_H
+#define _CTEST_STD_ASSERT_MACROS_H
 
 /*STD macros for I/O*/
 /*WITH_ASSERT_STDOUT_EQUAL(EXPECTED_CONTENT, LINE_NUMBER, MSG){ <PIECE_OF_CODE> }END_WITH;*/

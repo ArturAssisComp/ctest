@@ -1,5 +1,5 @@
-#ifndef SET_H
-#define SET_H
+#ifndef _CTEST_SET_H
+#define _CTEST_SET_H
 
 #include "types.h"
 #include <stdbool.h>

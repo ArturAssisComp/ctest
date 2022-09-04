@@ -1,5 +1,5 @@
-#ifndef HASH_FUNCTION_H
-#define HASH_FUNCTION_H
+#ifndef _CTEST_HASH_FUNCTION_H
+#define _CTEST_HASH_FUNCTION_H
 
 //Libs:
 #include "types.h"

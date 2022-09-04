@@ -1,5 +1,5 @@
-#ifndef ARRAY_H
-#define ARRAY_H
+#ifndef _CTEST_ARRAY_H
+#define _CTEST_ARRAY_H
 
 //Libs
 #include "types.h"

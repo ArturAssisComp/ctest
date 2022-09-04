@@ -1,5 +1,5 @@
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#ifndef _CTEST_GLOBALS_H
+#define _CTEST_GLOBALS_H
 
 //Include libs:
 #include <stdbool.h>

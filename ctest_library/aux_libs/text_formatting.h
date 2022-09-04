@@ -1,5 +1,5 @@
-#ifndef TEXT_FORMATTING_H
-#define TEXT_FORMATTING_H
+#ifndef _CTEST_TEXT_FORMATTING_H
+#define _CTEST_TEXT_FORMATTING_H
 
 //Include:
 #include <stdlib.h>

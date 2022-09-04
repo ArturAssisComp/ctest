@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef _CTEST_TYPES_H
+#define _CTEST_TYPES_H
 
 //Include libs:
 #include "globals.h"

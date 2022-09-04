@@ -1,5 +1,5 @@
-#ifndef DICT_H
-#define DICT_H
+#ifndef _CTEST_DICT_H
+#define _CTEST_DICT_H
 
 //Include libs:
 #include "types.h"
