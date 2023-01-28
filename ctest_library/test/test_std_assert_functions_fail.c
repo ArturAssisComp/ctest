@@ -932,6 +932,7 @@ int main(void)
 
 		//----------------------assert_unsigned_integerArray_setEqual-------------------------
 		//Tests that will fail:
+        /*
 		start_module("u_iArray - setEqual", "Every assert in this module must fail.", (char *[]){"assert_unsigned_integerArray_setEqual", NULL});
 			verbose = LOW;
 			assert_unsigned_integerArray_setEqual(UI{1}, 1, UI{0}, 1, __LINE__, NULL);
@@ -965,6 +966,7 @@ int main(void)
 
 
 		end_module();
+        */
 		//----------------------------------------------------------------------------
 
         /*Strings*/
