@@ -1,6 +1,63 @@
-# ctest
+<a name="readme-top"></a>
+
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/ArturAssisComp/ctest.git">
+  </a>
+
+  <h3 align="center">CTEST</h3>
+
+  <p align="center">
+    An unit test lib for C.
+    <br />
+    <a href="#documentation"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href=[issues-url]>Report Bug</a>
+    ·
+    <a href=[issues-url]>Request Feature</a>
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#how-is-a-contribution-made">How to contribute</a></li>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#how-to-use-the-makefile">How to use the makefile</a></li>
+    <li>
+      <a href="#how-to-use-ctest-in-other-projects">Using ctest</a>
+      <ul>
+        <li><a href="#example-of-usage">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#documentation">Documentation</a></li>
+
+  </ol>
+</details>
+
+
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+
+
+
+# Description 
 
 This repository contains a library that can be used to unittest C code.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # How is a contribution made?
 
@@ -48,6 +105,16 @@ Get changes from remote repository from branch master
 git pull origin <master-branch-name>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Requirements
+
+make       4.3
+
+gcc        11.2.0
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 # How to use the makefile?
 
 Run the following command in the terminal in the root directory of the ctest project:
@@ -70,7 +137,7 @@ or, to print the results to txt files in ./build/test_results/
 ```bash
 make test_to_txt
 ```
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # How to use ctest in other projects?
 
@@ -92,7 +159,7 @@ to the desired folder in the target project, import the header ctest.h, and
 compile the file with the unit tests using as input, among others, the 
 ctest.a object file.
 
-## Example of usage in the project with base dir name as BASE_DIR:
+## Example of usage
 Let us suppose that the base directory for ctest is CTEST_BASE_DIR and the 
 base directory for the target project, in which the unit tests will be 
 implemented, is BASE_DIR. In an actual case, it is necessary to exchange
@@ -183,10 +250,19 @@ gcc -o unit_test unit_test.c ctest_lib/lib/ctest_a
 ```bash
 unit_test
 ``` 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-# Requirements:
+# Documentation
 
-make       4.3
+todo
 
-gcc        11.2.0
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+[issues-shield]: https://img.shields.io/github/issues/ArturAssisComp/ctest?logo=github&style=for-the-badge
+[issues-url]: https://github.com/ArturAssisComp/ctest/issues
+
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/ArturAssisComp/ctest/blob/version1_0/LICENSE
