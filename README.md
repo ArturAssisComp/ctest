@@ -37,12 +37,43 @@
         <li><a href="#example-of-usage">Example</a></li>
       </ul>
     </li>
-    <li><a href="#documentation">Documentation</a></li>
+    <li>
+      <a href="#documentation">Documentation</a>
+      <ul>
+	<details>
+          <summary>index</summary>
+          <li><a href="#overview">Overview</a></li>
+	      <li><a href="#types">Types</a></li>
+	      <li><a href="#variables">Variables</a></li>
+          <li><a href="#constants">Constants</a></li>
+          <li><a href="#functions">Functions</a></li>
+	      <ul>
+              <li><a href="#single-data-types">Single data types</a></li>
+	              <ul>
+                       <li><a href="#unsigned_integer">unsigned_integer</a></li>
+                       <li><a href="#integer">integer</a></li>
+                       <li><a href="#floating_point">floating_point</a></li>
+                       <li><a href="#bool">bool</a></li>
+                       <li><a href="#char">char</a></li>
+                       <li><a href="#file">file</a></li>
+                       <li><a href="#void-pointer">Void pointer</a></li>
+                  </ul>
+              <li><a href="#array-data-types">Array data type</a></li>
+	              <ul>
+                       <li><a href="#unsigned_integerarray">unsigned_integerArray</a></li>
+                       <li><a href="#integerarray">integerArray</a></li>
+                       <li><a href="#boolarray">boolArray</a></li>
+                       <li><a href="#chararray">charArray</a></li>
+                       <li><a href="#string">string</a></li>
+                  </ul>
+          </ul>
+          <li><a href="#macros">Macros</a></li>
+	</details>
+      </ul>
+    </li>
 
   </ol>
 </details>
-
-
 
 
 
@@ -255,7 +286,82 @@ unit_test
 
 # Documentation
 
-todo
+## Overview
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Types
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Variables
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Constants
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Functions
+
+### Single data types
+
+#### unsigned_integer
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### integer
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### floating_point
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+#### bool
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### char
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### file
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### void pointer
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Array data types
+
+#### unsigned_integerArray
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### integerArray
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### boolArray
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+#### charArray
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+#### string
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Macros
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
