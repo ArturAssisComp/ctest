@@ -17,9 +17,9 @@
     <a href="#documentation"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href=[issues-url]>Report Bug</a>
+    <a href="https://github.com/ArturAssisComp/ctest/issues">Report Bug</a>
     ·
-    <a href=[issues-url]>Request Feature</a>
+    <a href="https://github.com/ArturAssisComp/ctest/issues">Request Feature</a>
   </p>
 </div>
 
