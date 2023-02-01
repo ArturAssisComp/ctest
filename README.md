@@ -240,7 +240,7 @@
 
 # Description 
 
-This repository contains a library that can be used to unittest C code.
+This repository contains a library that can be used to implement unit tests for C code.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
