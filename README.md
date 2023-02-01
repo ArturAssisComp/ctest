@@ -162,7 +162,7 @@
                            </ul>
                        <li><a href="#chararray">charArray</a></li>
 			   <ul>
-                               <li><a href="#assert_array_equal">assert_charArray_equal</a></li>
+                               <li><a href="#assert_chararray_equal">assert_charArray_equal</a></li>
                                <li><a href="#assert_chararray_notequal">assert_charArray_notEqual</a></li>
                                <li><a href="#assert_chararray_sorted">assert_charArray_sorted</a></li>
                                <li><a href="#assert_chararray_notsorted">assert_charArray_notSorted</a></li>
@@ -183,6 +183,42 @@
                                <li><a href="#assert_chararray_nothassubarray">assert_charArray_notHasSubarray</a></li>
                            </ul>
                        <li><a href="#string">string</a></li>
+			   <ul>
+                               <li><a href="#assert_string_equal">assert_string_equal</a></li>
+                               <li><a href="#assert_string_notequal">assert_string_notEqual</a></li>
+                               <li><a href="#assert_string_greater">assert_string_greater</a></li>
+                               <li><a href="#assert_string_greaterequal">assert_string_greaterEqual</a></li>
+                               <li><a href="#assert_string_less">assert_string_less</a></li>
+                               <li><a href="#assert_string_lessequal">assert_string_lessEqual</a></li>
+                               <li><a href="#assert_string_sizeequal">assert_string_sizeEqual</a></li>
+                               <li><a href="#assert_string_notsizeequal">assert_string_notSizeEqual</a></li>
+                               <li><a href="#assert_string_sizegreater">assert_string_sizeGreater</a></li>
+                               <li><a href="#assert_string_sizegreaterequal">assert_string_sizeGreaterEqual</a></li>
+                               <li><a href="#assert_string_sizeless">assert_string_sizeLess</a></li>
+                               <li><a href="#assert_string_sizelessequal">assert_string_sizeLessEqual</a></li>
+                               <li><a href="#assert_string_samesize">assert_string_sameSize</a></li>
+                               <li><a href="#assert_string_haschar">assert_string_hasChar</a></li>
+                               <li><a href="#assert_string_nothaschar">assert_string_notHasChar</a></li>
+                               <li><a href="#assert_string_sorted">assert_string_sorted</a></li>
+                               <li><a href="#assert_string_notsorted">assert_string_notSorted</a></li>
+                               <li><a href="#assert_string_permutation">assert_string_permutation</a></li>
+                               <li><a href="#assert_string_notpermutation">assert_string_notPermutation</a></li>
+                               <li><a href="#assert_string_ispartialpermutation">assert_string_isPartialPermutation</a></li>
+                               <li><a href="#assert_string_notispartialpermutation">assert_string_notIsPartialPermutation</a></li>
+                               <li><a href="#assert_stringy_haspartialpermutation">assert_string_hasPartialPermutation</a></li>
+                               <li><a href="#assert_string_nothaspartialpermutation">assert_string_notHasPartialPermutation</a></li>
+                               <li><a href="#assert_string_setequal">assert_string_setEqual</a></li>
+                               <li><a href="#assert_string_setin">assert_string_setIn</a></li>
+                               <li><a href="#assert_string_notsetin">assertd_string_notSetIn</a></li>
+                               <li><a href="#assert_string_sethas">assert_string_setHas</a></li>
+                               <li><a href="#assert_string_notsethas">assert_string_notSetHas</a></li>
+                               <li><a href="#assert_string_issubarray">assert_string_isSubarray</a></li>
+                               <li><a href="#assert_string_notissubarray">assert_string_notIsSubarray</a></li>
+                               <li><a href="#assert_string_hassubarray">assert_string_hasSubarray</a></li>
+                               <li><a href="#assert_string_nothassubarray">assert_string_notHasSubarray</a></li>
+                               <li><a href="#assert_string_epmty">assert_string_empty</a></li>
+                               <li><a href="#assert_string_notempty">assert_string_notEmpty</a></li>
+                           </ul>
                   </ul>
           </ul>
           <li><a href="#macros">Macros</a></li>
@@ -405,6 +441,13 @@ unit_test
 # Documentation
 
 ## Overview
+- ***About assert functions***: every assert function has the signature in the following format: 
+
+***void assert_\<type\>_\<description\>(..., int line_number, char custom_message[])***. 
+
+\<type\> describes the type of the target that will be used in the assertion process. \<description\> specify the type of assertion that will be made. As an example, \<type\> may be ***integer*** and \<description\> may be ***equal***, resulting in ***assert_integer_equal***. 
+
+***line_number*** and ***custom_message*** are useful for printing meaningful failure messages. It is recommended to use the macro ***\_\_LINE\_\_*** as the input ***line_number***. ***custom_message*** may be NULL if no custom message will be used for failure message. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -425,6 +468,30 @@ unit_test
 ### Single data types
 
 #### unsigned_integer
+
+##### assert_unsigned_integer_equal
+- Signature: 
+```C
+void assert_unsigned_integer_equal (unsigned_integer target, unsigned_integer reference, int line_number, char custom_message[]);
+```
+- Description: this function checks if the unsigned_integer ***target*** is equal to the unsigned_integer ***reference***.
+<details> 
+	<summary>Example</summary> 
+<pre><code>#include "ctest_lib/include/ctest.h"
+int main(void)
+{
+    char *functions_tested[] = { "None", NULL };
+    start_suite("Unit test", "Basic test case.", functions_tested);
+        start_module("Success module", "Basic test case.", functions_tested);
+            assert_unsigned_integer_equal(2, 2, __LINE__, NULL); //pass
+        end_module();	
+        start_module("Fail module", "Basic test case.", functions_tested);
+            assert_unsigned_integer_equal(0, 2, __LINE__, NULL); //fail
+        end_module();	
+    end_suite();
+}</code></pre>
+</details>
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
