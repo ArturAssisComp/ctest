@@ -51,19 +51,137 @@
               <li><a href="#single-data-types">Single data types</a></li>
 	              <ul>
                        <li><a href="#unsigned_integer">unsigned_integer</a></li>
+			   <ul>
+                               <li><a href="#assert_unsigned_integer_equal">assert_unsigned_integer_equal</a></li>
+                               <li><a href="#assert_unsigned_integer_notequal">assert_unsigned_integer_notEqual</a></li>
+                               <li><a href="#assert_unsigned_integer_greater">assert_unsigned_integer_greater</a></li>
+                               <li><a href="#assert_unsigned_integer_greaterequal">assert_unsigned_integer_greaterEqual</a></li>
+                               <li><a href="#assert_unsigned_integer_less">assert_unsigned_integer_less</a></li>
+                               <li><a href="#assert_unsigned_integer_lessequal">assert_unsigned_integer_lessEqual</a></li>
+                               <li><a href="#assert_unsigned_integer_bitmaskequal">assert_unsigned_integer_bitMaskEqual</a></li>
+                           </ul>
                        <li><a href="#integer">integer</a></li>
+			   <ul>
+                               <li><a href="#assert_integer_equal">assert_integer_equal</a></li>
+                               <li><a href="#assert_integer_notequal">assert_integer_notEqual</a></li>
+                               <li><a href="#assert_integer_greater">assert_integer_greater</a></li>
+                               <li><a href="#assert_integer_greaterequal">assert_integer_greaterEqual</a></li>
+                               <li><a href="#assert_integer_less">assert_integer_less</a></li>
+                               <li><a href="#assert_integer_lessequal">assert_integer_lessEqual</a></li>
+                           </ul>
                        <li><a href="#floating_point">floating_point</a></li>
+			   <ul>
+                               <li><a href="#assert_floating_point_almostequal">assert_floating_point_almostEqual</a></li>
+                               <li><a href="#assert_floating_point_notalmostequal">assert_floating_point_notAlmostEqual</a></li>
+                               <li><a href="#assert_floating_point_greater">assert_floating_point_greater</a></li>
+                               <li><a href="#assert_floating_point_greaterequal">assert_floating_point_greaterEqual</a></li>
+                               <li><a href="#assert_floating_point_less">assert_floating_point_less</a></li>
+                               <li><a href="#assert_floating_point_lessequal">assert_floating_point_lessEqual</a></li>
+                           </ul>
                        <li><a href="#bool">bool</a></li>
+			   <ul>
+                               <li><a href="#assert_bool_equal">assert_bool_equal</a></li>
+                               <li><a href="#assert_bool_notequal">assert_bool_notEqual</a></li>
+                               <li><a href="#assert_bool_true">assert_bool_true</a></li>
+                               <li><a href="#assert_bool_false">assert_bool_false</a></li>
+                           </ul>
                        <li><a href="#char">char</a></li>
+			   <ul>
+                               <li><a href="#assert_char_equal">assert_char_equal</a></li>
+                               <li><a href="#assert_char_notequal">assert_char_notEqual</a></li>
+                               <li><a href="#assert_char_greater">assert_char_greater</a></li>
+                               <li><a href="#assert_char_greaterequal">assert_char_greaterEqual</a></li>
+                               <li><a href="#assert_char_less">assert_char_less</a></li>
+                               <li><a href="#assert_char_lessequal">assert_char_lessEqual</a></li>
+                           </ul>
                        <li><a href="#file">file</a></li>
+			   <ul>
+                               <li><a href="#assert_files_binarycontentequal">assert_files_binaryContentEqual</a></li>
+                               <li><a href="#assert_files_contentequal">assert_files_contentEqual</a></li>
+                               <li><a href="#assert_file_path_contentequal">assert_file_path_contentEqual</a></li>
+                           </ul>
                        <li><a href="#void-pointer">Void pointer</a></li>
-                  </ul>
+			   <ul>
+                               <li><a href="#assert_pointer_isnull">assert_pointer_isNULL</a></li>
+                               <li><a href="#assert_pointer_notisnull">assert_pointer_notIsNULL</a></li>
+                           </ul>
+                      </ul>
               <li><a href="#array-data-types">Array data type</a></li>
 	              <ul>
                        <li><a href="#unsigned_integerarray">unsigned_integerArray</a></li>
+			   <ul>
+                               <li><a href="#assert_unsigned_integerarray_equal">assert_unsigned_integerArray_equal</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notequal">assert_unsigned_integerArray_notEqual</a></li>
+                               <li><a href="#assert_unsigned_integerarray_sorted">assert_unsigned_integerArray_sorted</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notsorted">assert_unsigned_integerArray_notSorted</a></li>
+                               <li><a href="#assert_unsigned_integerarray_permutation">assert_unsigned_integerArray_permutation</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notpermutation">assert_unsigned_integerArray_notPermutation</a></li>
+                               <li><a href="#assert_unsigned_integerarray_ispartialpermutation">assert_unsigned_integerArray_isPartialPermutation</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notispartialpermutation">assert_unsigned_integerArray_notIsPartialPermutation</a></li>
+                               <li><a href="#assert_unsigned_integerarray_haspartialpermutation">assert_unsigned_integerArray_hasPartialPermutation</a></li>
+                               <li><a href="#assert_unsigned_integerarray_nothaspartialpermutation">assert_unsigned_integerArray_notHasPartialPermutation</a></li>
+                               <li><a href="#assert_unsigned_integerarray_setequal">assert_unsigned_integerArray_setEqual</a></li>
+                               <li><a href="#assert_unsigned_integerarray_setin">assert_unsigned_integerArray_setIn</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notsetin">assert_unsigned_integerArray_notSetIn</a></li>
+                               <li><a href="#assert_unsigned_integerarray_sethas">assert_unsigned_integerArray_setHas</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notsethas">assert_unsigned_integerArray_notSetHas</a></li>
+                               <li><a href="#assert_unsigned_integerarray_issubarray">assert_unsigned_integerArray_isSubarray</a></li>
+                               <li><a href="#assert_unsigned_integerarray_notissubarray">assert_unsigned_integerArray_notIsSubarray</a></li>
+                               <li><a href="#assert_unsigned_integerarray_hassubarray">assert_unsigned_integerArray_hasSubarray</a></li>
+                               <li><a href="#assert_unsigned_integerarray_nothassubarray">assert_unsigned_integerArray_notHasSubarray</a></li>
+                           </ul>
                        <li><a href="#integerarray">integerArray</a></li>
+			   <ul>
+                               <li><a href="#assert_integerarray_equal">assert_integerArray_equal</a></li>
+                               <li><a href="#assert_integerarray_notequal">assert_integerArray_notEqual</a></li>
+                               <li><a href="#assert_integerarray_sorted">assert_integerArray_sorted</a></li>
+                               <li><a href="#assert_integerarray_notsorted">assert_integerArray_notSorted</a></li>
+                               <li><a href="#assert_integerarray_permutation">assert_integerArray_permutation</a></li>
+                               <li><a href="#assert_integerarray_notpermutation">assert_integerArray_notPermutation</a></li>
+                               <li><a href="#assert_integerarray_ispartialpermutation">assert_integerArray_isPartialPermutation</a></li>
+                               <li><a href="#assert_integerarray_notispartialpermutation">assert_integerArray_notIsPartialPermutation</a></li>
+                               <li><a href="#assert_integerarray_haspartialpermutation">assert_integerArray_hasPartialPermutation</a></li>
+                               <li><a href="#assert_integerarray_nothaspartialpermutation">assert_integerArray_notHasPartialPermutation</a></li>
+                               <li><a href="#assert_integerarray_setequal">assert_integerArray_setEqual</a></li>
+                               <li><a href="#assert_integerarray_setin">assert_integerArray_setIn</a></li>
+                               <li><a href="#assert_integerarray_notsetin">assertd_integerArray_notSetIn</a></li>
+                               <li><a href="#assert_integerarray_sethas">assert_integerArray_setHas</a></li>
+                               <li><a href="#assert_integerarray_notsethas">assert_integerArray_notSetHas</a></li>
+                               <li><a href="#assert_integerarray_issubarray">assert_integerArray_isSubarray</a></li>
+                               <li><a href="#assert_integerarray_notissubarray">assert_integerArray_notIsSubarray</a></li>
+                               <li><a href="#assert_integerarray_hassubarray">assert_integerArray_hasSubarray</a></li>
+                               <li><a href="#assert_integerarray_nothassubarray">assert_integerArray_notHasSubarray</a></li>
+                           </ul>
                        <li><a href="#boolarray">boolArray</a></li>
+			   <ul>
+                               <li><a href="#assert_boolarray_equal">assert_boolArray_equal</a></li>
+                               <li><a href="#assert_boolarray_alltrue">assert_boolArray_allTrue</a></li>
+                               <li><a href="#assert_boolarray_anyfalse">assert_boolArray_anyFalse</a></li>
+                               <li><a href="#assert_boolarray_allfalse">assert_boolArray_allFalse</a></li>
+                               <li><a href="#assert_boolarray_anytrue">assert_boolArray_anyTrue</a></li>
+                           </ul>
                        <li><a href="#chararray">charArray</a></li>
+			   <ul>
+                               <li><a href="#assert_array_equal">assert_charArray_equal</a></li>
+                               <li><a href="#assert_chararray_notequal">assert_charArray_notEqual</a></li>
+                               <li><a href="#assert_chararray_sorted">assert_charArray_sorted</a></li>
+                               <li><a href="#assert_chararray_notsorted">assert_charArray_notSorted</a></li>
+                               <li><a href="#assert_chararray_permutation">assert_charArray_permutation</a></li>
+                               <li><a href="#assert_chararray_notpermutation">assert_charArray_notPermutation</a></li>
+                               <li><a href="#assert_chararray_ispartialpermutation">assert_charArray_isPartialPermutation</a></li>
+                               <li><a href="#assert_chararray_notispartialpermutation">assert_charArray_notIsPartialPermutation</a></li>
+                               <li><a href="#assert_chararray_haspartialpermutation">assert_charArray_hasPartialPermutation</a></li>
+                               <li><a href="#assert_chararray_nothaspartialpermutation">assert_charArray_notHasPartialPermutation</a></li>
+                               <li><a href="#assert_chararray_setequal">assert_charArray_setEqual</a></li>
+                               <li><a href="#assert_chararray_setin">assert_charArray_setIn</a></li>
+                               <li><a href="#assert_chararray_notsetin">assertd_charArray_notSetIn</a></li>
+                               <li><a href="#assert_chararray_sethas">assert_charArray_setHas</a></li>
+                               <li><a href="#assert_chararray_notsethas">assert_charArray_notSetHas</a></li>
+                               <li><a href="#assert_chararray_issubarray">assert_charArray_isSubarray</a></li>
+                               <li><a href="#assert_chararray_notissubarray">assert_charArray_notIsSubarray</a></li>
+                               <li><a href="#assert_chararray_hassubarray">assert_charArray_hasSubarray</a></li>
+                               <li><a href="#assert_chararray_nothassubarray">assert_charArray_notHasSubarray</a></li>
+                           </ul>
                        <li><a href="#string">string</a></li>
                   </ul>
           </ul>
