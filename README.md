@@ -428,7 +428,7 @@ int main(void)
 4 - Compile the unit test file and execute it:
 ```bash
 cd BASE_DIR
-gcc -o unit_test unit_test.c ctest_lib/lib/ctest_a
+gcc -o unit_test unit_test.c ctest_lib/lib/ctest.a
 ```  
 
 5 - Execute unit_test and check the results:
