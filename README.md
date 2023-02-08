@@ -351,8 +351,12 @@ implemented, is BASE_DIR. In an actual case, it is necessary to exchange
 BASE_DIR and CTEST_BASE_DIR to the respective actual directory name.
 
 1 - Execute the make command from CTEST_BASE_DIR:
+
 ```bash
 cd CTEST_BASE_DIR
+```  
+
+```bash
 make
 ```  
 
@@ -428,6 +432,9 @@ int main(void)
 4 - Compile the unit test file and execute it:
 ```bash
 cd BASE_DIR
+``` 
+
+```bash
 gcc -o unit_test unit_test.c ctest_lib/lib/ctest.a
 ```  
 
